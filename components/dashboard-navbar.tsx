@@ -7,6 +7,7 @@ import { useRouter } from "next/navigation";
 
 import { useDemoAuth } from "@/components/providers/demo-auth-provider";
 import Logo from "./logo";
+import { ThemeToggle } from "./theme-toggle";
 
 // Function to check if we're in development mode
 const isDevelopment = () => {
@@ -62,7 +63,7 @@ const Navbar: React.FC = () => {
   }, [user, isLoading, router]);
   return (
     <header className="sticky top-0 z-10 border-b bg-background">
-      <div className="container flex h-16 items-center justify-between">
+      <div className="container flex items-center justify-between h-16">
         <Logo />
         <nav className="hidden md:flex md:items-center md:gap-6">
           <Link
@@ -84,7 +85,10 @@ const Navbar: React.FC = () => {
             Settings
           </Link>
         </nav>
-        <UserAccountNav user={displayUser} />
+        <div className="flex items-center gap-4">
+          <ThemeToggle />
+          <UserAccountNav user={displayUser} />
+        </div>
       </div>
     </header>
   );

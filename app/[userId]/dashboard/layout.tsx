@@ -1,5 +1,7 @@
 "use client";
 
+import type React from "react";
+
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 
@@ -7,10 +9,10 @@ import {
   DemoAuthProvider,
   useDemoAuth,
 } from "@/components/providers/demo-auth-provider";
-import Navbar from "@/components/navbar";
+import Navbar from "@/components/dashboard-navbar";
 
 // Function to check if we're in development mode
-const isDevelopment = (): boolean => {
+const isDevelopment = () => {
   if (typeof window !== "undefined") {
     // Client-side check
     return process.env.NODE_ENV === "development";
@@ -34,7 +36,7 @@ function DashboardLayoutContent({ children }: { children: React.ReactNode }) {
 
     // Only redirect if not in development mode and not authenticated
     if (!isLoading && !user) {
-      router.push("/auth/log=in");
+      router.push("/auth/log-in");
     }
   }, [user, isLoading, router]);
 
@@ -53,7 +55,7 @@ function DashboardLayoutContent({ children }: { children: React.ReactNode }) {
 
   if (isLoading && !isDevelopment()) {
     return (
-      <div className="flex min-h-screen items-center justify-center">
+      <div className="flex items-center justify-center min-h-screen">
         Loading...
       </div>
     );
@@ -71,9 +73,9 @@ function DashboardLayoutContent({ children }: { children: React.ReactNode }) {
   }
 
   return (
-    <div className="flex min-h-screen flex-col">
+    <div className="flex flex-col min-h-screen">
       {devMode && (
-        <div className="bg-yellow-500 text-black px-4 py-1 text-center text-sm">
+        <div className="px-4 py-1 text-sm text-center text-black bg-yellow-500 dark:bg-yellow-800 dark:text-white">
           Development Mode: Authentication bypassed
         </div>
       )}

@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import Link from "next/link";
-import { Plus } from "lucide-react";
+import { Edit, Plus } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 import {
@@ -46,15 +46,15 @@ export default function DashboardPage() {
     if (storedSecrets) {
       setSecrets(JSON.parse(storedSecrets));
     } else {
-      setSecrets(mockSecrets);
-      localStorage.setItem("demoSecrets", JSON.stringify(mockSecrets));
+      setSecrets([]);
+      localStorage.setItem("demoSecrets", JSON.stringify([]));
     }
   }, []);
 
   return (
     <div className="flex flex-col space-y-6">
       {isDevelopment && !user && (
-        <div className="bg-yellow-100 border border-yellow-400 text-yellow-800 px-4 py-3 rounded relative mb-4">
+        <div className="relative px-4 py-3 mb-4 text-yellow-800 bg-yellow-100 border border-yellow-400 rounded dark:bg-yellow-900 dark:border-yellow-800 dark:text-yellow-100">
           <strong className="font-bold">Development Mode:</strong>
           <span className="block sm:inline">
             {" "}
@@ -67,7 +67,7 @@ export default function DashboardPage() {
         <h1 className="text-3xl font-bold">Your Secrets</h1>
         <Link href={`/${user?.name}/dashboard/create`}>
           <Button>
-            <Plus className="mr-2 h-4 w-4" />
+            <Plus className="w-4 h-4 mr-2" />
             Create New Secret
           </Button>
         </Link>
@@ -83,10 +83,10 @@ export default function DashboardPage() {
               </p>
               <Link
                 href={`/${user?.name}/dashboard/create`}
-                className="mt-4 inline-block"
+                className="inline-block mt-4"
               >
                 <Button>
-                  <Plus className="mr-2 h-4 w-4" />
+                  <Plus className="w-4 h-4 mr-2" />
                   Create New Secret
                 </Button>
               </Link>
@@ -96,12 +96,21 @@ export default function DashboardPage() {
       ) : (
         <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
           {secrets.map((secret) => (
-            <Card key={secret.id}>
+            <Card key={secret.id} className="relative group">
               <CardHeader>
                 <CardTitle>{secret.name}</CardTitle>
                 <CardDescription>
                   Created on {new Date(secret.createdAt).toLocaleDateString()}
                 </CardDescription>
+                <Link
+                  href={`/${user?.name}/dashboard/secret/${secret.id}/edit`}
+                  className="absolute transition-opacity opacity-0 top-3 right-3 group-hover:opacity-100"
+                >
+                  <Button variant="ghost" size="icon" className="w-8 h-8">
+                    <Edit className="w-4 h-4" />
+                    <span className="sr-only">Edit</span>
+                  </Button>
+                </Link>
               </CardHeader>
               <CardContent>
                 <div className="space-y-2 text-sm">

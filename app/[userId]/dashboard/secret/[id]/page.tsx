@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import { useParams, useRouter } from "next/navigation";
-import { ArrowLeft, Copy, Download } from "lucide-react";
+import { ArrowLeft, Copy, Download, Edit } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 import {
@@ -35,10 +35,10 @@ export default function SecretPage() {
       if (foundSecret) {
         setSecret(foundSecret);
       } else {
-        router.push(`/${user?.name}/dashboard`);
+        router.push(`${user?.name}/dashboard`);
       }
     } else {
-      router.push(`/${user?.name}/dashboard`);
+      router.push(`${user?.name}/dashboard`);
     }
     setIsLoading(false);
   }, [params.id, router]);
@@ -88,23 +88,31 @@ export default function SecretPage() {
   }
 
   return (
-    <div className="mx-auto max-w-2xl">
+    <div className="max-w-2xl mx-auto">
       <Button
         variant="ghost"
-        className="mb-4 flex items-center text-muted-foreground"
+        className="flex items-center mb-4 text-muted-foreground"
         onClick={() => router.back()}
       >
-        <ArrowLeft className="mr-2 h-4 w-4" />
+        <ArrowLeft className="w-4 h-4 mr-2" />
         Back
       </Button>
 
       <Card>
-        <CardHeader>
-          <CardTitle>{secret.name}</CardTitle>
-          <CardDescription>
-            Created on {new Date(secret.createdAt).toLocaleDateString()} •
-            Expires on {new Date(secret.expiresAt).toLocaleDateString()}
-          </CardDescription>
+        <CardHeader className="flex flex-row items-center justify-between">
+          <div>
+            <CardTitle>{secret.name}</CardTitle>
+            <CardDescription>
+              Created on {new Date(secret.createdAt).toLocaleDateString()} •
+              Expires on {new Date(secret.expiresAt).toLocaleDateString()}
+            </CardDescription>
+          </div>
+          <Button variant="outline" size="sm" asChild>
+            <Link href={`/${user?.name}/dashboard/secret/${secret.id}/edit`}>
+              <Edit className="w-4 h-4 mr-2" />
+              Edit
+            </Link>
+          </Button>
         </CardHeader>
         <CardContent className="space-y-4">
           <div className="space-y-2">
@@ -112,11 +120,11 @@ export default function SecretPage() {
               <h3 className="text-sm font-medium">Environment Variables</h3>
               <div className="flex items-center gap-2">
                 <Button variant="outline" size="sm" onClick={copyToClipboard}>
-                  <Copy className="mr-2 h-4 w-4" />
+                  <Copy className="w-4 h-4 mr-2" />
                   {copied ? "Copied!" : "Copy"}
                 </Button>
                 <Button variant="outline" size="sm" onClick={downloadAsFile}>
-                  <Download className="mr-2 h-4 w-4" />
+                  <Download className="w-4 h-4 mr-2" />
                   Download
                 </Button>
               </div>
@@ -124,14 +132,16 @@ export default function SecretPage() {
             <Textarea
               value={
                 secret.content ||
-                `API_KEY=demo_api_key_${secret.id}\nDATABASE_URL=demo_database_url_${secret.id}\nSECRET_KEY=demo_secret_key_${secret.id}`
+                `API_KEY=demo_api_key_${secret.id}
+DATABASE_URL=demo_database_url_${secret.id}
+SECRET_KEY=demo_secret_key_${secret.id}`
               }
               readOnly
-              className="font-mono h-40"
+              className="h-40 font-mono"
             />
           </div>
 
-          <div className="rounded-md bg-muted p-4">
+          <div className="p-4 rounded-md bg-muted">
             <div className="flex items-center justify-between">
               <div>
                 <h4 className="font-medium">Sharing</h4>
