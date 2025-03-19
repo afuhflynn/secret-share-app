@@ -109,9 +109,9 @@ export default function CreateSecretPage() {
   }
 
   return (
-    <div className="mx-auto max-w-2xl">
+    <div className="max-w-2xl mx-auto">
       {isDevelopment && (
-        <div className="bg-yellow-100 border border-yellow-400 text-yellow-800 px-4 py-3 rounded relative mb-4">
+        <div className="relative px-4 py-3 mb-4 text-yellow-800 bg-yellow-100 border border-yellow-400 rounded">
           <strong className="font-bold">Development Mode:</strong>
           <span className="block sm:inline">
             {" "}
@@ -122,10 +122,10 @@ export default function CreateSecretPage() {
 
       <Button
         variant="ghost"
-        className="mb-4 flex items-center text-muted-foreground"
+        className="flex items-center mb-4 text-muted-foreground"
         onClick={() => router.back()}
       >
-        <ArrowLeft className="mr-2 h-4 w-4" />
+        <ArrowLeft className="w-4 h-4 mr-2" />
         Back
       </Button>
 
@@ -156,7 +156,7 @@ export default function CreateSecretPage() {
                 placeholder="API_KEY=your_api_key
 DATABASE_URL=your_database_url
 SECRET_KEY=your_secret_key"
-                className="font-mono h-40"
+                className="h-40 font-mono"
                 required
               />
               <p className="text-xs text-muted-foreground">
@@ -172,23 +172,23 @@ SECRET_KEY=your_secret_key"
                 onValueChange={setExpiryType}
                 className="flex flex-col space-y-3"
               >
-                <div className="flex items-center space-x-3 rounded-md border p-3">
+                <div className="flex items-center p-3 space-x-3 border rounded-md">
                   <RadioGroupItem value="time" id="time" />
                   <Label
                     htmlFor="time"
-                    className="flex cursor-pointer items-center gap-2 font-normal"
+                    className="flex items-center gap-2 font-normal cursor-pointer"
                   >
-                    <Clock className="h-4 w-4" />
+                    <Clock className="w-4 h-4" />
                     <span>Time-based expiration</span>
                   </Label>
                 </div>
-                <div className="flex items-center space-x-3 rounded-md border p-3">
+                <div className="flex items-center p-3 space-x-3 border rounded-md">
                   <RadioGroupItem value="views" id="views" />
                   <Label
                     htmlFor="views"
-                    className="flex cursor-pointer items-center gap-2 font-normal"
+                    className="flex items-center gap-2 font-normal cursor-pointer"
                   >
-                    <Eye className="h-4 w-4" />
+                    <Eye className="w-4 h-4" />
                     <span>View-based expiration</span>
                   </Label>
                 </div>
@@ -202,12 +202,22 @@ SECRET_KEY=your_secret_key"
                   <SelectTrigger>
                     <SelectValue placeholder="Select expiration time" />
                   </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="1h">1 hour</SelectItem>
-                    <SelectItem value="24h">24 hours</SelectItem>
-                    <SelectItem value="7d">7 days</SelectItem>
-                    <SelectItem value="30d">30 days</SelectItem>
-                    <SelectItem value="never">Never (Pro plan only)</SelectItem>
+                  <SelectContent className="bg-background">
+                    <SelectItem value="1h" className="cursor-pointer">
+                      1 hour
+                    </SelectItem>
+                    <SelectItem value="24h" className="cursor-pointer">
+                      24 hours
+                    </SelectItem>
+                    <SelectItem value="7d" className="cursor-pointer">
+                      7 days
+                    </SelectItem>
+                    <SelectItem value="30d" className="cursor-pointer">
+                      30 days
+                    </SelectItem>
+                    <SelectItem value="never" className="cursor-pointer">
+                      Never (Pro plan only)
+                    </SelectItem>
                   </SelectContent>
                 </Select>
               </div>
@@ -218,12 +228,20 @@ SECRET_KEY=your_secret_key"
                   <SelectTrigger>
                     <SelectValue placeholder="Select maximum views" />
                   </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="1">1 view</SelectItem>
-                    <SelectItem value="5">5 views</SelectItem>
-                    <SelectItem value="10">10 views</SelectItem>
-                    <SelectItem value="25">25 views (Pro plan only)</SelectItem>
-                    <SelectItem value="unlimited">
+                  <SelectContent className="bg-background">
+                    <SelectItem value="1" className="cursor-pointer">
+                      1 view
+                    </SelectItem>
+                    <SelectItem value="5" className="cursor-pointer">
+                      5 views
+                    </SelectItem>
+                    <SelectItem value="10" className="cursor-pointer">
+                      10 views
+                    </SelectItem>
+                    <SelectItem value="25" className="cursor-pointer">
+                      25 views (Pro plan only)
+                    </SelectItem>
+                    <SelectItem value="unlimited" className="cursor-pointer">
                       Unlimited (Enterprise plan only)
                     </SelectItem>
                   </SelectContent>

@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import Link from "next/link";
-import { Edit, Plus } from "lucide-react";
+import { Edit, Plus, Trash2 } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 import {
@@ -63,7 +63,7 @@ export default function DashboardPage() {
         </div>
       )}
 
-      <div className="flex items-center justify-between">
+      <div className="flex flex-col items-center justify-between gap-4 md:flex-row md:gap-0">
         <h1 className="text-3xl font-bold">Your Secrets</h1>
         <Link href={`/${user?.name}/dashboard/create`}>
           <Button>
@@ -95,22 +95,36 @@ export default function DashboardPage() {
         </Card>
       ) : (
         <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-          {secrets.map((secret) => (
-            <Card key={secret.id} className="relative group">
+          {secrets.map((secret, index) => (
+            <Card
+              key={`item-${secret.id}-${secret.name}-${index}`}
+              className="relative group hover:shadow-md"
+            >
               <CardHeader>
                 <CardTitle>{secret.name}</CardTitle>
                 <CardDescription>
                   Created on {new Date(secret.createdAt).toLocaleDateString()}
                 </CardDescription>
-                <Link
-                  href={`/${user?.name}/dashboard/secret/${secret.id}/edit`}
-                  className="absolute transition-opacity opacity-0 top-3 right-3 group-hover:opacity-100"
-                >
-                  <Button variant="ghost" size="icon" className="w-8 h-8">
-                    <Edit className="w-4 h-4" />
-                    <span className="sr-only">Edit</span>
-                  </Button>
-                </Link>
+                <div className="absolute flex flex-row items-center top-3 right-3">
+                  <Link
+                    href={`/${user?.name}/dashboard/secret/${secret.id}/edit`}
+                    className="transition-opacity opacity-0 group-hover:opacity-100"
+                  >
+                    <Button variant="ghost" size="icon" className="w-8 h-8">
+                      <Edit className="w-4 h-4" />
+                      <span className="sr-only">Edit</span>
+                    </Button>
+                  </Link>
+                  <Link
+                    href={`/${user?.name}/dashboard/secret/${secret.id}/delete`}
+                    className="transition-opacity opacity-0 group-hover:opacity-100"
+                  >
+                    <Button variant="ghost" size="icon" className="w-8 h-8">
+                      <Trash2 className="w-4 h-4" />
+                      <span className="sr-only">Delete</span>
+                    </Button>
+                  </Link>
+                </div>
               </CardHeader>
               <CardContent>
                 <div className="space-y-2 text-sm">

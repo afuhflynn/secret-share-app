@@ -136,18 +136,34 @@ export default function ContactPage() {
                         <SelectTrigger>
                           <SelectValue placeholder="Select a subject" />
                         </SelectTrigger>
-                        <SelectContent>
-                          <SelectItem value="general">
+                        <SelectContent className="bg-background">
+                          <SelectItem
+                            value="general"
+                            className="cursor-pointer"
+                          >
                             General Inquiry
                           </SelectItem>
-                          <SelectItem value="support">
+                          <SelectItem
+                            value="support"
+                            className="cursor-pointer"
+                          >
                             Technical Support
                           </SelectItem>
-                          <SelectItem value="billing">
+                          <SelectItem
+                            value="billing"
+                            className="cursor-pointer"
+                          >
                             Billing Question
                           </SelectItem>
-                          <SelectItem value="feedback">Feedback</SelectItem>
-                          <SelectItem value="other">Other</SelectItem>
+                          <SelectItem
+                            value="feedback"
+                            className="cursor-pointer"
+                          >
+                            Feedback
+                          </SelectItem>
+                          <SelectItem value="other" className="cursor-pointer">
+                            Other
+                          </SelectItem>
                         </SelectContent>
                       </Select>
                     </div>
@@ -158,7 +174,7 @@ export default function ContactPage() {
                         value={message}
                         onChange={(e) => setMessage(e.target.value)}
                         placeholder="Your message"
-                        className="min-h-[150px]"
+                        className="min-h-[150px] resize-none"
                         required
                       />
                     </div>
@@ -189,7 +205,7 @@ export default function ContactPage() {
                       <div>
                         <h3 className="font-medium">Email</h3>
                         <p className="text-sm text-muted-foreground">
-                          support@secretshare.example.com
+                          support@secretshare.com
                         </p>
                         <p className="mt-1 text-xs text-muted-foreground">
                           We aim to respond to all inquiries within 24 hours.
@@ -201,7 +217,7 @@ export default function ContactPage() {
                       <div>
                         <h3 className="font-medium">Phone</h3>
                         <p className="text-sm text-muted-foreground">
-                          +1 (555) 123-4567
+                          +237 (675) 171 796
                         </p>
                         <p className="mt-1 text-xs text-muted-foreground">
                           Available Monday-Friday, 9am-5pm EST.
@@ -297,7 +313,7 @@ export default function ContactPage() {
                   </li>
                   <li>
                     <Link
-                      href="#"
+                      href="#features"
                       className="text-muted-foreground hover:text-foreground"
                     >
                       Features
@@ -305,7 +321,7 @@ export default function ContactPage() {
                   </li>
                   <li>
                     <Link
-                      href="#"
+                      href="/pricing"
                       className="text-muted-foreground hover:text-foreground"
                     >
                       Pricing
@@ -318,7 +334,7 @@ export default function ContactPage() {
                 <ul className="space-y-2 text-sm">
                   <li>
                     <Link
-                      href="#"
+                      href="/about"
                       className="text-muted-foreground hover:text-foreground"
                     >
                       About
@@ -334,7 +350,7 @@ export default function ContactPage() {
                   </li>
                   <li>
                     <Link
-                      href="#"
+                      href="/privacy-policy"
                       className="text-muted-foreground hover:text-foreground"
                     >
                       Privacy
@@ -347,7 +363,7 @@ export default function ContactPage() {
                 <ul className="space-y-2 text-sm">
                   <li>
                     <Link
-                      href="#"
+                      href="/blog"
                       className="text-muted-foreground hover:text-foreground"
                     >
                       Blog
@@ -355,8 +371,9 @@ export default function ContactPage() {
                   </li>
                   <li>
                     <Link
-                      href="#"
+                      href="https://github.com/afuhflynns/secret-share.git"
                       className="text-muted-foreground hover:text-foreground"
+                      target="_blank"
                     >
                       Documentation
                     </Link>

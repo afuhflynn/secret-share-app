@@ -68,19 +68,19 @@ const Navbar: React.FC = () => {
         <nav className="hidden md:flex md:items-center md:gap-6">
           <Link
             href={`/${displayUser?.name}/dashboard`}
-            className="text-sm font-medium"
+            className="text-sm font-medium hover:underline"
           >
             Dashboard
           </Link>
           <Link
             href={`/${displayUser?.name}/dashboard/create`}
-            className="text-sm font-medium"
+            className="text-sm font-medium hover:underline"
           >
             Create Secret
           </Link>
           <Link
             href={`/${displayUser?.name}/dashboard/settings`}
-            className="text-sm font-medium"
+            className="text-sm font-medium hover:underline"
           >
             Settings
           </Link>

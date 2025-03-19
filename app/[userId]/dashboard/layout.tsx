@@ -45,8 +45,8 @@ function DashboardLayoutContent({ children }: { children: React.ReactNode }) {
     if (isDevelopment() && !user) {
       // Create a demo user for development
       const demoUser = {
-        name: "Dev User",
-        email: "dev@example.com",
+        name: "afuhflynn",
+        email: "dev@afuhflynn.com",
         image: null,
       };
       localStorage.setItem("demoUser", JSON.stringify(demoUser));
@@ -65,7 +65,7 @@ function DashboardLayoutContent({ children }: { children: React.ReactNode }) {
   const displayUser =
     user ||
     (devMode
-      ? { name: "Dev User", email: "dev@example.com", image: null }
+      ? { name: "afuhflynn", email: "dev@afuhflynn.com", image: null }
       : null);
 
   if (!displayUser && !devMode) {

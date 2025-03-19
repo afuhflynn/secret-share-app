@@ -116,7 +116,7 @@ export default function SecretPage() {
         </CardHeader>
         <CardContent className="space-y-4">
           <div className="space-y-2">
-            <div className="flex items-center justify-between">
+            <div className="flex md:flex-row flex-col gap-4 items-center justify-between">
               <h3 className="text-sm font-medium">Environment Variables</h3>
               <div className="flex items-center gap-2">
                 <Button variant="outline" size="sm" onClick={copyToClipboard}>
@@ -142,7 +142,7 @@ SECRET_KEY=demo_secret_key_${secret.id}`
           </div>
 
           <div className="p-4 rounded-md bg-muted">
-            <div className="flex items-center justify-between">
+            <div className="flex md:flex-row flex-col gap-4 items-center justify-between">
               <div>
                 <h4 className="font-medium">Sharing</h4>
                 <p className="text-sm text-muted-foreground">

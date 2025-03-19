@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import Link from "next/link";
-import { ArrowLeft, Globe, Lock, Moon, Sun } from "lucide-react";
+import { ArrowLeft, ComputerIcon, Lock, Moon, Sun } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useTheme } from "next-themes";
 
@@ -104,7 +104,7 @@ export default function SettingsPage() {
                 onValueChange={setTheme}
                 className="flex flex-col space-y-3"
               >
-                <div className="flex items-center p-3 space-x-3 border rounded-md">
+                <div className="flex items-center p-3 space-x-3 border rounded-md cursor-pointer">
                   <RadioGroupItem value="light" id="light" />
                   <Label
                     htmlFor="light"
@@ -114,7 +114,7 @@ export default function SettingsPage() {
                     <span>Light</span>
                   </Label>
                 </div>
-                <div className="flex items-center p-3 space-x-3 border rounded-md">
+                <div className="flex items-center p-3 space-x-3 border rounded-md cursor-pointer">
                   <RadioGroupItem value="dark" id="dark" />
                   <Label
                     htmlFor="dark"
@@ -124,13 +124,13 @@ export default function SettingsPage() {
                     <span>Dark</span>
                   </Label>
                 </div>
-                <div className="flex items-center p-3 space-x-3 border rounded-md">
+                <div className="flex items-center p-3 space-x-3 border rounded-md cursor-pointer">
                   <RadioGroupItem value="system" id="system" />
                   <Label
                     htmlFor="system"
                     className="flex items-center gap-2 font-normal cursor-pointer"
                   >
-                    <Globe className="w-4 h-4" />
+                    <ComputerIcon className="w-4 h-4" />
                     <span>System</span>
                   </Label>
                 </div>
