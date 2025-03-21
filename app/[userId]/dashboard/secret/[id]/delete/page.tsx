@@ -21,9 +21,8 @@ export default function EditSecretPage() {
   const params = useParams();
   const router = useRouter();
   const [secret, setSecret] = useState<any>(null);
-  const [secretValue, setSecretValue] = useState("");
   const [isLoading, setIsLoading] = useState(true);
-  const [isUpdating, setIsUpdating] = useState(false);
+  const [isDeleting, setIsDeleting] = useState(false);
   const { user } = useDemoAuth();
 
   useEffect(() => {
@@ -35,7 +34,6 @@ export default function EditSecretPage() {
       const foundSecret = secrets.find((s: any) => s.id === params.id);
       if (foundSecret) {
         setSecret(foundSecret);
-        setSecretValue(foundSecret.content);
       } else {
         router.push(`${user?.name}/dashboard`);
       }
@@ -59,32 +57,16 @@ export default function EditSecretPage() {
 
   async function onSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
-    setIsUpdating(true);
+    setIsDeleting(true);
 
     try {
       // Demo mode - simulate creating a secret
       await new Promise((resolve) => setTimeout(resolve, 1000));
 
-      // Create a new secret
-      setSecret({ ...secret, content: secretValue });
-
-      // Get existing secrets from localStorage
-      const storedSecrets = localStorage.getItem("demoSecrets");
-      const secrets = storedSecrets ? JSON.parse(storedSecrets) : [];
-
-      // Update current secret
-      secrets.map((item: any) => {
-        if (item.id === params.id) {
-          item = secret;
-        }
-      });
-
-      // Save to localStorage
-      localStorage.setItem("demoSecrets", JSON.stringify(secrets));
-
       toast({
-        title: "Secret updated",
-        description: "Your secret has been updated successfully.",
+        title: "Secret deleted",
+        description: "Your secret has been deleted successfully.",
+        variant: "destructive",
       });
 
       router.push(`/${user?.name}/dashboard`);
@@ -96,7 +78,7 @@ export default function EditSecretPage() {
         variant: "destructive",
       });
     } finally {
-      setIsUpdating(false);
+      setIsDeleting(false);
     }
   }
   return (
@@ -113,10 +95,14 @@ export default function EditSecretPage() {
       <Card>
         <CardHeader className="flex flex-row items-center justify-between">
           <div>
-            <CardTitle>Edit &apos;{secret.name}&apos;</CardTitle>
+            <CardTitle>Delete &apos;{secret.name}&apos;</CardTitle>
             <CardDescription>
               Created on {new Date(secret.createdAt).toLocaleDateString()} •
               Expires on {new Date(secret.expiresAt).toLocaleDateString()}
+            </CardDescription>
+            <CardDescription className="pt-2 text-red-500">
+              The action you are about to perform cannot be undone. Are you sure
+              you want to delete this secret?
             </CardDescription>
           </div>
         </CardHeader>
@@ -126,8 +112,8 @@ export default function EditSecretPage() {
               <h3 className="text-sm font-medium">Environment Variables</h3>
             </div>
             <Textarea
-              value={secretValue}
-              onChange={(e) => setSecretValue(e.target.value)}
+              value={secret.content}
+              readOnly
               className="h-40 font-mono"
             />
           </div>
@@ -135,14 +121,18 @@ export default function EditSecretPage() {
           <div className="p-4 rounded-md bg-muted">
             <div className="flex flex-col items-center justify-between gap-3 sm:gap-0 sm:flex-row">
               <div>
-                <h4 className="font-medium">Done Editing</h4>
+                <h4 className="font-medium">Confirm Delete</h4>
                 <p className="text-sm text-muted-foreground">
-                  Click the button on the right to save the changes.
+                  Click the button on the right to delete the secret.
                 </p>
               </div>
               <CardFooter>
-                <Button type="submit" className="w-full" disabled={isUpdating}>
-                  {isUpdating ? "Updating..." : "Update Secret"}
+                <Button
+                  type="submit"
+                  variant="destructive"
+                  disabled={isDeleting}
+                >
+                  {isDeleting ? "Deleting..." : "Delete Secret"}
                 </Button>
               </CardFooter>
             </div>

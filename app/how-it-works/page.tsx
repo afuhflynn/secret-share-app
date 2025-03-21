@@ -9,27 +9,11 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import Logo from "@/components/logo";
+import Footer from "@/components/footer";
 
 export default function HowItWorksPage() {
   return (
-    <div className="flex min-h-screen flex-col">
-      <header className="border-b">
-        <div className="container flex h-16 items-center justify-between">
-          <Logo />
-          <nav className="flex items-center gap-4">
-            <Link
-              href="/auth/log-in"
-              className="text-sm font-medium hover:underline"
-            >
-              Login
-            </Link>
-            <Link href="/auth/sign-up">
-              <Button>Get Started</Button>
-            </Link>
-          </nav>
-        </div>
-      </header>
+    <div className="flex flex-col min-h-screen">
       <main className="flex-1">
         <section className="container py-12 md:py-16">
           <div className="flex items-center gap-2 mb-8">
@@ -37,11 +21,11 @@ export default function HowItWorksPage() {
               href="/"
               className="flex items-center text-sm font-medium text-muted-foreground hover:text-foreground"
             >
-              <ArrowLeft className="mr-2 h-4 w-4" />
+              <ArrowLeft className="w-4 h-4 mr-2" />
               Back to Home
             </Link>
           </div>
-          <div className="mx-auto max-w-3xl space-y-8">
+          <div className="max-w-3xl mx-auto space-y-8">
             <div className="space-y-2">
               <h1 className="text-3xl font-bold tracking-tight sm:text-4xl">
                 How SecretShare Works
@@ -56,8 +40,8 @@ export default function HowItWorksPage() {
               <Card>
                 <CardHeader>
                   <CardTitle className="flex items-center gap-2">
-                    <div className="flex h-8 w-8 items-center justify-center rounded-full bg-primary/10">
-                      <Key className="h-4 w-4 text-primary" />
+                    <div className="flex items-center justify-center w-8 h-8 rounded-full bg-primary/10">
+                      <Key className="w-4 h-4 text-primary" />
                     </div>
                     <span>Step 1: Create Your Secret</span>
                   </CardTitle>
@@ -65,14 +49,14 @@ export default function HowItWorksPage() {
                     Enter your environment variables securely
                   </CardDescription>
                 </CardHeader>
-                <CardContent className="space-y-4">
+                <CardContent className="space-y-4 overflow-hidden">
                   <p>
                     Start by creating a new secret in your dashboard. Enter your
                     environment variables in KEY=VALUE format, one per line.
                     These could be API keys, database credentials, or any
                     sensitive information you need to share.
                   </p>
-                  <div className="rounded-md bg-muted p-4 font-mono text-sm">
+                  <div className="p-4 overflow-hidden font-mono text-sm rounded-md bg-muted">
                     API_KEY=your_api_key
                     <br />
                     DATABASE_URL=your_database_url
@@ -85,8 +69,8 @@ export default function HowItWorksPage() {
               <Card>
                 <CardHeader>
                   <CardTitle className="flex items-center gap-2">
-                    <div className="flex h-8 w-8 items-center justify-center rounded-full bg-primary/10">
-                      <Shield className="h-4 w-4 text-primary" />
+                    <div className="flex items-center justify-center w-8 h-8 rounded-full bg-primary/10">
+                      <Shield className="w-4 h-4 text-primary" />
                     </div>
                     <span>Step 2: Set Security Options</span>
                   </CardTitle>
@@ -102,8 +86,8 @@ export default function HowItWorksPage() {
                     additional security.
                   </p>
                   <div className="grid gap-4 sm:grid-cols-2">
-                    <div className="rounded-md border p-4">
-                      <h3 className="font-medium mb-2">
+                    <div className="p-4 overflow-hidden border rounded-md">
+                      <h3 className="mb-2 font-medium">
                         Time-based Expiration
                       </h3>
                       <p className="text-sm text-muted-foreground">
@@ -111,8 +95,8 @@ export default function HowItWorksPage() {
                         days, or 30 days.
                       </p>
                     </div>
-                    <div className="rounded-md border p-4">
-                      <h3 className="font-medium mb-2">
+                    <div className="p-4 overflow-hidden border rounded-md">
+                      <h3 className="mb-2 font-medium">
                         View-based Expiration
                       </h3>
                       <p className="text-sm text-muted-foreground">
@@ -127,8 +111,8 @@ export default function HowItWorksPage() {
               <Card>
                 <CardHeader>
                   <CardTitle className="flex items-center gap-2">
-                    <div className="flex h-8 w-8 items-center justify-center rounded-full bg-primary/10">
-                      <Share2 className="h-4 w-4 text-primary" />
+                    <div className="flex items-center justify-center w-8 h-8 rounded-full bg-primary/10">
+                      <Share2 className="w-4 h-4 text-primary" />
                     </div>
                     <span>Step 3: Share Your Secret</span>
                   </CardTitle>
@@ -143,7 +127,7 @@ export default function HowItWorksPage() {
                     communication channel. Only those with the link can access
                     your secret.
                   </p>
-                  <div className="rounded-md bg-muted p-4 font-mono text-sm break-all">
+                  <div className="p-4 overflow-hidden font-mono text-sm break-all rounded-md bg-muted">
                     https://secretshare.example.com/s/abc123/xyz789
                   </div>
                 </CardContent>
@@ -152,8 +136,8 @@ export default function HowItWorksPage() {
               <Card>
                 <CardHeader>
                   <CardTitle className="flex items-center gap-2">
-                    <div className="flex h-8 w-8 items-center justify-center rounded-full bg-primary/10">
-                      <Lock className="h-4 w-4 text-primary" />
+                    <div className="flex items-center justify-center w-8 h-8 rounded-full bg-primary/10">
+                      <Lock className="w-4 h-4 text-primary" />
                     </div>
                     <span>Step 4: Secure Access</span>
                   </CardTitle>
@@ -168,14 +152,14 @@ export default function HowItWorksPage() {
                     conditions are met (time or views), the link becomes invalid
                     and the secret can no longer be accessed.
                   </p>
-                  <div className="rounded-md border p-4 text-center">
-                    <p className="text-sm text-muted-foreground mb-4">
+                  <div className="p-4 text-center border rounded-md">
+                    <p className="mb-4 text-sm text-muted-foreground">
                       Ready to securely share your environment variables?
                     </p>
                     <Link href="/auth/sign-up">
                       <Button>
                         Get Started
-                        <ArrowRight className="ml-2 h-4 w-4" />
+                        <ArrowRight className="w-4 h-4 ml-2" />
                       </Button>
                     </Link>
                   </div>
@@ -185,14 +169,7 @@ export default function HowItWorksPage() {
           </div>
         </section>
       </main>
-      <footer className="border-t py-6 md:py-8">
-        <div className="container flex flex-col items-center justify-between gap-4 md:flex-row">
-          <Logo />
-          <p className="text-center text-sm text-muted-foreground md:text-left">
-            &copy; {new Date().getFullYear()} SecretShare. All rights reserved.
-          </p>
-        </div>
-      </footer>
+      <Footer />
     </div>
   );
 }

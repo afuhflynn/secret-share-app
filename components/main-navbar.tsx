@@ -16,7 +16,7 @@ import { useState } from "react";
 export default function Navbar() {
   const [isMobileNavbar, setIsMobileNavbar] = useState(false);
   return (
-    <header className="border-b">
+    <header className="top-0 left-0 right-0 z-10 border-b md:sticky bg-background bg-opacity-40">
       <div className="container flex items-center justify-between h-16">
         <Logo />
         {/* Desktop navbar */}
@@ -36,15 +36,6 @@ export default function Navbar() {
             </Link>
             <Link href="/about" className="text-sm font-medium hover:underline">
               About us
-            </Link>
-            <Link href="/blog" className="text-sm font-medium hover:underline">
-              Blog
-            </Link>
-            <Link
-              href="/how-it-works"
-              className="text-sm font-medium hover:underline"
-            >
-              How it Works
             </Link>
             <Link
               href="/contact"
@@ -76,7 +67,7 @@ export default function Navbar() {
                 {!isMobileNavbar ? <Menu /> : <X />}
               </Button>
             </DropdownMenuTrigger>
-            <DropdownMenuContent className="z-10 flex flex-col items-start justify-center w-screen gap-3 px-8 py-3 bg-background">
+            <DropdownMenuContent className="z-10 flex flex-col items-start justify-center w-screen gap-3 px-8 py-3 border-b bg-background">
               <DropdownMenuItem asChild className="cursor-pointer">
                 <Link
                   href="/features"

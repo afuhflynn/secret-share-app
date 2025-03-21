@@ -80,7 +80,7 @@ function DashboardLayoutContent({ children }: { children: React.ReactNode }) {
         </div>
       )}
       <Navbar />
-      <main className="flex-1 bg-muted/40">
+      <main className="flex-1 overflow-hidden bg-muted/40">
         <div className="container py-6 md:py-8">{children}</div>
       </main>
     </div>
