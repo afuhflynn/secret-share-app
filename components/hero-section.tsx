@@ -35,7 +35,7 @@ export default function HeroSection() {
                 <Link href="/how-it-works">How It Works</Link>
               </Button>
             </div>
-            <div className="flex items-center gap-4 text-sm text-muted-foreground">
+            <div className="flex flex-col items-center gap-4 text-sm sm:flex-row text-muted-foreground">
               <div className="flex items-center">
                 <CheckCircle className="w-4 h-4 mr-1 text-primary" />
                 <span>End-to-end encryption</span>
