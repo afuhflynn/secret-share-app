@@ -19,6 +19,7 @@ export async function POST(req: NextRequest) {
         { success: false, message: "All fields are required!" },
         { status: 400 }
       );
+    devLog(code);
     //Check if user code is still valid
     const foundUser = await prisma.user.findFirst({
       where: {

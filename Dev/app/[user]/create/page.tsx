@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { ArrowLeft, Clock, Eye } from "lucide-react";
 
@@ -28,12 +28,26 @@ import { toast } from "@/hooks/use-toast";
 import { useDemoAuth } from "@/components/providers/demo-auth-provider";
 import { encryptData } from "@/lib/encryption";
 import { SECRETS_PASSWORD } from "@/utils/Load_Envs";
+import { useUserStore } from "@/store/user.store";
 
 export default function CreateSecretPage() {
-  const router = useRouter();
-  const { isDevelopment, user } = useDemoAuth();
+  const { isDevelopment } = useDemoAuth();
   const [isLoading, setIsLoading] = useState(false);
   const [expiryType, setExpiryType] = useState("time");
+  const router = useRouter();
+
+  const { isGettingUserProfile, getUserProfile, isAuthenticated, user } =
+    useUserStore();
+
+  useEffect(() => {
+    getUserProfile();
+  }, [getUserProfile]);
+
+  useEffect(() => {
+    if (!user && !isAuthenticated) {
+      router.push(`/auth/log-in?redirect=${window.location.pathname}`);
+    }
+  }, [user, isAuthenticated, router]);
 
   async function onSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();

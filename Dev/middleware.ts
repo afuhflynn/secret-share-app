@@ -1,10 +1,9 @@
-// middleware.ts
 import NextAuth from "next-auth";
 import authConfig from "./lib/auth.config";
 import { NextRequest, NextResponse } from "next/server";
 import { devLog } from "./utils/devLog";
 
-// 1) List any truly public pages here
+// Truly public routes
 const publicRoutes = new Set([
   "/terms-of-service",
   "/privacy-policy",
@@ -16,14 +15,15 @@ const publicRoutes = new Set([
   "/blog",
   "/blog/:slug",
 ]);
-// define a list of dynamic‑route patterns you want to protect
+
+// Protected patterns
 const protectedPatterns = [
-  /^\/[^\/]+$/, // /:user
-  /^\/[^\/]+\/settings$/, // /:user/settings
-  /^\/[^\/]+\/profile$/, // /:user/profile
-  /^\/[^\/]+\/create$/, // /:user/create
-  /^\/[^\/]+\/secret$/, // /:user/secret
-  /^\/[^\/]+\/secret\/[^\/]+\/delete$/, // /:user/secret/:id/delete
+  /^\/[^\/]+$/,
+  /^\/[^\/]+\/settings$/,
+  /^\/[^\/]+\/profile$/,
+  /^\/[^\/]+\/create$/,
+  /^\/[^\/]+\/secret$/,
+  /^\/[^\/]+\/secret\/[^\/]+\/delete$/,
   /^\/[^\/]+\/secret\/[^\/]+\/edit$/,
   /^\/[^\/]+\/secret\/[^\/]+\/share$/,
   /^\/s\/[^\/]+\/[^\/]+$/,
@@ -35,33 +35,50 @@ export async function middleware(req: NextRequest) {
   const session = await auth();
   const { pathname } = req.nextUrl;
 
-  // 1) skip Next.js internals + public/static + auth routes
+  // Skip Next.js internals and public assets
   if (
     pathname.startsWith("/_next") ||
     pathname.startsWith("/api") ||
     pathname.startsWith("/auth") ||
-    pathname.includes(".") // e.g. .png, .css, etc.
+    pathname.includes(".")
   ) {
     return NextResponse.next();
   }
-  // Public routes should also bypass our auth guard
+
+  // Allow public routes
   if (publicRoutes.has(pathname)) {
     return NextResponse.next();
   }
 
-  // 2) if this path matches one of our protectedPatterns → enforce login
-  const needsAuth = protectedPatterns.some((pattern) => pattern.test(pathname));
+  // 🚨 Redirect '/' (home) if user is not authenticated
+  if (pathname === "/") {
+    if (!session) {
+      devLog(
+        "Unauthenticated user trying to access '/' → redirecting to /auth/log-in"
+      );
+      return NextResponse.redirect(new URL("/auth/log-in", req.url));
+    }
 
+    // 🧠 Build personalized redirect path
+    const username = session.user?.name?.trim()?.split(" ")[0]?.toLowerCase();
+
+    if (username) {
+      devLog(`Authenticated user at '/' → redirecting to /${username}`);
+      return NextResponse.redirect(new URL(`/${username}`, req.url));
+    }
+  }
+
+  // Protect matched routes
+  const needsAuth = protectedPatterns.some((pattern) => pattern.test(pathname));
   if (needsAuth && !session) {
     devLog(`Unauthenticated access to ${pathname}`);
     return NextResponse.redirect(new URL("/auth/log-in", req.url));
   }
 
-  // 3) otherwise, let it through
   return NextResponse.next();
 }
 
-// have middleware run on *all* routes
+// Apply middleware to all routes
 export const config = {
   matcher: ["/((?!_next/static|_next/image|favicon.ico).*)"],
 };

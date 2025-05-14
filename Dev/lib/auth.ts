@@ -36,9 +36,7 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
       clientSecret: GOOGLE_CLIENT_SECRET,
       authorization: {
         params: {
-          prompt: "consent",
-          access_type: "offline",
-          response_type: "code",
+          scope: "openid email profile",
         },
       },
     }),
@@ -110,7 +108,12 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
           }
         );
 
-        return { id: user.id, email: user.email, name: user.name };
+        return {
+          id: user.id,
+          email: user.email,
+          name: user.name,
+          username: user.username,
+        };
       },
     }),
   ],
@@ -136,7 +139,7 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
       if (account?.provider === "google") {
         return (
           profile?.email_verified === true &&
-          profile?.email?.endsWith("@example.com") === true
+          profile?.email?.endsWith("@gmail.com") === true
         );
       }
       return true; // Do different verification for other providers that don't have `email_verified`

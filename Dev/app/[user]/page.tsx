@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Link from "next/link";
 import { Edit, Plus, Trash2 } from "lucide-react";
 
@@ -18,10 +18,24 @@ import { SECRETS_PASSWORD } from "@/utils/Load_Envs";
 import { useUserStore } from "@/store/user.store";
 import { Secret } from "@prisma/client";
 import { Loading } from "@/components/ui/loading";
+import { useRouter } from "next/navigation";
 
 export default function DashboardPage() {
-  const { user, isGettingUserProfile } = useUserStore();
+  const { isGettingUserProfile, getUserProfile, isAuthenticated, user } =
+    useUserStore();
   const [secrets, setSecrets] = useState<Secret[] | []>([]);
+
+  const router = useRouter();
+
+  useEffect(() => {
+    getUserProfile();
+  }, [getUserProfile]);
+
+  useEffect(() => {
+    if (!user && !isAuthenticated) {
+      router.push(`/auth/log-in?redirect=${window.location.pathname}`);
+    }
+  }, [user, isAuthenticated, router]);
 
   if (isGettingUserProfile) {
     return <Loading />;

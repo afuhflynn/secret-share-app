@@ -1,7 +1,15 @@
 "use client";
 
-import { useEffect, useState } from "react";
-import { ArrowLeft, Camera, User } from "lucide-react";
+import { useEffect, useMemo, useState } from "react";
+import {
+  ArrowLeft,
+  Camera,
+  CheckCircle,
+  Eye,
+  EyeOff,
+  User,
+  XCircle,
+} from "lucide-react";
 import { useRouter } from "next/navigation";
 
 import { UploadButton } from "@/utils/uploadthing";
@@ -26,6 +34,43 @@ import { devLog } from "@/utils/devLog";
 import { privateAxios } from "@/utils/axios.config";
 import { User as AuthUser } from "@prisma/client";
 
+// ------ Password validation helpers ------
+const rules = [
+  {
+    key: "length",
+    label: "At least 8 characters",
+    test: (pw: string) => pw.length >= 8,
+  },
+  {
+    key: "upper",
+    label: "One uppercase letter",
+    test: (pw: string) => /[A-Z]/.test(pw),
+  },
+  {
+    key: "lower",
+    label: "One lowercase letter",
+    test: (pw: string) => /[a-z]/.test(pw),
+  },
+  { key: "number", label: "One number", test: (pw: string) => /\d/.test(pw) },
+  {
+    key: "symbol",
+    label: "One special character (!@#$%^&*)",
+    test: (pw: string) => /[!@#\$%\^&\*]/.test(pw),
+  },
+];
+
+export function validatePassword(pw: string) {
+  return rules.reduce((acc, rule) => {
+    acc[rule.key] = rule.test(pw);
+    return acc;
+  }, {} as Record<string, boolean>);
+}
+
+export function getStrengthPercent(results: Record<string, boolean>) {
+  const passed = Object.values(results).filter(Boolean).length;
+  return Math.floor((passed / rules.length) * 100);
+}
+
 export default function ProfilePage() {
   const router = useRouter();
   const {
@@ -33,133 +78,114 @@ export default function ProfilePage() {
     isGettingUserProfile,
     setUser,
     error,
-    setMessage,
     setError,
     message,
+    setMessage,
+    getUserProfile,
+    isAuthenticated,
   } = useUserStore();
-
   const [formData, setFormData] = useState({
     name: user?.name || "",
     email: user?.email || "",
     username: user?.username || "",
   });
-
   const [securityFormData, setSecurityFormData] = useState({
     currentPassword: "",
     newPassword: "",
     confirmPassword: "",
   });
-  // const imageInputRef = useRef<null | HTMLInputElement>(null);
-  const [profileAvatar, setProfileAvatar] = useState(user?.image || "");
-
+  const [showCurrent, setShowCurrent] = useState(false);
+  const [showNew, setShowNew] = useState(false);
+  const [showConfirm, setShowConfirm] = useState(false);
   const [isUpdatingDetails, setIsUpdatingDetails] = useState(false);
   const [isUpdatingPassword, setIsUpdatingPassword] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
+  const [profileAvatar, setProfileAvatar] = useState(user?.image || "");
 
-  // clear the error and message and redirect the user to verify email page
   useEffect(() => {
-    setMessage(null);
-    setError(null);
-  }, [setMessage, setError]);
+    getUserProfile();
+  }, [getUserProfile]);
+  useEffect(() => {
+    if (!user && !isAuthenticated)
+      router.push(`/auth/log-in?redirect=${window.location.pathname}`);
+  }, [user, isAuthenticated, router]);
 
-  async function handleUpdateDetails(event: React.FormEvent<HTMLFormElement>) {
-    event.preventDefault();
+  // derive newPassword strength
+  const pwdResults = useMemo(
+    () => validatePassword(securityFormData.newPassword),
+    [securityFormData.newPassword]
+  );
+  const strength = useMemo(() => getStrengthPercent(pwdResults), [pwdResults]);
+  const passwordsMatch =
+    securityFormData.newPassword === securityFormData.confirmPassword;
+  const allGood = strength === 100 && passwordsMatch;
+
+  async function handleUpdateDetails(e: React.FormEvent) {
+    e.preventDefault();
     setIsUpdatingDetails(true);
-
     try {
-      const res = await privateAxios.put<{
-        user: AuthUser;
-        message: string;
-      }>("/api/v1/user/update-details", {
-        email: formData.email,
-        image: profileAvatar,
-        name: formData.name,
-        username: formData.username,
+      const res = await privateAxios.put("/api/v1/user/update-details", {
+        ...formData,
+        image: user?.image,
       });
-
       setUser(res.data.user);
       setMessage(res.data.message);
       setIsSubmitted(true);
-    } catch (error: Error | any) {
-      if (error.response.data) setError(error.response.data.error);
-      else
-        setError(
-          "Sorry, an unexpected error occurred. Please try again later."
-        );
-
-      devLog(error);
+    } catch (err: any) {
+      setError(err.response?.data?.error || "Unexpected error");
+      devLog(err);
     } finally {
       setIsUpdatingDetails(false);
     }
   }
-  async function handleUpdatePassword(event: React.FormEvent<HTMLFormElement>) {
-    event.preventDefault();
-    setIsUpdatingPassword(true);
 
-    if (securityFormData.newPassword !== securityFormData.confirmPassword) {
+  async function handleUpdatePassword(e: React.FormEvent) {
+    e.preventDefault();
+    setIsUpdatingPassword(true);
+    if (!passwordsMatch) {
       setError("Passwords do not match");
+      setIsUpdatingPassword(false);
       return;
     }
-
+    if (strength < 100) {
+      setError("New password is not strong enough");
+      setIsUpdatingPassword(false);
+      return;
+    }
     try {
-      const res = await privateAxios.put<{
-        user: AuthUser;
-        message: string;
-      }>("/api/v1/user/update-password", {
-        password: securityFormData.newPassword,
+      const res = await privateAxios.put("/api/v1/user/update-password", {
         currentPassword: securityFormData.currentPassword,
+        newPassword: securityFormData.newPassword,
       });
-
       setUser(res.data.user);
       setMessage(res.data.message);
-    } catch (error: Error | any) {
-      if (error.response.data) setError(error.response.data.error);
-      else
-        setError(
-          "Sorry, an unexpected error occurred. Please try again later."
-        );
-
-      devLog(error);
+      setIsSubmitted(true);
+    } catch (err: Error | any) {
+      if (err.response.data) {
+        setError(err.response.data.error || "Unexpected error");
+      } else {
+        setError(err.message || "Unexpected error");
+      }
+      devLog(err);
     } finally {
       setIsUpdatingPassword(false);
     }
   }
 
-  // update state popup for details info update
   useEffect(() => {
-    if (
-      message &&
-      message !== null &&
-      error === null &&
-      (!isUpdatingDetails || !isUpdatingPassword) &&
-      isSubmitted
-    ) {
-      toast({
-        title: "Profile updated",
-        description: message || "Your profile has been updated successfully.",
-      });
-      if (message !== null) router.refresh();
-    } else {
-      if (error !== null)
-        toast({
-          title: "Error",
-          description: error || "Failed to update profile. Please try again.",
-          variant: "destructive",
-        });
+    if (message && !error && isSubmitted) {
+      toast({ title: "Success", description: message });
+      router.refresh();
+    } else if (error) {
+      toast({ title: "Error", description: error, variant: "destructive" });
     }
-  }, [message, error]);
+  }, [message, error, isSubmitted, router]);
 
-  // const handleToggleImageInput = () => {
-  //   if (imageInputRef && imageInputRef.current) {
-  //     imageInputRef.current.click();
-  //   }
-  // };
+  const handleSecurityChange = (name: string, value: string) =>
+    setSecurityFormData({ ...securityFormData, [name]: value });
 
   const handleInputChange = (name: string, value: string) => {
     setFormData({ ...formData, [name]: value });
-  };
-  const handleImportantInputChange = (name: string, value: string) => {
-    setSecurityFormData({ ...securityFormData, [name]: value });
   };
 
   if (isGettingUserProfile) {
@@ -300,59 +326,117 @@ export default function ProfilePage() {
         </Card>
 
         <Card>
+          <CardHeader>
+            <CardTitle>Password</CardTitle>
+            <CardDescription>Change your password.</CardDescription>
+          </CardHeader>
           <form onSubmit={handleUpdatePassword}>
-            <CardHeader>
-              <CardTitle>Password</CardTitle>
-              <CardDescription>
-                Change your password to keep your account secure.
-              </CardDescription>
-            </CardHeader>
             <CardContent className="space-y-4">
-              <div className="space-y-2">
-                <Label htmlFor="current-password">Current Password</Label>
+              <Label htmlFor="currentPassword">Current Password</Label>
+              <div className="relative">
                 <Input
                   id="currentPassword"
-                  type="password"
-                  placeholder="********"
+                  type={showCurrent ? "text" : "password"}
                   value={securityFormData.currentPassword}
                   onChange={(e) =>
-                    handleImportantInputChange(e.target.id, e.target.value)
+                    handleSecurityChange(e.target.id, e.target.value)
                   }
+                  required
+                  className="pr-10"
                 />
+                <button
+                  type="button"
+                  onClick={() => setShowCurrent((v) => !v)}
+                  className="absolute inset-y-0 right-2"
+                >
+                  {showCurrent ? <EyeOff size={18} /> : <Eye size={18} />}
+                </button>
               </div>
-              <div className="space-y-2">
-                <Label htmlFor="new-password">New Password</Label>
+
+              <Label htmlFor="newPassword">New Password</Label>
+              <div className="relative">
                 <Input
                   id="newPassword"
-                  type="password"
+                  type={showNew ? "text" : "password"}
                   value={securityFormData.newPassword}
                   onChange={(e) =>
-                    handleImportantInputChange(e.target.id, e.target.value)
+                    handleSecurityChange(e.target.id, e.target.value)
                   }
+                  required
+                  className="pr-10"
                 />
+                <button
+                  type="button"
+                  onClick={() => setShowNew((v) => !v)}
+                  className="absolute inset-y-0 right-2"
+                >
+                  {showNew ? <EyeOff size={18} /> : <Eye size={18} />}
+                </button>
               </div>
-              <div className="space-y-2">
-                <Label htmlFor="confirm-password">Confirm New Password</Label>
-                <Input
-                  id="confirmPassword"
-                  type="password"
-                  value={securityFormData.confirmPassword}
-                  onChange={(e) =>
-                    handleImportantInputChange(e.target.id, e.target.value)
-                  }
-                />
-              </div>
-              {error && <p className="text-sm text-destructive">{error}</p>}
+              {!allGood && (
+                <>
+                  <div className="w-full bg-gray-200 h-2 rounded mt-2 overflow-hidden">
+                    <div
+                      className="h-2 rounded"
+                      style={{
+                        width: `${strength}%`,
+                        backgroundColor: strength >= 80 ? "#10b981" : "#f59e0b",
+                      }}
+                    />
+                  </div>
+                  <ul className="mt-2 space-y-1 text-sm">
+                    {rules.map((r) => {
+                      const ok = pwdResults[r.key];
+                      return (
+                        <li key={r.key} className="flex items-center">
+                          {ok ? (
+                            <CheckCircle
+                              size={14}
+                              className="text-green-500 mr-1"
+                            />
+                          ) : (
+                            <XCircle size={14} className="text-red-500 mr-1" />
+                          )}
+                          <span
+                            className={ok ? "text-green-600" : "text-red-600"}
+                          >
+                            {r.label}
+                          </span>
+                        </li>
+                      );
+                    })}
+                  </ul>
+                </>
+              )}
+
+              <Label htmlFor="confirmPassword">Confirm New Password</Label>
+              <Input
+                id="confirmPassword"
+                type="password"
+                value={securityFormData.confirmPassword}
+                onChange={(e) =>
+                  handleSecurityChange(e.target.id, e.target.value)
+                }
+                required
+                className="pr-10"
+              />
+              {!passwordsMatch && securityFormData.confirmPassword && (
+                <p className="text-red-600 text-sm mt-1">
+                  Passwords do not match
+                </p>
+              )}
+              {error && (
+                <p className="text-destructive text-sm mt-2">{error}</p>
+              )}
             </CardContent>
             <CardFooter>
-              <Button disabled={isUpdatingPassword} type="submit">
-                {isUpdatingPassword
-                  ? "Changing password..."
-                  : "Change Password"}
+              <Button type="submit" disabled={isUpdatingPassword}>
+                {isUpdatingPassword ? "Changing..." : "Change Password"}
               </Button>
             </CardFooter>
           </form>
         </Card>
+
         <Card>
           <CardHeader>
             <CardTitle className="text-destructive">Danger Zone</CardTitle>

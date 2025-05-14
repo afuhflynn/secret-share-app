@@ -2,7 +2,10 @@ import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
 import { logger } from "@/utils/logger";
 import { devLog } from "@/utils/devLog";
-import { sendNotificationEmail } from "@/utils/Emails/send.emails";
+import {
+  sendNotificationEmail,
+  sendVerificationEmail,
+} from "@/utils/Emails/send.emails";
 import { generateVerificationCode } from "@/utils/generateCode";
 import { generateToken } from "@/utils/generate-token";
 
@@ -39,7 +42,7 @@ export async function PUT(req: NextRequest) {
     // Update db record
     const verificationCode = generateVerificationCode();
     const verificationToken = generateToken();
-    await prisma.user.update({
+    const updatedUser = await prisma.user.update({
       where: {
         id: foundUser.id,
       },
@@ -52,21 +55,20 @@ export async function PUT(req: NextRequest) {
       },
     });
 
-    //Send welcome email
-    await sendNotificationEmail(
-      `A new verification email sent to: ${foundUser.email}`,
-      foundUser?.email as string,
-      foundUser?.name as string,
-      new Date(Date.now()).toLocaleDateString(),
-      foundUser?.name as string,
+    //Send verification email
+    await sendVerificationEmail(
+      updatedUser.verificationCode as string,
+      updatedUser.email as string,
+      updatedUser.name as string,
+      updatedUser.verificationToken as string,
       {
-        "X-Category": "Notification Email",
+        "X-Category": "Verification Email",
       }
     );
 
     //Hide password before sending to frontend
     logger.info(
-      `User ${foundUser.name}, ${foundUser.email} verification email resent`
+      `User ${updatedUser.name}, ${updatedUser.email} verification email resent`
     );
 
     return NextResponse.json(

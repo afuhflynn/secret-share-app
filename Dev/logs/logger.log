@@ -678,3 +678,123 @@
 
 [2025-05-14 14:29:36] - [ERROR] - Email sent successfully! to flynnsf1keyz@gmail.com
 
+[2025-05-14 15:44:46] - [ERROR] - Email sent successfully! to flyinnsafuh@gmail.com
+
+[2025-05-14 15:44:46] - [INFO] - User Afuh Flynn Tembeng, flyinnsafuh@gmail.com account details updated
+
+[2025-05-14 15:46:31] - [ERROR] - Email sent successfully! to flynnsf1keyz@gmail.com
+
+[2025-05-14 15:46:31] - [INFO] - User Flynn Afuh, flynnsf1keyz@gmail.com account created
+
+[2025-05-14 15:56:36] - [ERROR] - Error sending email: getaddrinfo EAI_AGAIN smtp.gmail.com - to flyinnsafuh@gmail.com
+
+[2025-05-14 15:56:36] - [INFO] - User Afuh Flyine Tembeng, flyinnsafuh@gmail.com account created
+
+[2025-05-14 15:59:22] - [ERROR] - Error sending email: getaddrinfo EAI_AGAIN smtp.gmail.com - to flyinnsafuh@gmail.com
+
+[2025-05-14 15:59:22] - [INFO] - User Afuh Flyine Tembeng, flyinnsafuh@gmail.com account created
+
+[2025-05-14 16:00:46] - [ERROR] - Error sending email: getaddrinfo EAI_AGAIN smtp.gmail.com - to flyinnsafuh@gmail.com
+
+[2025-05-14 16:00:46] - [INFO] - User Afuh Flyine Tembeng, flyinnsafuh@gmail.com account created
+
+[2025-05-14 16:03:09] - [ERROR] - Error sending email:  - to flyinnsafuh@gmail.com
+
+[2025-05-14 16:03:09] - [INFO] - User Afuh Flynn Tembeng, flyinnsafuh@gmail.com account created
+
+[2025-05-14 16:04:43] - [ERROR] - Error sending email:  - to flynnsf1keyz@gmail.com
+
+[2025-05-14 16:04:43] - [INFO] - User Afuh Flyine Tembeng, flynnsf1keyz@gmail.com account created
+
+[2025-05-14 16:06:13] - [ERROR] - Email sent successfully! to flynnsf1keyz@gmail.com
+
+[2025-05-14 16:06:13] - [INFO] - User Afuh Flyine Tembeng, flynnsf1keyz@gmail.com verification email resent
+
+[2025-05-14 16:07:51] - [ERROR] - Email sent successfully! to flynnsf1keyz@gmail.com
+
+[2025-05-14 16:07:51] - [INFO] - User Afuh Flyine Tembeng, flynnsf1keyz@gmail.com verification email resent
+
+[2025-05-14 16:10:02] - [ERROR] - Email sent successfully! to flynnsf1keyz@gmail.com
+
+[2025-05-14 16:10:02] - [INFO] - User Afuh Flyine Tembeng, flynnsf1keyz@gmail.com verification email resent
+
+[2025-05-14 16:14:09] - [ERROR] - Email sent successfully! to flynnsf1keyz@gmail.com
+
+[2025-05-14 16:14:09] - [INFO] - User Afuh Flyine Tembeng, flynnsf1keyz@gmail.com verification email resent
+
+[2025-05-14 16:14:35] - [ERROR] - Email sent successfully! to flynnsf1keyz@gmail.com
+
+[2025-05-14 16:14:35] - [INFO] - User Afuh Flyine Tembeng, flynnsf1keyz@gmail.com account verified
+
+[2025-05-14 16:14:48] - [ERROR] - User flynnsf1keyz@gmail.com recently authorized a sign in into their account
+
+[2025-05-14 16:14:53] - [ERROR] - Email sent successfully! to flynnsf1keyz@gmail.com
+
+[2025-05-14 16:14:53] - [INFO] - User sign in / 
+
+[2025-05-14 16:15:45] - [ERROR] - Email sent successfully! to flynnsf1keyz@gmail.com
+
+[2025-05-14 16:15:45] - [INFO] - User Afuh Flyine Tembeng, flynnsf1keyz@gmail.com password forgotten attempt granted
+
+[2025-05-14 16:17:57] - [ERROR] - Email sent successfully! to flynnsf1keyz@gmail.com
+
+[2025-05-14 16:17:57] - [INFO] - User Afuh Flyine Tembeng, flynnsf1keyz@gmail.com account verified
+
+[2025-05-14 16:18:09] - [ERROR] - User flynnsf1keyz@gmail.com recently authorized a sign in into their account
+
+[2025-05-14 16:18:13] - [ERROR] - Email sent successfully! to flynnsf1keyz@gmail.com
+
+[2025-05-14 16:18:13] - [INFO] - User sign in / 
+
+[2025-05-14 16:23:01] - [ERROR] - Email sent successfully! to flynnsf1keyz@gmail.com
+
+[2025-05-14 16:23:01] - [INFO] - User Afuh Flyine Tembeng, flynnsf1keyz@gmail.com account created
+
+[2025-05-14 16:24:16] - [ERROR] - Email sent successfully! to flynnsf1keyz@gmail.com
+
+[2025-05-14 16:24:16] - [INFO] - User Afuh Flyine Tembeng, flynnsf1keyz@gmail.com account verified
+
+[2025-05-14 16:27:32] - [ERROR] - A failed login attempt was detected for user with email: flynnsf1keyz@gmail.com
+
+[2025-05-14 16:27:36] - [ERROR] - Email sent successfully! to flynnsf1keyz@gmail.com
+
+[2025-05-14 16:27:36] - [INFO] - Error signing in user CallbackRouteError: Invalid email or password. Read more at https://errors.authjs.dev#callbackrouteerror 
+
+[2025-05-14 16:28:44] - [ERROR] - A failed login attempt was detected for user with email: flynnsf1keyz@gmail.com
+
+[2025-05-14 16:28:48] - [ERROR] - Email sent successfully! to flynnsf1keyz@gmail.com
+
+[2025-05-14 16:28:48] - [INFO] - Error signing in user CallbackRouteError: Invalid email or password. Read more at https://errors.authjs.dev#callbackrouteerror 
+
+[2025-05-14 16:33:59] - [ERROR] - A failed login attempt was detected for user with email: flynnsf1keyz@gmail.com
+
+[2025-05-14 16:34:04] - [ERROR] - Email sent successfully! to flynnsf1keyz@gmail.com
+
+[2025-05-14 16:34:04] - [INFO] - Error signing in user CallbackRouteError: Invalid email or password. Read more at https://errors.authjs.dev#callbackrouteerror 
+
+[2025-05-14 17:06:01] - [ERROR] - A failed login attempt was detected for user with email: flynnsf1keyz@gmail.com
+
+[2025-05-14 17:06:07] - [ERROR] - Email sent successfully! to flynnsf1keyz@gmail.com
+
+[2025-05-14 17:06:07] - [INFO] - Error signing in user CallbackRouteError: Invalid email or password. Read more at https://errors.authjs.dev#callbackrouteerror 
+
+[2025-05-14 17:12:12] - [ERROR] - A failed login attempt was detected for user with email: flynnsf1keyz@gmail.com
+
+[2025-05-14 17:12:18] - [ERROR] - Email sent successfully! to flynnsf1keyz@gmail.com
+
+[2025-05-14 17:12:18] - [INFO] - Error signing in user CallbackRouteError: Invalid email or password. Read more at https://errors.authjs.dev#callbackrouteerror 
+
+[2025-05-14 17:13:06] - [ERROR] - User flynnsf1keyz@gmail.com recently authorized a sign in into their account
+
+[2025-05-14 17:13:12] - [ERROR] - Email sent successfully! to flynnsf1keyz@gmail.com
+
+[2025-05-14 17:13:12] - [INFO] - User sign in / 
+
+[2025-05-14 18:42:30] - [INFO] - Error signing in user CallbackRouteError: Read more at https://errors.authjs.dev#callbackrouteerror 
+
+[2025-05-14 18:43:00] - [ERROR] - User flynnsf1keyz@gmail.com recently authorized a sign in into their account
+
+[2025-05-14 18:43:00] - [ERROR] - Error sending email: getaddrinfo EAI_AGAIN smtp.gmail.com - to flynnsf1keyz@gmail.com
+
+[2025-05-14 18:43:00] - [INFO] - User sign in / 
+

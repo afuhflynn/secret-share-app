@@ -35,7 +35,7 @@ export const SignInForm = () => {
     setIsSubmitted(true);
     try {
       signIn(formData); // Call backend signup
-      setIsSubmitted(false);
+      setIsSubmitted(true);
     } catch (error) {
       devLog(error);
       setIsSubmitted(false);
@@ -44,7 +44,7 @@ export const SignInForm = () => {
 
   // Route user if signup is successful
   useEffect(() => {
-    if (message && message !== null && error === null && !isSubmitted) {
+    if (message && message !== null && error === null && isSubmitted) {
       if (message !== null)
         toast({
           title: "Login Successful",
@@ -52,7 +52,7 @@ export const SignInForm = () => {
         });
       router.push("/");
     } else {
-      if (error !== null)
+      if (error !== null && !error?.includes("Login to continue"))
         toast({
           title: "Error login into your account",
           description:

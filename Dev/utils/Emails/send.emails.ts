@@ -69,7 +69,8 @@ const sendNotificationEmail = async (
       .replace("[activity_description]", activity)
       .replace("[activity_time]", time)
       .replace("[activity_author]", author)
-      .replace("[account_security_link]", `"${clientUrl}"`);
+      .replace("href=[account_security_link]", `href="${clientUrl}"`)
+      .replace("[account_security_link]", `${clientUrl}`);
     await sendEmails(
       email,
       "Notification Email",
