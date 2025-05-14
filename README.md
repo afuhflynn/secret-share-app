@@ -2,7 +2,11 @@
 
 SecretShare is a secure platform for sharing sensitive information with your team or clients. With end-to-end encryption and time-limited access, you can ensure your secrets remain secure.
 
-![SecretShare Screenshot](./public/secret-share-app-landing-page.png)
+Light
+![SecretShare Screenshot](./public/secret-share-app-landing-page-light.png)
+
+Dark
+![SecretShare Screenshot](./public/secret-share-app-landing-page-dark.png)
 
 ## Features
 
