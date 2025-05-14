@@ -1,0 +1,120 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mongodb"
+  url      = env("LOCAL_DATABASE_URL") // to be changed later in production
+}
+
+enum Plan {
+  free
+  pro
+  enterprise
+}
+
+model Account {
+  id                String   @id @default(cuid()) @map("_id") // Added @map("_id")
+  userId            String
+  type              String
+  provider          String
+  providerAccountId String
+  refreshToken      String?
+  accessToken       String?
+  expiresAt         Int?
+  tokenType         String?
+  scope             String?
+  idToken           String?
+  sessionState      String?
+  createdAt         DateTime @default(now())
+  updatedAt         DateTime @default(now())
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([provider, providerAccountId])
+  @@map(name: "accounts")
+}
+
+model Session {
+  id           String   @id @default(cuid()) @map("_id") // Added @map("_id")
+  sessionToken String   @unique
+  userId       String
+  expires      DateTime
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@map(name: "sessions")
+}
+
+model User {
+  id                          String    @id @default(cuid()) @map("_id") // Added @map("_id")
+  name                        String?
+  username                    String?
+  email                       String?   @unique
+  password                    String?
+  emailVerified               Boolean?
+  image                       String?
+  createdAt                   DateTime  @default(now())
+  updatedAt                   DateTime  @default(now())
+  plan                        String    @default("free")
+  prefersTheme                String    @default("light")
+  emailNotifications          Boolean?
+  accessNotifications         Boolean?
+  marketingEmails             Boolean?
+  verificationToken           String?
+  verificationTokenExpiresAt  DateTime?
+  verificationCode            String?
+  verificationCodeExpiresAt   DateTime?
+  resetPasswordToken          String?
+  resetPasswordTokenExpiresAt DateTime?
+
+  accounts    Account[]
+  sessions    Session[]
+  secrets     Secret[]
+  testimonial Testimonial?
+
+  @@map(name: "users")
+}
+
+model Testimonial {
+  id        String   @id @default(cuid()) @map("_id") // Added @map("_id")
+  title     String
+  content   String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  userId    String
+  createdAt DateTime
+  updatedAt DateTime
+
+  @@unique([userId])
+  @@map(name: "testimonials")
+}
+
+model Secret {
+  id           String    @id @default(cuid()) @map("_id") // Added @map("_id")
+  name         String
+  content      String
+  createdAt    DateTime  @default(now())
+  updatedAt    DateTime  @default(now())
+  expiresAt    DateTime?
+  maxViews     Int?
+  currentViews Int       @default(0)
+  userId       String
+  user         User      @relation(fields: [userId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  shares       Share[]
+
+  @@map(name: "secrets")
+}
+
+model Share {
+  id              String   @id @default(cuid()) @map("_id") // Added @map("_id")
+  token           String   @unique
+  secretId        String
+  secret          Secret   @relation(fields: [secretId], references: [id], onDelete: Cascade)
+  createdAt       DateTime @default(now())
+  expiresAt       DateTime
+  maxViews        Int?
+  views           Int      @default(0)
+  emails          String?
+  sendAccessEmail Boolean?
+
+  @@map(name: "shares")
+}

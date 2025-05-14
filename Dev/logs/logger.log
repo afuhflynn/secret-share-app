@@ -1,0 +1,680 @@
+[2025-05-13 08:13:22] - [ERROR] - Error sending email: ENOENT: no such file or directory, open '/home/tembeng/Documents/new_projects/secret-share-app/Dev/public/icons/logo.svg' - to flyinnsafuh@gmail.com
+
+[2025-05-13 08:13:22] - [INFO] - Error signing in user Error: NEXT_REDIRECT 
+
+[2025-05-13 08:16:12] - [ERROR] - Error sending email: ENOENT: no such file or directory, open '/home/tembeng/Documents/new_projects/secret-share-app/Dev/public/icons/logo.svg' - to flyinnsafuh@gmail.com
+
+[2025-05-13 08:16:12] - [INFO] - Error signing in user Error: NEXT_REDIRECT 
+
+[2025-05-13 08:21:55] - [ERROR] - User flyinnsafuh@gmail.com recently authorized a sign in into your account
+
+[2025-05-13 08:22:10] - [ERROR] - Error sending email: Unexpected socket close - to flyinnsafuh@gmail.com
+
+[2025-05-13 08:22:10] - [INFO] - Error signing in user Error: NEXT_REDIRECT 
+
+[2025-05-13 08:24:59] - [ERROR] - User flyinnsafuh@gmail.com recently authorized a sign in into your account
+
+[2025-05-13 08:25:18] - [ERROR] - Error sending email: ENOENT: no such file or directory, open '/home/tembeng/Documents/new_projects/secret-share-app/Dev/public/icons/logo.svg' - to flyinnsafuh@gmail.com
+
+[2025-05-13 08:25:18] - [INFO] - Error signing in user Error: NEXT_REDIRECT 
+
+[2025-05-13 08:26:38] - [ERROR] - User flyinnsafuh@gmail.com recently authorized a sign in into your account
+
+[2025-05-13 08:27:07] - [ERROR] - Error sending email: Unexpected socket close - to flyinnsafuh@gmail.com
+
+[2025-05-13 08:27:07] - [INFO] - Error signing in user Error: NEXT_REDIRECT 
+
+[2025-05-13 08:28:06] - [ERROR] - User flyinnsafuh@gmail.com recently authorized a sign in into your account
+
+[2025-05-13 08:28:14] - [ERROR] - Error sending email: ENOENT: no such file or directory, open '/home/tembeng/Documents/new_projects/secret-share-app/Dev/public/icons/logo.svg' - to flyinnsafuh@gmail.com
+
+[2025-05-13 08:28:14] - [INFO] - Error signing in user Error: NEXT_REDIRECT 
+
+[2025-05-13 08:28:59] - [ERROR] - User flyinnsafuh@gmail.com recently authorized a sign in into your account
+
+[2025-05-13 08:29:03] - [ERROR] - Error sending email: ENOENT: no such file or directory, open '/home/tembeng/Documents/new_projects/secret-share-app/Dev/public/icons/logo.svg' - to flyinnsafuh@gmail.com
+
+[2025-05-13 08:29:03] - [INFO] - Error signing in user Error: NEXT_REDIRECT 
+
+[2025-05-13 08:29:52] - [ERROR] - User flyinnsafuh@gmail.com recently authorized a sign in into your account
+
+[2025-05-13 08:30:12] - [ERROR] - Error sending email: ENOENT: no such file or directory, open '/home/tembeng/Documents/new_projects/secret-share-app/Dev/public/icons/logo.svg' - to flyinnsafuh@gmail.com
+
+[2025-05-13 08:30:12] - [INFO] - Error signing in user Error: NEXT_REDIRECT 
+
+[2025-05-13 08:30:57] - [ERROR] - User flyinnsafuh@gmail.com recently authorized a sign in into your account
+
+[2025-05-13 08:31:22] - [ERROR] - Error sending email: ENOENT: no such file or directory, open '/home/tembeng/Documents/new_projects/secret-share-app/Dev/public/icons/logo.svg' - to flyinnsafuh@gmail.com
+
+[2025-05-13 08:31:22] - [INFO] - Error signing in user Error: NEXT_REDIRECT 
+
+[2025-05-13 08:32:17] - [ERROR] - User flyinnsafuh@gmail.com recently authorized a sign in into your account
+
+[2025-05-13 08:32:23] - [ERROR] - Error sending email: ENOENT: no such file or directory, open '/home/tembeng/Documents/new_projects/secret-share-app/Dev/public/icons/logo.svg' - to flyinnsafuh@gmail.com
+
+[2025-05-13 08:32:23] - [INFO] - Error signing in user Error: NEXT_REDIRECT 
+
+[2025-05-13 08:33:53] - [ERROR] - User flyinnsafuh@gmail.com recently authorized a sign in into your account
+
+[2025-05-13 08:33:54] - [ERROR] - Error sending email: ENOENT: no such file or directory, open '/home/tembeng/Documents/new_projects/secret-share-app/Dev/public/icons/logo.svg' - to flyinnsafuh@gmail.com
+
+[2025-05-13 08:33:54] - [INFO] - Error signing in user Error: NEXT_REDIRECT 
+
+[2025-05-13 08:34:18] - [ERROR] - A failed login attempt was detected for your email: flyinnsafuh@gmail.com
+
+[2025-05-13 08:34:23] - [ERROR] - Error sending email: ENOENT: no such file or directory, open '/home/tembeng/Documents/new_projects/secret-share-app/Dev/public/icons/logo.svg' - to flyinnsafuh@gmail.com
+
+[2025-05-13 08:34:23] - [INFO] - Error signing in user CallbackRouteError: Invalid identifier or password. Read more at https://errors.authjs.dev#callbackrouteerror 
+
+[2025-05-13 08:37:42] - [ERROR] - A failed login attempt was detected for your email: flyinnsafuh@gmail.com
+
+[2025-05-13 08:38:06] - [ERROR] - Error sending email: ENOENT: no such file or directory, open '/home/tembeng/Documents/new_projects/secret-share-app/Dev/public/icons/logo.svg' - to flyinnsafuh@gmail.com
+
+[2025-05-13 08:38:13] - [ERROR] - User flyinnsafuh@gmail.com recently authorized a sign in into your account
+
+[2025-05-13 08:38:28] - [ERROR] - Error sending email: ENOENT: no such file or directory, open '/home/tembeng/Documents/new_projects/secret-share-app/Dev/public/icons/logo.svg' - to flyinnsafuh@gmail.com
+
+[2025-05-13 08:39:09] - [ERROR] - User flyinnsafuh@gmail.com recently authorized a sign in into your account
+
+[2025-05-13 08:39:11] - [ERROR] - Error sending email: ENOENT: no such file or directory, open '/home/tembeng/Documents/new_projects/secret-share-app/Dev/public/icons/logo.svg' - to flyinnsafuh@gmail.com
+
+[2025-05-13 08:43:09] - [ERROR] - User flyinnsafuh@gmail.com recently authorized a sign in into your account
+
+[2025-05-13 08:43:13] - [ERROR] - Error sending email: ENOENT: no such file or directory, open '/home/tembeng/Documents/new_projects/secret-share-app/Dev/public/icons/logo.svg' - to flyinnsafuh@gmail.com
+
+[2025-05-13 09:00:57] - [ERROR] - A failed login attempt was detected for your email: flyinnsafuh@gmail.com
+
+[2025-05-13 09:01:17] - [ERROR] - Error sending email: getaddrinfo EAI_AGAIN smtp.gmail.com - to flyinnsafuh@gmail.com
+
+[2025-05-13 09:01:26] - [ERROR] - User flyinnsafuh@gmail.com recently authorized a sign in into your account
+
+[2025-05-13 09:01:46] - [ERROR] - Error sending email: getaddrinfo EAI_AGAIN smtp.gmail.com - to flyinnsafuh@gmail.com
+
+[2025-05-13 09:12:10] - [ERROR] - A failed login attempt was detected for your email: flyinnsafuh@gmail.com
+
+[2025-05-13 09:12:30] - [ERROR] - Error sending email: getaddrinfo EAI_AGAIN smtp.gmail.com - to flyinnsafuh@gmail.com
+
+[2025-05-13 09:12:44] - [ERROR] - User flyinnsafuh@gmail.com recently authorized a sign in into your account
+
+[2025-05-13 09:13:04] - [ERROR] - Error sending email: getaddrinfo EAI_AGAIN smtp.gmail.com - to flyinnsafuh@gmail.com
+
+[2025-05-13 09:13:55] - [ERROR] - User flyinnsafuh@gmail.com recently authorized a sign in into your account
+
+[2025-05-13 09:14:15] - [ERROR] - Error sending email: getaddrinfo EAI_AGAIN smtp.gmail.com - to flyinnsafuh@gmail.com
+
+[2025-05-13 09:41:28] - [ERROR] - User flyinnsafuh@gmail.com recently authorized a sign in into your account
+
+[2025-05-13 09:41:42] - [ERROR] - Error sending email: ENOENT: no such file or directory, open '/home/tembeng/Documents/new_projects/secret-share-app/Dev/public/icons/logo.svg' - to flyinnsafuh@gmail.com
+
+[2025-05-13 10:36:22] - [ERROR] - User flyinnsafuh@gmail.com recently authorized a sign in into your account
+
+[2025-05-13 10:36:35] - [ERROR] - Error sending email: ENOENT: no such file or directory, open '/home/tembeng/Documents/new_projects/secret-share-app/Dev/public/icons/logo.svg' - to flyinnsafuh@gmail.com
+
+[2025-05-13 12:52:25] - [ERROR] - User flyinnsafuh@gmail.com recently authorized a sign in into your account
+
+[2025-05-13 12:52:25] - [ERROR] - Error sending email: getaddrinfo EAI_AGAIN smtp.gmail.com - to flyinnsafuh@gmail.com
+
+[2025-05-13 13:05:07] - [ERROR] - User flyinnsafuh@gmail.com recently authorized a sign in into your account
+
+[2025-05-13 13:05:07] - [ERROR] - Error sending email: getaddrinfo EAI_AGAIN smtp.gmail.com - to flyinnsafuh@gmail.com
+
+[2025-05-13 13:13:53] - [ERROR] - User flyinnsafuh@gmail.com recently authorized a sign in into your account
+
+[2025-05-13 13:13:53] - [ERROR] - Error sending email: getaddrinfo EAI_AGAIN smtp.gmail.com - to flyinnsafuh@gmail.com
+
+[2025-05-13 13:13:53] - [INFO] - User sign in http://localhost:3000/ 
+
+[2025-05-13 13:14:18] - [ERROR] - User flyinnsafuh@gmail.com recently authorized a sign in into your account
+
+[2025-05-13 13:14:18] - [ERROR] - Error sending email: getaddrinfo EAI_AGAIN smtp.gmail.com - to flyinnsafuh@gmail.com
+
+[2025-05-13 13:14:18] - [INFO] - Error signing in user Error: NEXT_REDIRECT 
+
+[2025-05-13 13:14:31] - [ERROR] - User flyinnsafuh@gmail.com recently authorized a sign in into your account
+
+[2025-05-13 13:14:31] - [ERROR] - Error sending email: getaddrinfo EAI_AGAIN smtp.gmail.com - to flyinnsafuh@gmail.com
+
+[2025-05-13 13:14:31] - [INFO] - User sign in http://localhost:3000/ 
+
+[2025-05-13 13:14:37] - [ERROR] - User flyinnsafuh@gmail.com recently authorized a sign in into your account
+
+[2025-05-13 13:14:37] - [ERROR] - Error sending email: getaddrinfo EAI_AGAIN smtp.gmail.com - to flyinnsafuh@gmail.com
+
+[2025-05-13 13:14:37] - [INFO] - User sign in http://localhost:3000/ 
+
+[2025-05-13 13:15:06] - [ERROR] - A failed login attempt was detected for your email: flyinnsafuh@gmail.com
+
+[2025-05-13 13:15:06] - [ERROR] - Error sending email: getaddrinfo EAI_AGAIN smtp.gmail.com - to flyinnsafuh@gmail.com
+
+[2025-05-13 13:15:06] - [INFO] - Error signing in user CallbackRouteError: Invalid identifier or password. Read more at https://errors.authjs.dev#callbackrouteerror 
+
+[2025-05-13 13:15:16] - [ERROR] - A failed login attempt was detected for your email: flyinnsafuh@gmail.com
+
+[2025-05-13 13:15:16] - [ERROR] - Error sending email: getaddrinfo EAI_AGAIN smtp.gmail.com - to flyinnsafuh@gmail.com
+
+[2025-05-13 13:15:16] - [INFO] - Error signing in user CallbackRouteError: Invalid identifier or password. Read more at https://errors.authjs.dev#callbackrouteerror 
+
+[2025-05-13 13:16:56] - [ERROR] - A failed login attempt was detected for your email: flyinnsafuh@gmail.com
+
+[2025-05-13 13:16:56] - [ERROR] - Error sending email: getaddrinfo EAI_AGAIN smtp.gmail.com - to flyinnsafuh@gmail.com
+
+[2025-05-13 13:16:56] - [INFO] - Error signing in user CallbackRouteError: Invalid identifier or password. Read more at https://errors.authjs.dev#callbackrouteerror 
+
+[2025-05-13 13:17:03] - [ERROR] - User flyinnsafuh@gmail.com recently authorized a sign in into your account
+
+[2025-05-13 13:17:03] - [ERROR] - Error sending email: getaddrinfo EAI_AGAIN smtp.gmail.com - to flyinnsafuh@gmail.com
+
+[2025-05-13 13:17:03] - [INFO] - User sign in http://localhost:3000/ 
+
+[2025-05-13 13:17:14] - [ERROR] - User flyinnsafuh@gmail.com recently authorized a sign in into your account
+
+[2025-05-13 13:17:14] - [ERROR] - Error sending email: getaddrinfo EAI_AGAIN smtp.gmail.com - to flyinnsafuh@gmail.com
+
+[2025-05-13 13:17:14] - [INFO] - User sign in http://localhost:3000/ 
+
+[2025-05-13 13:18:49] - [ERROR] - A failed login attempt was detected for your email: flyinnsafuh@gmail.com
+
+[2025-05-13 13:18:49] - [ERROR] - Error sending email: getaddrinfo EAI_AGAIN smtp.gmail.com - to flyinnsafuh@gmail.com
+
+[2025-05-13 13:18:49] - [INFO] - Error signing in user CallbackRouteError: Invalid identifier or password. Read more at https://errors.authjs.dev#callbackrouteerror 
+
+[2025-05-13 13:18:55] - [ERROR] - User flyinnsafuh@gmail.com recently authorized a sign in into your account
+
+[2025-05-13 13:18:55] - [ERROR] - Error sending email: getaddrinfo EAI_AGAIN smtp.gmail.com - to flyinnsafuh@gmail.com
+
+[2025-05-13 13:18:55] - [INFO] - User sign in http://localhost:3000/ 
+
+[2025-05-13 13:21:03] - [ERROR] - User flyinnsafuh@gmail.com recently authorized a sign in into your account
+
+[2025-05-13 13:21:03] - [ERROR] - Error sending email: getaddrinfo EAI_AGAIN smtp.gmail.com - to flyinnsafuh@gmail.com
+
+[2025-05-13 13:37:08] - [INFO] - User sign in http://localhost:3000/api/auth/signin?callbackUrl=%2Fnotes 
+
+[2025-05-13 13:38:18] - [INFO] - User sign in http://localhost:3000/api/auth/signin?callbackUrl=%2F 
+
+[2025-05-13 13:39:53] - [INFO] - User sign in http://localhost:3000/api/auth/signin?callbackUrl=%2F 
+
+[2025-05-13 13:41:37] - [INFO] - User sign in http://localhost:3000/api/auth/signin?callbackUrl=%2F 
+
+[2025-05-13 13:44:26] - [INFO] - User sign in http://localhost:3000/api/auth/signin?callbackUrl=%2F 
+
+[2025-05-13 13:45:56] - [INFO] - User sign in http://localhost:3000/api/auth/signin?callbackUrl=%2F 
+
+[2025-05-13 13:48:02] - [INFO] - User sign in http://localhost:3000/api/auth/signin?callbackUrl=%2F 
+
+[2025-05-13 13:48:19] - [INFO] - User sign in http://localhost:3000/api/auth/signin?callbackUrl=%2F 
+
+[2025-05-13 13:48:31] - [INFO] - User sign in http://localhost:3000/api/auth/signin?callbackUrl=%2F 
+
+[2025-05-13 13:48:33] - [INFO] - User sign in http://localhost:3000/api/auth/signin?callbackUrl=%2F 
+
+[2025-05-13 13:48:37] - [INFO] - User sign in http://localhost:3000/api/auth/signin?callbackUrl=%2F 
+
+[2025-05-13 13:48:46] - [INFO] - User sign in http://localhost:3000/api/auth/signin?callbackUrl=%2F 
+
+[2025-05-13 13:49:12] - [INFO] - User sign in http://localhost:3000/api/auth/signin?callbackUrl=%2F 
+
+[2025-05-13 13:49:21] - [INFO] - User sign in http://localhost:3000/api/auth/signin?callbackUrl=%2F 
+
+[2025-05-13 13:51:31] - [INFO] - Error signing in user Error: NEXT_REDIRECT 
+
+[2025-05-13 13:51:56] - [INFO] - Error signing in user Error: NEXT_REDIRECT 
+
+[2025-05-13 14:04:09] - [INFO] - Error signing in user CallbackRouteError: Read more at https://errors.authjs.dev#callbackrouteerror 
+
+[2025-05-13 14:07:57] - [INFO] - Error signing in user CallbackRouteError: Read more at https://errors.authjs.dev#callbackrouteerror 
+
+[2025-05-13 14:16:57] - [INFO] - Error signing in user Error: NEXT_REDIRECT 
+
+[2025-05-13 14:18:03] - [INFO] - Error signing in user CallbackRouteError: Read more at https://errors.authjs.dev#callbackrouteerror 
+
+[2025-05-13 14:21:06] - [INFO] - Error signing in user CallbackRouteError: Read more at https://errors.authjs.dev#callbackrouteerror 
+
+[2025-05-13 14:28:12] - [ERROR] - A failed login attempt was detected email: flyinnsafuh@gmail.com
+
+[2025-05-13 14:29:06] - [ERROR] - Error sending email: queryA ETIMEOUT smtp.gmail.com - to flyinnsafuh@gmail.com
+
+[2025-05-13 14:29:06] - [INFO] - Error signing in user CallbackRouteError: Invalid identifier or password. Read more at https://errors.authjs.dev#callbackrouteerror 
+
+[2025-05-13 14:29:21] - [ERROR] - A failed login attempt was detected email: flyinnsafuh@gmail.com
+
+[2025-05-13 14:30:03] - [ERROR] - Error sending email: getaddrinfo EAI_AGAIN smtp.gmail.com - to flyinnsafuh@gmail.com
+
+[2025-05-13 14:30:03] - [INFO] - Error signing in user CallbackRouteError: Invalid identifier or password. Read more at https://errors.authjs.dev#callbackrouteerror 
+
+[2025-05-13 14:31:21] - [ERROR] - Error creating user flynn afuh, flyinnsafuh@gmail.com account
+
+[2025-05-13 14:35:32] - [ERROR] - Error creating user flynn afuh, flyinnsafuh@gmail.com account
+
+[2025-05-13 14:38:33] - [ERROR] - Error creating user flynn afuh, flyinnsafuh@gmail.com account
+
+[2025-05-13 15:16:20] - [INFO] - Error signing in user Error: NEXT_REDIRECT 
+
+[2025-05-13 15:16:41] - [INFO] - Error signing in user Error: NEXT_REDIRECT 
+
+[2025-05-13 15:18:25] - [INFO] - User sign in https://github.com/login/oauth/authorize?scope=read%3Auser+user%3Aemail&response_type=code&client_id=Ov23li7L7SmdycZA6mIs&redirect_uri=http%3A%2F%2Flocalhost%3A3000%2Fapi%2Fauth%2Fcallback%2Fgithub&code_challenge=XifCrcQoL4u3eyL0jrnVAbaC-IV_84Q_SIcF0dfih_k&code_challenge_method=S256 
+
+[2025-05-13 15:24:02] - [INFO] - User sign in https://github.com/login/oauth/authorize?scope=read%3Auser+user%3Aemail&response_type=code&client_id=Ov23li7L7SmdycZA6mIs&redirect_uri=http%3A%2F%2Flocalhost%3A3000%2Fapi%2Fauth%2Fcallback%2Fgithub&code_challenge=NxTIdofkf15QOapNxWN6-OIxNAkFBtlo8GeAENqugcc&code_challenge_method=S256 
+
+[2025-05-13 15:42:04] - [INFO] - User sign in https://github.com/login/oauth/authorize?scope=read%3Auser+user%3Aemail&response_type=code&client_id=Ov23li7L7SmdycZA6mIs&redirect_uri=http%3A%2F%2Flocalhost%3A3000%2Fapi%2Fauth%2Fcallback%2Fgithub&code_challenge=T4eM4Yxb7bIAQpUm-9bR1wok2BoiX0iM_OwW4dY8rs4&code_challenge_method=S256 
+
+[2025-05-13 15:42:32] - [INFO] - User sign in https://github.com/login/oauth/authorize?scope=read%3Auser+user%3Aemail&response_type=code&client_id=Ov23li7L7SmdycZA6mIs&redirect_uri=http%3A%2F%2Flocalhost%3A3000%2Fapi%2Fauth%2Fcallback%2Fgithub&code_challenge=4aObrYAH7PFtYinh7_j2Ie3rVHN2Waf0sUsTbVsG6rs&code_challenge_method=S256 
+
+[2025-05-13 15:42:50] - [INFO] - User sign in https://github.com/login/oauth/authorize?scope=read%3Auser+user%3Aemail&response_type=code&client_id=Ov23li7L7SmdycZA6mIs&redirect_uri=http%3A%2F%2Flocalhost%3A3000%2Fapi%2Fauth%2Fcallback%2Fgithub&code_challenge=Y_FYfvFSChfAoFKzLa9y7GJYctjPcdVgvCSvFlxcGbI&code_challenge_method=S256 
+
+[2025-05-13 15:45:35] - [INFO] - User sign in https://github.com/login/oauth/authorize?scope=read%3Auser+user%3Aemail&response_type=code&client_id=Ov23li7L7SmdycZA6mIs&redirect_uri=http%3A%2F%2Flocalhost%3A3000%2Fapi%2Fauth%2Fcallback%2Fgithub&code_challenge=ODEzMb3uHgsx-72TepCZE2ebOOsxXYhdoJ2aJXFNoiM&code_challenge_method=S256 
+
+[2025-05-13 15:45:50] - [INFO] - User sign in https://github.com/login/oauth/authorize?scope=read%3Auser+user%3Aemail&response_type=code&client_id=Ov23li7L7SmdycZA6mIs&redirect_uri=http%3A%2F%2Flocalhost%3A3000%2Fapi%2Fauth%2Fcallback%2Fgithub&code_challenge=DWITqXL1SWO4839NNFpr3q9Qifo2NxTqTA96B5KdkGA&code_challenge_method=S256 
+
+[2025-05-13 15:47:03] - [INFO] - User sign in https://github.com/login/oauth/authorize?scope=read%3Auser+user%3Aemail&response_type=code&client_id=Ov23li7L7SmdycZA6mIs&redirect_uri=http%3A%2F%2Flocalhost%3A3000%2Fapi%2Fauth%2Fcallback%2Fgithub&code_challenge=KXbOyLwgXeEGcfk7xKqjV9ZjENDOr9Iq9XfzpvoleWc&code_challenge_method=S256 
+
+[2025-05-13 15:47:32] - [INFO] - User sign in https://github.com/login/oauth/authorize?scope=read%3Auser+user%3Aemail&response_type=code&client_id=Ov23li7L7SmdycZA6mIs&redirect_uri=http%3A%2F%2Flocalhost%3A3000%2Fapi%2Fauth%2Fcallback%2Fgithub&code_challenge=pgezPO53JIzJgyh_f97YmrV3bl_0SLWVhahd1UCOVMU&code_challenge_method=S256 
+
+[2025-05-13 15:53:43] - [INFO] - User sign in https://github.com/login/oauth/authorize?scope=read%3Auser+user%3Aemail&response_type=code&client_id=Ov23li7L7SmdycZA6mIs&redirect_uri=http%3A%2F%2Flocalhost%3A3000%2Fapi%2Fauth%2Fcallback%2Fgithub&code_challenge=ZrZW8nj948664wGh2RuBgwh-6NfxmP4zhZemkuYsy70&code_challenge_method=S256 
+
+[2025-05-13 15:56:32] - [INFO] - User sign in with github: https://github.com/login/oauth/authorize?scope=read%3Auser+user%3Aemail&response_type=code&client_id=Ov23li7L7SmdycZA6mIs&redirect_uri=http%3A%2F%2Flocalhost%3A3000%2Fapi%2Fauth%2Fcallback%2Fgithub&code_challenge=h63lUDFr1eFR9VFaZNO5AtZHSRMOiG26lYvDmU8s_7c&code_challenge_method=S256 
+
+[2025-05-13 15:56:32] - [INFO] - Error signing in user Error: NEXT_REDIRECT 
+
+[2025-05-13 15:57:09] - [INFO] - User sign in with github: https://github.com/login/oauth/authorize?scope=read%3Auser+user%3Aemail&response_type=code&client_id=Ov23li7L7SmdycZA6mIs&redirect_uri=http%3A%2F%2Flocalhost%3A3000%2Fapi%2Fauth%2Fcallback%2Fgithub&code_challenge=VqG3kXBdlAsirKZzh7oifTbQknfbrTBvv9MPjkl0oSE&code_challenge_method=S256 
+
+[2025-05-13 15:57:19] - [INFO] - User sign in with github: https://github.com/login/oauth/authorize?scope=read%3Auser+user%3Aemail&response_type=code&client_id=Ov23li7L7SmdycZA6mIs&redirect_uri=http%3A%2F%2Flocalhost%3A3000%2Fapi%2Fauth%2Fcallback%2Fgithub&code_challenge=STUeHHOohAJonYL2mnaQKGSpvUL_f7fQ_GmVPYd-HBg&code_challenge_method=S256 
+
+[2025-05-13 15:57:32] - [INFO] - User sign in with github: https://github.com/login/oauth/authorize?scope=read%3Auser+user%3Aemail&response_type=code&client_id=Ov23li7L7SmdycZA6mIs&redirect_uri=http%3A%2F%2Flocalhost%3A3000%2Fapi%2Fauth%2Fcallback%2Fgithub&code_challenge=4IwqRHl0vrUryJQbiXU5bltgxFmohdAdUMgnzjRKzeM&code_challenge_method=S256 
+
+[2025-05-13 15:58:26] - [INFO] - User sign in with github: https://github.com/login/oauth/authorize?scope=read%3Auser+user%3Aemail&response_type=code&client_id=Ov23li7L7SmdycZA6mIs&redirect_uri=http%3A%2F%2Flocalhost%3A3000%2Fapi%2Fauth%2Fcallback%2Fgithub&code_challenge=wwD0eGGNtUO0hI2-D1pWySaVuL5N9hpdhdciq-1EcDo&code_challenge_method=S256 
+
+[2025-05-13 15:59:17] - [INFO] - Error signing in user Error: NEXT_REDIRECT 
+
+[2025-05-13 15:59:38] - [INFO] - User sign in with github: https://github.com/login/oauth/authorize?scope=read%3Auser+user%3Aemail&response_type=code&client_id=Ov23li7L7SmdycZA6mIs&redirect_uri=http%3A%2F%2Flocalhost%3A3000%2Fapi%2Fauth%2Fcallback%2Fgithub&code_challenge=NAaKXPT8EhYzs4nZdADTqGxduTaUx7HlVC76l_Kro0g&code_challenge_method=S256 
+
+[2025-05-13 16:08:18] - [INFO] - User sign in with github: https://github.com/login/oauth/authorize?scope=read%3Auser+user%3Aemail&response_type=code&client_id=Ov23li7L7SmdycZA6mIs&redirect_uri=http%3A%2F%2Flocalhost%3A3000%2Fapi%2Fauth%2Fcallback%2Fgithub&code_challenge=30pdVQtJU-7tdM0RPDVUHz84ALdwZdydxTkR272oQpg&code_challenge_method=S256 
+
+[2025-05-13 16:08:18] - [INFO] - User successfully logged in with github via: undefined
+
+[2025-05-13 16:10:39] - [INFO] - User sign in with github: https://github.com/login/oauth/authorize?scope=read%3Auser+user%3Aemail&response_type=code&client_id=Ov23li7L7SmdycZA6mIs&redirect_uri=http%3A%2F%2Flocalhost%3A3000%2Fapi%2Fauth%2Fcallback%2Fgithub&code_challenge=bjcKJlPq_4GuvAMVZhLLvyw2RJSOcNN-sJZFzZR3w5o&code_challenge_method=S256 
+
+[2025-05-13 16:10:39] - [INFO] - User successfully logged in with github via: undefined
+
+[2025-05-13 16:13:02] - [INFO] - User sign in with github: https://github.com/login/oauth/authorize?scope=read%3Auser+user%3Aemail&response_type=code&client_id=Ov23li7L7SmdycZA6mIs&redirect_uri=http%3A%2F%2Flocalhost%3A3000%2Fapi%2Fauth%2Fcallback%2Fgithub&code_challenge=jlRg5dbtgYD2cWLnvfuuH0Yc37Kw2N7Tfb_RVqJNrwc&code_challenge_method=S256 
+
+[2025-05-13 16:13:02] - [INFO] - User successfully logged in with github via: undefined
+
+[2025-05-13 16:14:22] - [INFO] - User sign in with github: https://github.com/login/oauth/authorize?scope=read%3Auser+user%3Aemail&response_type=code&client_id=Ov23li7L7SmdycZA6mIs&redirect_uri=http%3A%2F%2Flocalhost%3A3000%2Fapi%2Fauth%2Fcallback%2Fgithub&code_challenge=T41yKGbbw3Fh1sy3gbkVHyIrCAbOaNfj-C07c5m102I&code_challenge_method=S256 
+
+[2025-05-13 16:14:22] - [INFO] - User successfully logged in with github via: https://github.com/login/oauth/authorize?scope=read%3Auser+user%3Aemail&response_type=code&client_id=Ov23li7L7SmdycZA6mIs&redirect_uri=http%3A%2F%2Flocalhost%3A3000%2Fapi%2Fauth%2Fcallback%2Fgithub&code_challenge=T41yKGbbw3Fh1sy3gbkVHyIrCAbOaNfj-C07c5m102I&code_challenge_method=S256
+
+[2025-05-13 16:16:49] - [INFO] - User sign in with github: https://github.com/login/oauth/authorize?scope=read%3Auser+user%3Aemail&response_type=code&client_id=Ov23li7L7SmdycZA6mIs&redirect_uri=http%3A%2F%2Flocalhost%3A3000%2Fapi%2Fauth%2Fcallback%2Fgithub&code_challenge=uzvdwfbXcvf3ltaZNQNiDQx05fhTXFeh4fSEe0UBUzo&code_challenge_method=S256 
+
+[2025-05-13 16:16:49] - [INFO] - User successfully logged in with github via: https://github.com/login/oauth/authorize?scope=read%3Auser+user%3Aemail&response_type=code&client_id=Ov23li7L7SmdycZA6mIs&redirect_uri=http%3A%2F%2Flocalhost%3A3000%2Fapi%2Fauth%2Fcallback%2Fgithub&code_challenge=uzvdwfbXcvf3ltaZNQNiDQx05fhTXFeh4fSEe0UBUzo&code_challenge_method=S256
+
+[2025-05-13 16:16:49] - [ERROR] - Error signin in user with github
+
+[2025-05-13 16:18:06] - [INFO] - User sign in with github: https://github.com/login/oauth/authorize?scope=read%3Auser+user%3Aemail&response_type=code&client_id=Ov23li7L7SmdycZA6mIs&redirect_uri=http%3A%2F%2Flocalhost%3A3000%2Fapi%2Fauth%2Fcallback%2Fgithub&code_challenge=wAA3FSv6D28-dRCiqTu2GH5rno0Fd7QHf6sA8D3IveA&code_challenge_method=S256 
+
+[2025-05-13 16:18:06] - [INFO] - User successfully logged in with github via: https://github.com/login/oauth/authorize?scope=read%3Auser+user%3Aemail&response_type=code&client_id=Ov23li7L7SmdycZA6mIs&redirect_uri=http%3A%2F%2Flocalhost%3A3000%2Fapi%2Fauth%2Fcallback%2Fgithub&code_challenge=wAA3FSv6D28-dRCiqTu2GH5rno0Fd7QHf6sA8D3IveA&code_challenge_method=S256
+
+[2025-05-13 16:18:06] - [ERROR] - Error signin in user with github
+
+[2025-05-13 16:22:55] - [INFO] - User sign in with github: https://github.com/login/oauth/authorize?scope=read%3Auser+user%3Aemail&response_type=code&client_id=Ov23li7L7SmdycZA6mIs&redirect_uri=http%3A%2F%2Flocalhost%3A3000%2Fapi%2Fauth%2Fcallback%2Fgithub&code_challenge=85Fdt4f3iYDcktnhjBUuiGWY2kF8v5rBT6GCrngl2Rk&code_challenge_method=S256 
+
+[2025-05-13 16:22:55] - [INFO] - User successfully logged in with github via: https://github.com/login/oauth/authorize?scope=read%3Auser+user%3Aemail&response_type=code&client_id=Ov23li7L7SmdycZA6mIs&redirect_uri=http%3A%2F%2Flocalhost%3A3000%2Fapi%2Fauth%2Fcallback%2Fgithub&code_challenge=85Fdt4f3iYDcktnhjBUuiGWY2kF8v5rBT6GCrngl2Rk&code_challenge_method=S256
+
+[2025-05-13 16:25:28] - [INFO] - User sign in with github: https://github.com/login/oauth/authorize?scope=read%3Auser+user%3Aemail&response_type=code&client_id=Ov23li7L7SmdycZA6mIs&redirect_uri=http%3A%2F%2Flocalhost%3A3000%2Fapi%2Fauth%2Fcallback%2Fgithub&code_challenge=dVYRKZGEw72GosSisXs1gKq5MyDJkWWYwf3nKFDVA00&code_challenge_method=S256 
+
+[2025-05-13 16:25:28] - [INFO] - User successfully logged in with github via: https://github.com/login/oauth/authorize?scope=read%3Auser+user%3Aemail&response_type=code&client_id=Ov23li7L7SmdycZA6mIs&redirect_uri=http%3A%2F%2Flocalhost%3A3000%2Fapi%2Fauth%2Fcallback%2Fgithub&code_challenge=dVYRKZGEw72GosSisXs1gKq5MyDJkWWYwf3nKFDVA00&code_challenge_method=S256
+
+[2025-05-13 16:25:43] - [INFO] - User sign in with github: https://github.com/login/oauth/authorize?scope=read%3Auser+user%3Aemail&response_type=code&client_id=Ov23li7L7SmdycZA6mIs&redirect_uri=http%3A%2F%2Flocalhost%3A3000%2Fapi%2Fauth%2Fcallback%2Fgithub&code_challenge=xyoeHb6cwJFspWgEK8FNZ53rIPJANeHoDga6DwCBVqQ&code_challenge_method=S256 
+
+[2025-05-13 16:25:43] - [INFO] - User successfully logged in with github via: https://github.com/login/oauth/authorize?scope=read%3Auser+user%3Aemail&response_type=code&client_id=Ov23li7L7SmdycZA6mIs&redirect_uri=http%3A%2F%2Flocalhost%3A3000%2Fapi%2Fauth%2Fcallback%2Fgithub&code_challenge=xyoeHb6cwJFspWgEK8FNZ53rIPJANeHoDga6DwCBVqQ&code_challenge_method=S256
+
+[2025-05-13 16:27:34] - [INFO] - User sign in with github: https://github.com/login/oauth/authorize?scope=read%3Auser+user%3Aemail&response_type=code&client_id=Ov23li7L7SmdycZA6mIs&redirect_uri=http%3A%2F%2Flocalhost%3A3000%2Fapi%2Fauth%2Fcallback%2Fgithub&code_challenge=b_Tzp9g6_ET0lTeJ22AxJ1yrngNN5wp-d-OzOVeBcDY&code_challenge_method=S256 
+
+[2025-05-13 16:27:34] - [INFO] - User successfully logged in with github via: https://github.com/login/oauth/authorize?scope=read%3Auser+user%3Aemail&response_type=code&client_id=Ov23li7L7SmdycZA6mIs&redirect_uri=http%3A%2F%2Flocalhost%3A3000%2Fapi%2Fauth%2Fcallback%2Fgithub&code_challenge=b_Tzp9g6_ET0lTeJ22AxJ1yrngNN5wp-d-OzOVeBcDY&code_challenge_method=S256
+
+[2025-05-13 16:51:17] - [INFO] - User sign in with github: https://github.com/login/oauth/authorize?scope=read%3Auser+user%3Aemail&response_type=code&client_id=Ov23li7L7SmdycZA6mIs&redirect_uri=http%3A%2F%2Flocalhost%3A3000%2Fapi%2Fauth%2Fcallback%2Fgithub&code_challenge=BeFBaQ6YFnnpzJt73oL27ZluN5RDhGuRdRHlGnDko8I&code_challenge_method=S256 
+
+[2025-05-13 16:51:17] - [INFO] - User successfully logged in with github via: https://github.com/login/oauth/authorize?scope=read%3Auser+user%3Aemail&response_type=code&client_id=Ov23li7L7SmdycZA6mIs&redirect_uri=http%3A%2F%2Flocalhost%3A3000%2Fapi%2Fauth%2Fcallback%2Fgithub&code_challenge=BeFBaQ6YFnnpzJt73oL27ZluN5RDhGuRdRHlGnDko8I&code_challenge_method=S256
+
+[2025-05-13 17:04:37] - [INFO] - Error signing in user CallbackRouteError: Read more at https://errors.authjs.dev#callbackrouteerror 
+
+[2025-05-13 17:06:41] - [INFO] - Error signing in user CallbackRouteError: Read more at https://errors.authjs.dev#callbackrouteerror 
+
+[2025-05-13 17:13:49] - [INFO] - Error signing in user CallbackRouteError: Read more at https://errors.authjs.dev#callbackrouteerror 
+
+[2025-05-13 17:14:57] - [INFO] - Error signing in user CallbackRouteError: Read more at https://errors.authjs.dev#callbackrouteerror 
+
+[2025-05-13 17:16:23] - [INFO] - Error signing in user CallbackRouteError: Read more at https://errors.authjs.dev#callbackrouteerror 
+
+[2025-05-13 17:17:28] - [INFO] - Error signing in user CallbackRouteError: Read more at https://errors.authjs.dev#callbackrouteerror 
+
+[2025-05-13 17:20:19] - [ERROR] - Error creating user flynn tembeng, flyinnsafuh@gmail.com account
+
+[2025-05-13 17:23:22] - [ERROR] - Error creating user flynn tembeng, flyinnsafuh@gmail.com account
+
+[2025-05-13 17:24:51] - [ERROR] - Error creating user flynn tembeng, flyinnsafuh@gmail.com account
+
+[2025-05-13 17:26:16] - [ERROR] - Error creating user flynn tembeng, flyinnsafuh@gmail.com account
+
+[2025-05-13 17:27:54] - [ERROR] - Error creating user flynn tembeng, flyinnsafuh@gmail.com account
+
+[2025-05-13 19:03:49] - [INFO] - User sign in with github: https://github.com/login/oauth/authorize?scope=read%3Auser+user%3Aemail&response_type=code&client_id=Ov23li7L7SmdycZA6mIs&redirect_uri=http%3A%2F%2Flocalhost%3A3000%2Fapi%2Fauth%2Fcallback%2Fgithub&code_challenge=WfV-Wg2xksmdmZ1CZC3ljoeW6HhHBEl6dsjCraW3kqM&code_challenge_method=S256 
+
+[2025-05-13 19:03:49] - [INFO] - User successfully logged in with github via: https://github.com/login/oauth/authorize?scope=read%3Auser+user%3Aemail&response_type=code&client_id=Ov23li7L7SmdycZA6mIs&redirect_uri=http%3A%2F%2Flocalhost%3A3000%2Fapi%2Fauth%2Fcallback%2Fgithub&code_challenge=WfV-Wg2xksmdmZ1CZC3ljoeW6HhHBEl6dsjCraW3kqM&code_challenge_method=S256
+
+[2025-05-13 19:07:50] - [INFO] - User sign in with github: https://github.com/login/oauth/authorize?scope=read%3Auser+user%3Aemail&response_type=code&client_id=Ov23li7L7SmdycZA6mIs&redirect_uri=http%3A%2F%2Flocalhost%3A3000%2Fapi%2Fauth%2Fcallback%2Fgithub&code_challenge=A-Tr1cFoMqsOdWr64zigEsHucRmCRrdr1yrngeMZZgY&code_challenge_method=S256 
+
+[2025-05-13 19:07:50] - [INFO] - User successfully logged in with github via: https://github.com/login/oauth/authorize?scope=read%3Auser+user%3Aemail&response_type=code&client_id=Ov23li7L7SmdycZA6mIs&redirect_uri=http%3A%2F%2Flocalhost%3A3000%2Fapi%2Fauth%2Fcallback%2Fgithub&code_challenge=A-Tr1cFoMqsOdWr64zigEsHucRmCRrdr1yrngeMZZgY&code_challenge_method=S256
+
+[2025-05-13 20:13:22] - [INFO] - Error signing in user CallbackRouteError: Read more at https://errors.authjs.dev#callbackrouteerror 
+
+[2025-05-13 20:14:03] - [ERROR] - Error creating user flynn afuh, flyinnsafuh@gmail.com account
+
+[2025-05-13 23:42:29] - [INFO] - User sign in with github: https://github.com/login/oauth/authorize?scope=read%3Auser+user%3Aemail&response_type=code&client_id=Ov23li7L7SmdycZA6mIs&redirect_uri=http%3A%2F%2Flocalhost%3A3000%2Fapi%2Fauth%2Fcallback%2Fgithub&code_challenge=cCX51acRkNArieEzUqmnmgl0etSIJD5bFfyuQkBB358&code_challenge_method=S256 
+
+[2025-05-13 23:42:29] - [INFO] - User successfully logged in with github via: https://github.com/login/oauth/authorize?scope=read%3Auser+user%3Aemail&response_type=code&client_id=Ov23li7L7SmdycZA6mIs&redirect_uri=http%3A%2F%2Flocalhost%3A3000%2Fapi%2Fauth%2Fcallback%2Fgithub&code_challenge=cCX51acRkNArieEzUqmnmgl0etSIJD5bFfyuQkBB358&code_challenge_method=S256
+
+[2025-05-13 23:44:54] - [ERROR] - Error creating user flynn afuh, flyinnsafuh@gmail.com account
+
+[2025-05-13 23:45:27] - [ERROR] - Error sending email: ENOENT: no such file or directory, open '/home/tembeng/Documents/new_projects/secret-share-app/Dev/public/icons/logo.svg' - to flyinnsafuh@gmail.com
+
+[2025-05-13 23:45:27] - [INFO] - User flynn afuh, flyinnsafuh@gmail.com account created
+
+[2025-05-13 23:46:46] - [ERROR] - User flyinnsafuh@gmail.com recently authorized a sign in into their account
+
+[2025-05-13 23:46:49] - [ERROR] - Error sending email: ENOENT: no such file or directory, open '/home/tembeng/Documents/new_projects/secret-share-app/Dev/public/icons/logo.svg' - to flyinnsafuh@gmail.com
+
+[2025-05-13 23:46:49] - [INFO] - User sign in http://localhost:3000/ 
+
+[2025-05-13 23:47:49] - [INFO] - User sign in with github: https://github.com/login/oauth/authorize?scope=read%3Auser+user%3Aemail&response_type=code&client_id=Ov23li7L7SmdycZA6mIs&redirect_uri=http%3A%2F%2Flocalhost%3A3000%2Fapi%2Fauth%2Fcallback%2Fgithub&code_challenge=gj7U0SV4FwSmDVSab3R_ll_HIPfQnFu5N_YSkAzDSuA&code_challenge_method=S256 
+
+[2025-05-13 23:47:49] - [INFO] - User successfully logged in with github via: https://github.com/login/oauth/authorize?scope=read%3Auser+user%3Aemail&response_type=code&client_id=Ov23li7L7SmdycZA6mIs&redirect_uri=http%3A%2F%2Flocalhost%3A3000%2Fapi%2Fauth%2Fcallback%2Fgithub&code_challenge=gj7U0SV4FwSmDVSab3R_ll_HIPfQnFu5N_YSkAzDSuA&code_challenge_method=S256
+
+[2025-05-14 00:05:12] - [ERROR] - User flyinnsafuh@gmail.com recently authorized a sign in into their account
+
+[2025-05-14 00:05:14] - [ERROR] - Error sending email: ENOENT: no such file or directory, open '/home/tembeng/Documents/new_projects/secret-share-app/Dev/public/icons/logo.svg' - to flyinnsafuh@gmail.com
+
+[2025-05-14 00:05:14] - [INFO] - User sign in http://localhost:3000/ 
+
+[2025-05-14 00:09:47] - [ERROR] - Error sending email: ENOENT: no such file or directory, open '/home/tembeng/Documents/new_projects/secret-share-app/Dev/public/icons/logo.svg' - to flyinnsafuh@gmail.com
+
+[2025-05-14 00:09:47] - [INFO] - User flynn afuh, flyinnsafuh@gmail.com account created
+
+[2025-05-14 00:24:42] - [ERROR] - User flyinnsafuh@gmail.com recently authorized a sign in into their account
+
+[2025-05-14 00:24:47] - [ERROR] - Email sent successfully! to flyinnsafuh@gmail.com
+
+[2025-05-14 00:24:47] - [INFO] - User sign in http://localhost:3000/ 
+
+[2025-05-14 00:50:06] - [INFO] - User sign in with github: https://github.com/login/oauth/authorize?scope=read%3Auser+user%3Aemail&response_type=code&client_id=Ov23li7L7SmdycZA6mIs&redirect_uri=http%3A%2F%2Flocalhost%3A3000%2Fapi%2Fauth%2Fcallback%2Fgithub&code_challenge=razlhT7iw9PWLhd0hCTOoSY7_TeW6FNpKoKiYW-its0&code_challenge_method=S256 
+
+[2025-05-14 00:50:06] - [INFO] - User successfully logged in with github via: https://github.com/login/oauth/authorize?scope=read%3Auser+user%3Aemail&response_type=code&client_id=Ov23li7L7SmdycZA6mIs&redirect_uri=http%3A%2F%2Flocalhost%3A3000%2Fapi%2Fauth%2Fcallback%2Fgithub&code_challenge=razlhT7iw9PWLhd0hCTOoSY7_TeW6FNpKoKiYW-its0&code_challenge_method=S256
+
+[2025-05-14 01:00:18] - [INFO] - User sign in with github: https://github.com/login/oauth/authorize?scope=read%3Auser+user%3Aemail&response_type=code&client_id=Ov23li7L7SmdycZA6mIs&redirect_uri=http%3A%2F%2Flocalhost%3A3000%2Fapi%2Fauth%2Fcallback%2Fgithub&code_challenge=7kQiP0fPOovu2hRYF_ntMvbqSuWzT5SyTTUJgyLKEmM&code_challenge_method=S256 
+
+[2025-05-14 01:00:18] - [INFO] - User successfully logged in with github via: https://github.com/login/oauth/authorize?scope=read%3Auser+user%3Aemail&response_type=code&client_id=Ov23li7L7SmdycZA6mIs&redirect_uri=http%3A%2F%2Flocalhost%3A3000%2Fapi%2Fauth%2Fcallback%2Fgithub&code_challenge=7kQiP0fPOovu2hRYF_ntMvbqSuWzT5SyTTUJgyLKEmM&code_challenge_method=S256
+
+[2025-05-14 01:01:17] - [INFO] - User sign in with github: https://github.com/login/oauth/authorize?scope=read%3Auser+user%3Aemail&response_type=code&client_id=Ov23li7L7SmdycZA6mIs&redirect_uri=http%3A%2F%2Flocalhost%3A3000%2Fapi%2Fauth%2Fcallback%2Fgithub&code_challenge=m6_-DSvN8KWaD3r7ICeUW4lMawQIkNsWodI0gJ-0iHg&code_challenge_method=S256 
+
+[2025-05-14 01:01:17] - [INFO] - User successfully logged in with github via: https://github.com/login/oauth/authorize?scope=read%3Auser+user%3Aemail&response_type=code&client_id=Ov23li7L7SmdycZA6mIs&redirect_uri=http%3A%2F%2Flocalhost%3A3000%2Fapi%2Fauth%2Fcallback%2Fgithub&code_challenge=m6_-DSvN8KWaD3r7ICeUW4lMawQIkNsWodI0gJ-0iHg&code_challenge_method=S256
+
+[2025-05-14 01:24:34] - [INFO] - User sign in with github: https://github.com/login/oauth/authorize?scope=read%3Auser+user%3Aemail&response_type=code&client_id=Ov23li7L7SmdycZA6mIs&redirect_uri=http%3A%2F%2Flocalhost%3A3000%2Fapi%2Fauth%2Fcallback%2Fgithub&code_challenge=WHkE3bD2pKUpyISSBcy1154BDt3mMWcUlCo3mFGYY3M&code_challenge_method=S256 
+
+[2025-05-14 01:24:34] - [INFO] - User successfully logged in with github via: https://github.com/login/oauth/authorize?scope=read%3Auser+user%3Aemail&response_type=code&client_id=Ov23li7L7SmdycZA6mIs&redirect_uri=http%3A%2F%2Flocalhost%3A3000%2Fapi%2Fauth%2Fcallback%2Fgithub&code_challenge=WHkE3bD2pKUpyISSBcy1154BDt3mMWcUlCo3mFGYY3M&code_challenge_method=S256
+
+[2025-05-14 01:39:54] - [ERROR] - User flyinnsafuh@gmail.com recently authorized a sign in into their account
+
+[2025-05-14 01:39:54] - [ERROR] - Error sending email: getaddrinfo EAI_AGAIN smtp.gmail.com - to flyinnsafuh@gmail.com
+
+[2025-05-14 01:39:54] - [INFO] - User sign in http://localhost:3000 
+
+[2025-05-14 02:19:07] - [ERROR] - User flyinnsafuh@gmail.com recently authorized a sign in into their account
+
+[2025-05-14 02:19:07] - [ERROR] - Error sending email: getaddrinfo EAI_AGAIN smtp.gmail.com - to flyinnsafuh@gmail.com
+
+[2025-05-14 02:19:07] - [INFO] - User sign in http://localhost:3000 
+
+[2025-05-14 02:20:32] - [ERROR] - User flyinnsafuh@gmail.com recently authorized a sign in into their account
+
+[2025-05-14 02:20:32] - [ERROR] - Error sending email: getaddrinfo EAI_AGAIN smtp.gmail.com - to flyinnsafuh@gmail.com
+
+[2025-05-14 02:20:32] - [INFO] - User sign in http://localhost:3000 
+
+[2025-05-14 02:21:15] - [ERROR] - User flyinnsafuh@gmail.com recently authorized a sign in into their account
+
+[2025-05-14 02:21:15] - [ERROR] - Error sending email: getaddrinfo EAI_AGAIN smtp.gmail.com - to flyinnsafuh@gmail.com
+
+[2025-05-14 02:21:15] - [INFO] - User sign in http://localhost:3000 
+
+[2025-05-14 02:22:01] - [ERROR] - User flyinnsafuh@gmail.com recently authorized a sign in into their account
+
+[2025-05-14 02:22:01] - [ERROR] - Error sending email: getaddrinfo EAI_AGAIN smtp.gmail.com - to flyinnsafuh@gmail.com
+
+[2025-05-14 02:22:01] - [INFO] - User sign in http://localhost:3000 
+
+[2025-05-14 02:24:34] - [ERROR] - User flyinnsafuh@gmail.com recently authorized a sign in into their account
+
+[2025-05-14 02:24:34] - [ERROR] - Error sending email: getaddrinfo EAI_AGAIN smtp.gmail.com - to flyinnsafuh@gmail.com
+
+[2025-05-14 02:24:34] - [INFO] - User sign in http://localhost:3000 
+
+[2025-05-14 02:25:27] - [ERROR] - User flyinnsafuh@gmail.com recently authorized a sign in into their account
+
+[2025-05-14 02:25:27] - [ERROR] - Error sending email: getaddrinfo EAI_AGAIN smtp.gmail.com - to flyinnsafuh@gmail.com
+
+[2025-05-14 02:25:27] - [INFO] - User sign in http://localhost:3000 
+
+[2025-05-14 02:28:32] - [ERROR] - User flyinnsafuh@gmail.com recently authorized a sign in into their account
+
+[2025-05-14 02:28:32] - [ERROR] - Error sending email: getaddrinfo EAI_AGAIN smtp.gmail.com - to flyinnsafuh@gmail.com
+
+[2025-05-14 02:28:32] - [INFO] - User sign in http://localhost:3000 
+
+[2025-05-14 02:29:55] - [ERROR] - User flyinnsafuh@gmail.com recently authorized a sign in into their account
+
+[2025-05-14 02:29:55] - [ERROR] - Error sending email: getaddrinfo EAI_AGAIN smtp.gmail.com - to flyinnsafuh@gmail.com
+
+[2025-05-14 02:29:55] - [INFO] - User sign in http://localhost:3000 
+
+[2025-05-14 02:30:30] - [ERROR] - User flyinnsafuh@gmail.com recently authorized a sign in into their account
+
+[2025-05-14 02:30:30] - [ERROR] - Error sending email: getaddrinfo EAI_AGAIN smtp.gmail.com - to flyinnsafuh@gmail.com
+
+[2025-05-14 02:30:30] - [INFO] - User sign in http://localhost:3000 
+
+[2025-05-14 03:03:27] - [ERROR] - Error sending email: getaddrinfo EAI_AGAIN smtp.gmail.com - to flyinnsafuh@gmail.com
+
+[2025-05-14 03:03:27] - [INFO] - User flynn afuh, flyinnsafuh@gmail.com account details updated
+
+[2025-05-14 03:04:24] - [ERROR] - Error sending email: getaddrinfo EAI_AGAIN smtp.gmail.com - to flyinnsafuh@gmail.com
+
+[2025-05-14 03:04:24] - [INFO] - User flynn afuh, flyinnsafuh@gmail.com account details updated
+
+[2025-05-14 03:04:32] - [ERROR] - Error sending email: getaddrinfo EAI_AGAIN smtp.gmail.com - to flyinnsafuh@gmail.com
+
+[2025-05-14 03:04:32] - [INFO] - User flynn afuh, flyinnsafuh@gmail.com account details updated
+
+[2025-05-14 03:06:14] - [ERROR] - Error sending email: getaddrinfo EAI_AGAIN smtp.gmail.com - to flyinnsafuh@gmail.com
+
+[2025-05-14 03:06:14] - [INFO] - User flynn afuh, flyinnsafuh@gmail.com account details updated
+
+[2025-05-14 03:06:34] - [ERROR] - Error sending email: getaddrinfo EAI_AGAIN smtp.gmail.com - to flyinnsafuh@gmail.com
+
+[2025-05-14 03:06:34] - [INFO] - User flynn afuh, flyinnsafuh@gmail.com account details updated
+
+[2025-05-14 03:06:37] - [ERROR] - Error sending email: getaddrinfo EAI_AGAIN smtp.gmail.com - to flyinnsafuh@gmail.com
+
+[2025-05-14 03:06:37] - [INFO] - User flynn afuh, flyinnsafuh@gmail.com account details updated
+
+[2025-05-14 03:06:38] - [ERROR] - Error sending email: getaddrinfo EAI_AGAIN smtp.gmail.com - to flyinnsafuh@gmail.com
+
+[2025-05-14 03:06:38] - [INFO] - User flynn afuh, flyinnsafuh@gmail.com account details updated
+
+[2025-05-14 03:06:48] - [ERROR] - Error sending email: getaddrinfo EAI_AGAIN smtp.gmail.com - to flyinnsafuh@gmail.com
+
+[2025-05-14 03:06:48] - [INFO] - User flynn afuh, flyinnsafuh@gmail.com account details updated
+
+[2025-05-14 03:18:57] - [ERROR] - Error sending email: getaddrinfo EAI_AGAIN smtp.gmail.com - to flynnsf1keyz@gmail.com
+
+[2025-05-14 03:18:57] - [INFO] - User flynn afuh, flynnsf1keyz@gmail.com account details updated
+
+[2025-05-14 03:21:35] - [ERROR] - A failed login attempt was detected email: flyinnsafuh@gmail.com
+
+[2025-05-14 03:21:35] - [ERROR] - Error sending email: getaddrinfo EAI_AGAIN smtp.gmail.com - to flyinnsafuh@gmail.com
+
+[2025-05-14 03:21:35] - [INFO] - Error signing in user CallbackRouteError: Invalid email or password. Read more at https://errors.authjs.dev#callbackrouteerror 
+
+[2025-05-14 03:21:50] - [ERROR] - User flynnsf1keyz@gmail.com recently authorized a sign in into their account
+
+[2025-05-14 03:21:50] - [ERROR] - Error sending email: getaddrinfo EAI_AGAIN smtp.gmail.com - to flynnsf1keyz@gmail.com
+
+[2025-05-14 03:21:50] - [INFO] - User sign in http://localhost:3000 
+
+[2025-05-14 03:22:18] - [ERROR] - Error sending email: getaddrinfo EAI_AGAIN smtp.gmail.com - to flyinnsafuh@gmail.com
+
+[2025-05-14 03:22:18] - [INFO] - User flynn afuh, flyinnsafuh@gmail.com account details updated
+
+[2025-05-14 03:25:59] - [ERROR] - User flyinnsafuh@gmail.com recently authorized a sign in into their account
+
+[2025-05-14 03:25:59] - [ERROR] - Error sending email: getaddrinfo EAI_AGAIN smtp.gmail.com - to flyinnsafuh@gmail.com
+
+[2025-05-14 03:25:59] - [INFO] - User sign in http://localhost:3000 
+
+[2025-05-14 03:27:11] - [ERROR] - Error sending email: getaddrinfo EAI_AGAIN smtp.gmail.com - to flyinnsafuh@gmail.com
+
+[2025-05-14 03:27:11] - [INFO] - User Tembeng Flynn Afuh, flyinnsafuh@gmail.com account details updated
+
+[2025-05-14 03:33:09] - [ERROR] - Error sending email: getaddrinfo EAI_AGAIN smtp.gmail.com - to flynnsf1keyz@gmail.com
+
+[2025-05-14 03:33:09] - [INFO] - User Faith Francis, flynnsf1keyz@gmail.com account created
+
+[2025-05-14 03:33:28] - [ERROR] - User flynnsf1keyz@gmail.com recently authorized a sign in into their account
+
+[2025-05-14 03:33:28] - [ERROR] - Error sending email: getaddrinfo EAI_AGAIN smtp.gmail.com - to flynnsf1keyz@gmail.com
+
+[2025-05-14 03:33:28] - [INFO] - User sign in http://localhost:3000 
+
+[2025-05-14 04:21:43] - [ERROR] - Error sending email: Connection timeout - to flyinnsafuh@gmail.com
+
+[2025-05-14 04:21:43] - [INFO] - User Tembeng Flynn Afuh, flyinnsafuh@gmail.com account password updated
+
+[2025-05-14 04:28:06] - [ERROR] - Error sending email: getaddrinfo EAI_AGAIN smtp.gmail.com - to flyinnsafuh@gmail.com
+
+[2025-05-14 04:28:06] - [INFO] - User Tembeng Flynn Afuh, flyinnsafuh@gmail.com account password updated
+
+[2025-05-14 04:29:32] - [ERROR] - Error sending email: getaddrinfo EAI_AGAIN smtp.gmail.com - to flyinnsafuh@gmail.com
+
+[2025-05-14 04:29:32] - [INFO] - User Tembeng Flynn Afuh, flyinnsafuh@gmail.com account password updated
+
+[2025-05-14 04:30:02] - [ERROR] - Error sending email: getaddrinfo EAI_AGAIN smtp.gmail.com - to flyinnsafuh@gmail.com
+
+[2025-05-14 04:30:02] - [INFO] - User Tembeng Flynn Afuh, flyinnsafuh@gmail.com account password updated
+
+[2025-05-14 04:30:08] - [ERROR] - Error sending email: getaddrinfo EAI_AGAIN smtp.gmail.com - to flyinnsafuh@gmail.com
+
+[2025-05-14 04:30:08] - [INFO] - User Tembeng Flynn Afuh, flyinnsafuh@gmail.com account password updated
+
+[2025-05-14 06:00:26] - [ERROR] - Error sending email: getaddrinfo EAI_AGAIN smtp.gmail.com - to flyinnsafuh@gmail.com
+
+[2025-05-14 06:00:26] - [ERROR] - Error sending email: getaddrinfo EAI_AGAIN smtp.gmail.com - to flynnsf1keyz@gmail.com
+
+[2025-05-14 06:00:26] - [INFO] - User Tembeng Flynn Afuh, flyinnsafuh@gmail.com account password deleted
+
+[2025-05-14 06:00:26] - [ERROR] - Error deleting user account
+
+[2025-05-14 06:05:51] - [ERROR] - A failed login attempt was detected email: flyinnsafuh@gmail.com
+
+[2025-05-14 06:05:51] - [ERROR] - Error sending email: getaddrinfo EAI_AGAIN smtp.gmail.com - to flyinnsafuh@gmail.com
+
+[2025-05-14 06:05:51] - [INFO] - Error signing in user CallbackRouteError: Invalid email or password. Read more at https://errors.authjs.dev#callbackrouteerror 
+
+[2025-05-14 06:05:55] - [ERROR] - A failed login attempt was detected email: flyinnsafuh@gmail.com
+
+[2025-05-14 06:05:55] - [ERROR] - Error sending email: getaddrinfo EAI_AGAIN smtp.gmail.com - to flyinnsafuh@gmail.com
+
+[2025-05-14 06:05:55] - [INFO] - Error signing in user CallbackRouteError: Invalid email or password. Read more at https://errors.authjs.dev#callbackrouteerror 
+
+[2025-05-14 06:06:05] - [ERROR] - A failed login attempt was detected for user with email: flynnsf1keyz@gmail.com
+
+[2025-05-14 06:06:05] - [ERROR] - Error sending email: getaddrinfo EAI_AGAIN smtp.gmail.com - to flynnsf1keyz@gmail.com
+
+[2025-05-14 06:06:05] - [INFO] - Error signing in user CallbackRouteError: Invalid email or password. Read more at https://errors.authjs.dev#callbackrouteerror 
+
+[2025-05-14 06:06:09] - [ERROR] - User flynnsf1keyz@gmail.com recently authorized a sign in into their account
+
+[2025-05-14 06:06:09] - [ERROR] - Error sending email: getaddrinfo EAI_AGAIN smtp.gmail.com - to flynnsf1keyz@gmail.com
+
+[2025-05-14 06:06:09] - [INFO] - User sign in http://localhost:3000 
+
+[2025-05-14 06:06:33] - [ERROR] - Error sending email: getaddrinfo EAI_AGAIN smtp.gmail.com - to flynnsf1keyz@gmail.com
+
+[2025-05-14 06:06:33] - [ERROR] - Error sending email: getaddrinfo EAI_AGAIN smtp.gmail.com - to flynnsf1keyz@gmail.com
+
+[2025-05-14 06:06:33] - [INFO] - User Faith Francis, flynnsf1keyz@gmail.com account password deleted
+
+[2025-05-14 06:08:13] - [ERROR] - Error sending email: getaddrinfo EAI_AGAIN smtp.gmail.com - to flyinnsafuh@gmail.com
+
+[2025-05-14 06:08:13] - [INFO] - User Tembeng Flynn, flyinnsafuh@gmail.com account created
+
+[2025-05-14 06:09:29] - [ERROR] - User flyinnsafuh@gmail.com recently authorized a sign in into their account
+
+[2025-05-14 06:09:29] - [ERROR] - Error sending email: getaddrinfo EAI_AGAIN smtp.gmail.com - to flyinnsafuh@gmail.com
+
+[2025-05-14 06:09:29] - [INFO] - User sign in http://localhost:3000 
+
+[2025-05-14 06:09:54] - [ERROR] - Error sending email: getaddrinfo EAI_AGAIN smtp.gmail.com - to flyinnsafuh@gmail.com
+
+[2025-05-14 06:09:54] - [INFO] - User Tembeng Flynn, flyinnsafuh@gmail.com account details updated
+
+[2025-05-14 10:29:04] - [INFO] - User sign in with github: https://github.com/login/oauth/authorize?scope=read%3Auser+user%3Aemail&response_type=code&client_id=Ov23li7L7SmdycZA6mIs&redirect_uri=http%3A%2F%2Flocalhost%3A3000%2Fapi%2Fauth%2Fcallback%2Fgithub&code_challenge=ji9L-YPCiQvSCZW_TJYSGstmQyEk9E-6eMFtH3u9Vz8&code_challenge_method=S256 
+
+[2025-05-14 10:29:04] - [INFO] - User successfully logged in with github via: https://github.com/login/oauth/authorize?scope=read%3Auser+user%3Aemail&response_type=code&client_id=Ov23li7L7SmdycZA6mIs&redirect_uri=http%3A%2F%2Flocalhost%3A3000%2Fapi%2Fauth%2Fcallback%2Fgithub&code_challenge=ji9L-YPCiQvSCZW_TJYSGstmQyEk9E-6eMFtH3u9Vz8&code_challenge_method=S256
+
+[2025-05-14 10:30:00] - [INFO] - User sign in with github: https://github.com/login/oauth/authorize?scope=read%3Auser+user%3Aemail&response_type=code&client_id=Ov23li7L7SmdycZA6mIs&redirect_uri=http%3A%2F%2Flocalhost%3A3000%2Fapi%2Fauth%2Fcallback%2Fgithub&code_challenge=PE26KCRIhq6tNfSOI8ZkpdNeI-P7BUEIOyUJV22AmH4&code_challenge_method=S256 
+
+[2025-05-14 10:30:00] - [INFO] - User successfully logged in with github via: https://github.com/login/oauth/authorize?scope=read%3Auser+user%3Aemail&response_type=code&client_id=Ov23li7L7SmdycZA6mIs&redirect_uri=http%3A%2F%2Flocalhost%3A3000%2Fapi%2Fauth%2Fcallback%2Fgithub&code_challenge=PE26KCRIhq6tNfSOI8ZkpdNeI-P7BUEIOyUJV22AmH4&code_challenge_method=S256
+
+[2025-05-14 10:30:09] - [INFO] - User sign in with github: https://github.com/login/oauth/authorize?scope=read%3Auser+user%3Aemail&response_type=code&client_id=Ov23li7L7SmdycZA6mIs&redirect_uri=http%3A%2F%2Flocalhost%3A3000%2Fapi%2Fauth%2Fcallback%2Fgithub&code_challenge=9mNNaLotoI155GAPHlFhNS7MIdaHHsuoXzahOF5v6Oo&code_challenge_method=S256 
+
+[2025-05-14 10:30:09] - [INFO] - User successfully logged in with github via: https://github.com/login/oauth/authorize?scope=read%3Auser+user%3Aemail&response_type=code&client_id=Ov23li7L7SmdycZA6mIs&redirect_uri=http%3A%2F%2Flocalhost%3A3000%2Fapi%2Fauth%2Fcallback%2Fgithub&code_challenge=9mNNaLotoI155GAPHlFhNS7MIdaHHsuoXzahOF5v6Oo&code_challenge_method=S256
+
+[2025-05-14 10:57:08] - [INFO] - User sign in with github: https://github.com/login/oauth/authorize?scope=read%3Auser+user%3Aemail&response_type=code&client_id=Ov23li7L7SmdycZA6mIs&redirect_uri=http%3A%2F%2Flocalhost%3A3000%2Fapi%2Fauth%2Fcallback%2Fgithub&code_challenge=2k13XZinkRFPfrojNKnsFTqJVhG2Xx0vGekwxB4qDFY&code_challenge_method=S256 
+
+[2025-05-14 10:57:08] - [INFO] - User successfully logged in with github via: https://github.com/login/oauth/authorize?scope=read%3Auser+user%3Aemail&response_type=code&client_id=Ov23li7L7SmdycZA6mIs&redirect_uri=http%3A%2F%2Flocalhost%3A3000%2Fapi%2Fauth%2Fcallback%2Fgithub&code_challenge=2k13XZinkRFPfrojNKnsFTqJVhG2Xx0vGekwxB4qDFY&code_challenge_method=S256
+
+[2025-05-14 11:43:10] - [INFO] - User sign in with github: https://github.com/login/oauth/authorize?scope=read%3Auser+user%3Aemail&response_type=code&client_id=Ov23li7L7SmdycZA6mIs&redirect_uri=http%3A%2F%2Flocalhost%3A3000%2Fapi%2Fauth%2Fcallback%2Fgithub&code_challenge=DTsRHZ8eJ8nGyQUUQ7bJNvXZh5g0f9u4yCaJvef2tu4&code_challenge_method=S256 
+
+[2025-05-14 11:43:10] - [INFO] - User successfully logged in with github via: https://github.com/login/oauth/authorize?scope=read%3Auser+user%3Aemail&response_type=code&client_id=Ov23li7L7SmdycZA6mIs&redirect_uri=http%3A%2F%2Flocalhost%3A3000%2Fapi%2Fauth%2Fcallback%2Fgithub&code_challenge=DTsRHZ8eJ8nGyQUUQ7bJNvXZh5g0f9u4yCaJvef2tu4&code_challenge_method=S256
+
+[2025-05-14 12:05:52] - [INFO] - User sign in with github: https://github.com/login/oauth/authorize?scope=read%3Auser+user%3Aemail&response_type=code&client_id=Ov23li7L7SmdycZA6mIs&redirect_uri=http%3A%2F%2Flocalhost%3A3000%2Fapi%2Fauth%2Fcallback%2Fgithub&code_challenge=XXzGzRuOv93eQC3oBv5v4mLSJ8jnqei30vCsffuozi4&code_challenge_method=S256 
+
+[2025-05-14 12:05:52] - [INFO] - User successfully logged in with github via: https://github.com/login/oauth/authorize?scope=read%3Auser+user%3Aemail&response_type=code&client_id=Ov23li7L7SmdycZA6mIs&redirect_uri=http%3A%2F%2Flocalhost%3A3000%2Fapi%2Fauth%2Fcallback%2Fgithub&code_challenge=XXzGzRuOv93eQC3oBv5v4mLSJ8jnqei30vCsffuozi4&code_challenge_method=S256
+
+[2025-05-14 12:29:15] - [ERROR] - User flyinnsafuh@gmail.com recently authorized a sign in into their account
+
+[2025-05-14 12:29:21] - [ERROR] - Email sent successfully! to flyinnsafuh@gmail.com
+
+[2025-05-14 12:32:19] - [ERROR] - Email sent successfully! to flyinnsafuh@gmail.com
+
+[2025-05-14 12:32:19] - [INFO] - User Afuh Flynn Tembeng, flyinnsafuh@gmail.com account details updated
+
+[2025-05-14 13:05:29] - [ERROR] - Upload complete for userId: fakeId
+
+[2025-05-14 13:05:34] - [ERROR] - Email sent successfully! to flynnsf1keyz@gmail.com
+
+[2025-05-14 13:59:42] - [ERROR] - Email sent successfully! to flyinnsafuh@gmail.com
+
+[2025-05-14 13:59:42] - [INFO] - User Afuh Flynn Tembeng, flyinnsafuh@gmail.com account details updated
+
+[2025-05-14 14:24:45] - [ERROR] - Upload complete for userId: fakeId
+
+[2025-05-14 14:24:49] - [ERROR] - Email sent successfully! to flynnsf1keyz@gmail.com
+
+[2025-05-14 14:27:25] - [ERROR] - Upload complete for userId: fakeId
+
+[2025-05-14 14:27:33] - [ERROR] - Email sent successfully! to flynnsf1keyz@gmail.com
+
+[2025-05-14 14:29:32] - [ERROR] - Upload complete for userId: fakeId
+
+[2025-05-14 14:29:36] - [ERROR] - Email sent successfully! to flynnsf1keyz@gmail.com
+
