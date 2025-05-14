@@ -54,6 +54,7 @@ export default function ProfilePage() {
 
   const [isUpdatingDetails, setIsUpdatingDetails] = useState(false);
   const [isUpdatingPassword, setIsUpdatingPassword] = useState(false);
+  const [isSubmitted, setIsSubmitted] = useState(false);
 
   // clear the error and message and redirect the user to verify email page
   useEffect(() => {
@@ -78,6 +79,7 @@ export default function ProfilePage() {
 
       setUser(res.data.user);
       setMessage(res.data.message);
+      setIsSubmitted(true);
     } catch (error: Error | any) {
       if (error.response.data) setError(error.response.data.error);
       else
@@ -129,7 +131,8 @@ export default function ProfilePage() {
       message &&
       message !== null &&
       error === null &&
-      (!isUpdatingDetails || !isUpdatingPassword)
+      (!isUpdatingDetails || !isUpdatingPassword) &&
+      isSubmitted
     ) {
       toast({
         title: "Profile updated",

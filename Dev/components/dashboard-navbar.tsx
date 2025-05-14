@@ -25,7 +25,7 @@ const Navbar: React.FC = () => {
           className="flex items-center gap-2"
         >
           <Logo hideText />
-          <h2 className="hidden text-md font-semibold capitalize sm:block">
+          <h2 className="hidden text-md font-semibold sm:block">
             {user?.username || user?.name?.split(" ")[0]}
           </h2>
         </Link>

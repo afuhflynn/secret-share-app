@@ -27,3 +27,7 @@ todo.todo
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+
+# private docs file
+/Docs
