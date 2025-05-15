@@ -15,8 +15,13 @@ class InvalidLoginError extends CredentialsSignin {
 }
 
 export const { handlers, auth, signIn, signOut } = NextAuth({
+  secret: process.env.NEXTAUTH_SECRET,
   adapter: CustomPrismaAdapter(prisma),
   session: { strategy: "jwt" },
+  pages: {
+    signIn: "/auth/log-in",
+    error: "/auth/error",
+  },
   ...authConfig,
   providers: [
     GitHub({
@@ -26,6 +31,7 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
     Google({
       clientId: process.env.GOOGLE_CLIENT_ID,
       clientSecret: process.env.GOOGLE_CLIENT_SECRET,
+      wellKnown: "https://accounts.google.com/.well-known/openid-configuration",
       authorization: {
         params: {
           prompt: "consent",
@@ -130,13 +136,14 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
       return token;
     },
 
-    async redirect() {
-      return "/"; // Always redirect to home
+    async redirect({ url, baseUrl }) {
+      if (url.startsWith(baseUrl)) return url;
+      return baseUrl;
     },
     async session({ session, token }) {
-      // attach extra token data to session if desired
-      session.user.id = token.sub as string;
-
+      if (session?.user) {
+        session.user.id = token.sub as string;
+      }
       return session;
     },
     async signIn({ account, profile }) {
@@ -149,5 +156,5 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
       return true; // Do different verification for other providers that don't have `email_verified`
     },
   },
-  debug: true,
+  debug: process.env.NODE_ENV === "development",
 });

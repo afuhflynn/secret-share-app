@@ -11,12 +11,11 @@ import {
 } from "@/emails-templates-setup/email-templates";
 import { sendEmails } from "@/config/email.sender.setup";
 import { logger } from "@/utils/logger";
-import { CLIENT_URL } from "../Load_Envs";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-const clientUrl = CLIENT_URL;
+const clientUrl = process.env.CLIENT_URL;
 const attachments = [
   {
     filename: "SecretShare logo", // Inline file

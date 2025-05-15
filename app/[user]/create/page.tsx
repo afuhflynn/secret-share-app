@@ -52,13 +52,16 @@ export default function CreateSecretPage() {
     const expiryTime = formData.get("expiryTime") as string;
     const maxViews = formData.get("maxViews") as string;
 
-    const encryptedData = await encryptData(
-      content,
-      process.env.SECRETS_PASSWORD as string
-    );
-    const encryptedName = await encryptData(name, process.env.SECRETS_PASSWORD as string);
-
     try {
+      const encryptedData = await encryptData(
+        content,
+        process.env.NEXT_PUBLIC_SECRETS_PASSWORD || ''
+      );
+      const encryptedName = await encryptData(
+        name,
+        process.env.NEXT_PUBLIC_SECRETS_PASSWORD || ''
+      );
+
       // Demo mode - simulate creating a secret
       await new Promise((resolve) => setTimeout(resolve, 1000));
 
