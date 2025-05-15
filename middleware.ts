@@ -1,11 +1,12 @@
+// middleware.ts
 import NextAuth from "next-auth";
 import authConfig from "./lib/auth.config";
 import { NextRequest, NextResponse } from "next/server";
 import { devLog } from "./utils/devLog";
 
-// 1) Public‐route patterns (static + dynamic)
-const publicPatterns = [
-  /^\/$/, // your landing page
+// Public routes (regex)
+const PUBLIC_ROUTES = [
+  /^\/$/, // landing
   /^\/terms-of-service$/,
   /^\/privacy-policy$/,
   /^\/pricing$/,
@@ -13,22 +14,17 @@ const publicPatterns = [
   /^\/contact$/,
   /^\/features$/,
   /^\/faqs$/,
-  /^\/blog$/, // blog index
-  /^\/blog\/[^\/]+$/, // blog posts
+  /^\/blog$/,
+  /^\/blog\/[^\/]+$/, // /blog/:slug
 ];
 
-// 2) Protected‑route patterns (same as yours)
-const protectedPatterns = [
+// Protected patterns (regex)
+const PROTECTED_ROUTES = [
   /^\/[^\/]+\/settings$/,
   /^\/[^\/]+\/profile$/,
   /^\/[^\/]+\/create$/,
-  /^\/[^\/]+\/secret$/,
-  /^\/[^\/]+\/secret\/[^\/]+\/delete$/,
-  /^\/[^\/]+\/secret\/[^\/]+\/edit$/,
-  /^\/[^\/]+\/secret\/[^\/]+\/share$/,
-  /^\/s\/[^\/]+\/[^\/]+$/,
-  /^\/s\/[^\/]+\/[^\/]+\/not-found$/,
-  // note: we removed the “/^\/[^\/]+$/” single‑segment catch‑all here
+  /^\/[^\/]+\/secret(\/.*)?$/, // /:user/secret and deeper
+  /^\/s\/[^\/]+\/[^\/]+(\/.*)?$/, // /s/:user/:id and deeper
 ];
 
 export async function middleware(req: NextRequest) {
@@ -36,7 +32,16 @@ export async function middleware(req: NextRequest) {
   const session = await auth();
   const { pathname } = req.nextUrl;
 
-  // → Skip Next.js internals, auth API, assets
+  // 0) If signed in AND already under /<username>, just let it through.
+  if (session) {
+    const handle = session.user?.name?.trim().split(" ")[0].toLowerCase();
+    if (handle && pathname.startsWith(`/${handle}`)) {
+      devLog(`✔︎ Already under /${handle}, allowing ${pathname}`);
+      return NextResponse.next();
+    }
+  }
+
+  // 1) Skip Next.js internals, API/auth endpoints, and static files.
   if (
     pathname.startsWith("/_next") ||
     pathname.startsWith("/api") ||
@@ -46,35 +51,39 @@ export async function middleware(req: NextRequest) {
     return NextResponse.next();
   }
 
-  // → Allow any public page
-  if (publicPatterns.some((rx) => rx.test(pathname))) {
-    // Special case: authenticated users on `/` should get sent to their profile
-    if (pathname === "/" && session) {
-      const username = session.user?.name?.trim()?.split(" ")[0]?.toLowerCase();
-      if (username) {
-        devLog(`Authenticated hit "/" → redirect → /${username}`);
-        return NextResponse.redirect(new URL(`/${username}`, req.url));
-      }
+  // 2) The root "/" route
+  if (pathname === "/") {
+    if (!session) {
+      devLog("→ Unauthenticated on `/` → redirect to /auth/log-in");
+      return NextResponse.redirect(new URL("/auth/log-in", req.url));
+    }
+    // Authenticated on `/` → redirect to /username
+    const handle = session.user?.name?.trim().split(" ")[0].toLowerCase();
+    if (handle) {
+      devLog(`→ Authenticated on "/" → redirect to /${handle}`);
+      return NextResponse.redirect(new URL(`/${handle}`, req.url));
     }
     return NextResponse.next();
   }
 
-  // → Enforce login on protected patterns
-  if (protectedPatterns.some((rx) => rx.test(pathname))) {
-    if (!session) {
-      devLog(`Unauthenticated access to ${pathname}`);
-      return NextResponse.redirect(new URL("/auth/log-in", req.url));
-    }
+  // 3) Public pages
+  if (PUBLIC_ROUTES.some((rx) => rx.test(pathname))) {
+    return NextResponse.next();
   }
 
-  // → Finally, catch anything else that’s a single segment (your user profiles)
-  //    (e.g. `/someuser`) and enforce login there too:
-  if (/^\/[^\/]+$/.test(pathname) && !session) {
-    devLog(`Unauthenticated access to profile ${pathname}`);
+  // 4) Protected pages require login
+  if (PROTECTED_ROUTES.some((rx) => rx.test(pathname)) && !session) {
+    devLog(`→ Unauthenticated access to protected ${pathname}`);
     return NextResponse.redirect(new URL("/auth/log-in", req.url));
   }
 
-  // → Let everything else through
+  // 5) Top-level username profile (/:username)
+  if (/^\/[^\/]+$/.test(pathname) && !session) {
+    devLog(`→ Unauthenticated access to profile ${pathname}`);
+    return NextResponse.redirect(new URL("/auth/log-in", req.url));
+  }
+
+  // 6) Everything else (deep nested under /:username or unlisted) passes
   return NextResponse.next();
 }
 

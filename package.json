@@ -6,6 +6,7 @@
   "description": "SecretShare is a secure platform for sharing sensitive information with your team or clients. With end-to-end encryption and time-limited access, you can ensure your secrets remain secure.",
   "scripts": {
     "dev": "next dev",
+    "dev:debug": "NODE_OPTIONS='--inspect' next dev",
     "build": "next build",
     "start": "next start",
     "lint": "next lint"

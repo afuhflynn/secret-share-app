@@ -4,7 +4,6 @@ import { logger } from "@/utils/logger";
 import { devLog } from "@/utils/devLog";
 import { sendPasswordResetEmail } from "@/utils/Emails/send.emails";
 import { generateToken } from "@/utils/generate-token";
-import { CLIENT_URL } from "@/utils/Load_Envs";
 
 /**
  * @description A function that handles user sign up and account creation
@@ -52,7 +51,7 @@ export async function POST(req: NextRequest) {
     await sendPasswordResetEmail(
       foundUser?.email as string,
       foundUser?.name as string,
-      `${CLIENT_URL}/auth/reset-password/${resetToken}`,
+      `${process.env.CLIENT_URL}/auth/reset-password/${resetToken}`,
       {
         "X-Category": "Password Reset Email",
       }

@@ -3,20 +3,12 @@ import GitHub from "next-auth/providers/github";
 import Google from "next-auth/providers/google";
 import Credentials from "next-auth/providers/credentials";
 import { prisma } from "@/lib/prisma";
-// import { User } from "@prisma/client";
 import NextAuth, { CredentialsSignin } from "next-auth";
 import authConfig from "./auth.config";
-// import { v4 as uuid } from "uuid";
 
 import { CustomPrismaAdapter } from "@/lib/custom-prisma-adapter";
 import { logger } from "@/utils/logger";
 import { sendNotificationEmail } from "@/utils/Emails/send.emails";
-import {
-  GITHUB_CLIENT_ID,
-  GITHUB_CLIENT_SECRET,
-  GOOGLE_CLIENT_ID,
-  GOOGLE_CLIENT_SECRET,
-} from "@/utils/Load_Envs";
 
 class InvalidLoginError extends CredentialsSignin {
   code = "Invalid email or password";
@@ -28,16 +20,29 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
   ...authConfig,
   providers: [
     GitHub({
-      clientId: GITHUB_CLIENT_ID,
-      clientSecret: GITHUB_CLIENT_SECRET,
+      clientId: process.env.GITHUB_CLIENT_ID,
+      clientSecret: process.env.GITHUB_CLIENT_SECRET,
     }),
     Google({
-      clientId: GOOGLE_CLIENT_ID,
-      clientSecret: GOOGLE_CLIENT_SECRET,
+      clientId: process.env.GOOGLE_CLIENT_ID,
+      clientSecret: process.env.GOOGLE_CLIENT_SECRET,
       authorization: {
         params: {
-          scope: "openid email profile",
+          prompt: "consent",
+          access_type: "offline",
+          response_type: "code",
         },
+      },
+      profile(profile) {
+        return {
+          id: profile.sub,
+          name: profile.name,
+          email: profile.email,
+          image: profile.picture,
+          username: profile.email.split("@")[0],
+          emailVerified: profile.email_verified,
+          emailVerifiedAt: new Date(),
+        };
       },
     }),
     Credentials({
@@ -118,14 +123,13 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
     }),
   ],
   callbacks: {
-    async jwt({ token, user }) {
-      if (user) {
-        token.sub = user.id;
-        token.email = user.email;
-        token.name = user.name;
+    async jwt({ token, account }) {
+      if (account?.access_token) {
+        token.accessToken = account.access_token;
       }
       return token;
     },
+
     async redirect() {
       return "/"; // Always redirect to home
     },

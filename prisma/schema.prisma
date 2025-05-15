@@ -4,7 +4,7 @@ generator client {
 
 datasource db {
   provider = "mongodb"
-  url      = env("LOCAL_DATABASE_URL") // to be changed later in production
+  url      = env("DATABASE_URL") // to be changed later in production
 }
 
 enum Plan {

@@ -32,58 +32,19 @@ import { useUserStore } from "@/store/user.store";
 import { Loading } from "@/components/ui/loading";
 import { devLog } from "@/utils/devLog";
 import { privateAxios } from "@/utils/axios.config";
+import {
+  getStrengthPercent,
+  rules,
+  validatePassword,
+} from "@/lib/password-validate";
+import { getSession } from "next-auth/react";
 import { User as AuthUser } from "@prisma/client";
 
-// ------ Password validation helpers ------
-const rules = [
-  {
-    key: "length",
-    label: "At least 8 characters",
-    test: (pw: string) => pw.length >= 8,
-  },
-  {
-    key: "upper",
-    label: "One uppercase letter",
-    test: (pw: string) => /[A-Z]/.test(pw),
-  },
-  {
-    key: "lower",
-    label: "One lowercase letter",
-    test: (pw: string) => /[a-z]/.test(pw),
-  },
-  { key: "number", label: "One number", test: (pw: string) => /\d/.test(pw) },
-  {
-    key: "symbol",
-    label: "One special character (!@#$%^&*)",
-    test: (pw: string) => /[!@#\$%\^&\*]/.test(pw),
-  },
-];
-
-export function validatePassword(pw: string) {
-  return rules.reduce((acc, rule) => {
-    acc[rule.key] = rule.test(pw);
-    return acc;
-  }, {} as Record<string, boolean>);
-}
-
-export function getStrengthPercent(results: Record<string, boolean>) {
-  const passed = Object.values(results).filter(Boolean).length;
-  return Math.floor((passed / rules.length) * 100);
-}
-
 export default function ProfilePage() {
+  // Get the user session from the server using the react session hook from authjs
+  const [user, setUser] = useState<AuthUser | null>(null);
   const router = useRouter();
-  const {
-    user,
-    isGettingUserProfile,
-    setUser,
-    error,
-    setError,
-    message,
-    setMessage,
-    getUserProfile,
-    isAuthenticated,
-  } = useUserStore();
+  const { isGettingUserProfile, getUserProfile } = useUserStore();
   const [formData, setFormData] = useState({
     name: user?.name || "",
     email: user?.email || "",
@@ -96,19 +57,39 @@ export default function ProfilePage() {
   });
   const [showCurrent, setShowCurrent] = useState(false);
   const [showNew, setShowNew] = useState(false);
-  const [showConfirm, setShowConfirm] = useState(false);
   const [isUpdatingDetails, setIsUpdatingDetails] = useState(false);
   const [isUpdatingPassword, setIsUpdatingPassword] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [profileAvatar, setProfileAvatar] = useState(user?.image || "");
+  const [error, setError] = useState<null | string>(null);
+  const [message, setMessage] = useState<null | string>(null);
 
   useEffect(() => {
     getUserProfile();
   }, [getUserProfile]);
+
+  // get user session and data use ueEffect
   useEffect(() => {
-    if (!user && !isAuthenticated)
-      router.push(`/auth/log-in?redirect=${window.location.pathname}`);
-  }, [user, isAuthenticated, router]);
+    async function fetchUser() {
+      const session = await getSession();
+      if (session) {
+        const userData = session.user as AuthUser;
+        setUser(userData);
+        setFormData({
+          name: userData.name || "",
+          email: userData.email || "",
+          username: userData.username || "",
+        });
+        setSecurityFormData({
+          currentPassword: "",
+          newPassword: "",
+          confirmPassword: "",
+        });
+        setProfileAvatar(userData.image || "");
+      }
+    }
+    fetchUser();
+  }, []);
 
   // derive newPassword strength
   const pwdResults = useMemo(
@@ -236,47 +217,38 @@ export default function ProfilePage() {
                     </AvatarFallback>
                   </Avatar>
 
-                  {/* <>
-                        <span className="sr-only">Upload avatar</span>
-                        <Camera className="w-4 h-4" />
-                      </> */}
+                  <UploadButton
+                    appearance={{
+                      container: {},
+                      button: {
+                        border: "none",
+                        padding: 0,
+                        width: "100%",
+                        height: "100%",
+                        display: "flex",
+                        alignItems: "center",
+                        justifyContent: "center",
+                      },
+                    }}
+                    className="appearance-none absolute"
+                    endpoint="imageUploader"
+                    onClientUploadComplete={(res) => {
+                      devLog("Files: ", res);
+                      setProfileAvatar(res[0].ufsUrl);
+                      toast({
+                        title: "Upload complete",
+                        description: "Profile photo uploaded successfully",
+                      });
+                    }}
+                    onUploadError={(error: Error) => {
+                      toast({
+                        title: "Error uploading profile photo",
+                        description: `ERROR! ${error.message}`,
+                        variant: "destructive",
+                      });
+                    }}
+                  />
                 </div>
-                <UploadButton
-                  appearance={
-                    {
-                      // container: {
-                      //   background: "transparent",
-                      // },
-                      // button: {
-                      //   background: "transparent",
-                      //   border: "none",
-                      //   padding: 0,
-                      //   width: "100%",
-                      //   height: "100%",
-                      //   display: "flex",
-                      //   alignItems: "center",
-                      //   justifyContent: "center",
-                      // },
-                    }
-                  }
-                  className="appearance-none w-8 h-8"
-                  endpoint="imageUploader"
-                  onClientUploadComplete={(res) => {
-                    devLog("Files: ", res);
-                    setProfileAvatar(res[0].ufsUrl);
-                    toast({
-                      title: "Upload complete",
-                      description: "Profile photo uploaded successfully",
-                    });
-                  }}
-                  onUploadError={(error: Error) => {
-                    toast({
-                      title: "Error uploading profile photo",
-                      description: `ERROR! ${error.message}`,
-                      variant: "destructive",
-                    });
-                  }}
-                />
                 <p className="text-xs text-muted-foreground">
                   Click the camera icon to upload a new avatar
                 </p>
@@ -331,7 +303,7 @@ export default function ProfilePage() {
             <CardDescription>Change your password.</CardDescription>
           </CardHeader>
           <form onSubmit={handleUpdatePassword}>
-            <CardContent className="space-y-4">
+            <CardContent className="space-y-2 flex flex-col">
               <Label htmlFor="currentPassword">Current Password</Label>
               <div className="relative">
                 <Input
@@ -363,7 +335,9 @@ export default function ProfilePage() {
                     handleSecurityChange(e.target.id, e.target.value)
                   }
                   required
-                  className="pr-10"
+                  className={`pr-10 ${
+                    securityFormData.newPassword.length > 0 ? "mb-3" : ""
+                  }`}
                 />
                 <button
                   type="button"
@@ -375,41 +349,51 @@ export default function ProfilePage() {
               </div>
               {!allGood && (
                 <>
-                  <div className="w-full bg-gray-200 h-2 rounded mt-2 overflow-hidden">
-                    <div
-                      className="h-2 rounded"
-                      style={{
-                        width: `${strength}%`,
-                        backgroundColor: strength >= 80 ? "#10b981" : "#f59e0b",
-                      }}
-                    />
-                  </div>
-                  <ul className="mt-2 space-y-1 text-sm">
-                    {rules.map((r) => {
-                      const ok = pwdResults[r.key];
-                      return (
-                        <li key={r.key} className="flex items-center">
-                          {ok ? (
-                            <CheckCircle
-                              size={14}
-                              className="text-green-500 mr-1"
-                            />
-                          ) : (
-                            <XCircle size={14} className="text-red-500 mr-1" />
-                          )}
-                          <span
-                            className={ok ? "text-green-600" : "text-red-600"}
-                          >
-                            {r.label}
-                          </span>
-                        </li>
-                      );
-                    })}
-                  </ul>
+                  {securityFormData.newPassword.length > 0 && (
+                    <div className="w-full bg-gray-200 h-1 rounded mt-2 overflow-hidden">
+                      <div
+                        className="h-2 rounded"
+                        style={{
+                          width: `${strength}%`,
+                          backgroundColor:
+                            strength >= 80 ? "#10b981" : "#f59e0b",
+                        }}
+                      />
+                    </div>
+                  )}
+                  {securityFormData.newPassword.length > 0 && (
+                    <ul className="my-2 space-y-1 text-sm mb-4">
+                      {rules.map((r) => {
+                        const ok = pwdResults[r.key];
+                        return (
+                          <li key={r.key} className="flex items-center">
+                            {ok ? (
+                              <CheckCircle
+                                size={14}
+                                className="text-green-500 mr-1"
+                              />
+                            ) : (
+                              <XCircle
+                                size={14}
+                                className="text-red-500 mr-1"
+                              />
+                            )}
+                            <span
+                              className={ok ? "text-green-600" : "text-red-600"}
+                            >
+                              {r.label}
+                            </span>
+                          </li>
+                        );
+                      })}
+                    </ul>
+                  )}
                 </>
               )}
 
-              <Label htmlFor="confirmPassword">Confirm New Password</Label>
+              <Label htmlFor="confirmPassword" className="pt-4">
+                Confirm New Password
+              </Label>
               <Input
                 id="confirmPassword"
                 type="password"

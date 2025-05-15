@@ -18,7 +18,7 @@ export async function PUT(req: NextRequest) {
   const session = await auth();
 
   // Check if username is valid
-  const containsWhiteSpace = /[s+]/g.test(username);
+  const containsWhiteSpace = email.includes(" ");
   const containsWeirdCharacter = /[!@#\$%\^&\*]/.test(username);
 
   if (containsWhiteSpace || containsWeirdCharacter) {
@@ -50,36 +50,40 @@ export async function PUT(req: NextRequest) {
       );
 
     // Check if user already exists with provided new email or username
-    const userNameExists = await prisma.user.findFirst({
-      where: {
-        username: username as string,
-      },
-    });
-
-    if (userNameExists)
-      return NextResponse.json(
-        {
-          success: false,
-          message: "The provided username is already taken!",
+    if (foundUser.username !== username) {
+      const userNameExists = await prisma.user.findFirst({
+        where: {
+          username: username as string,
         },
-        { status: 409 }
-      );
+      });
+
+      if (userNameExists)
+        return NextResponse.json(
+          {
+            success: false,
+            message: "The provided username is already taken!",
+          },
+          { status: 409 }
+        );
+    }
 
     // Check if user already exists with provided new email or username
-    const userEmailExists = await prisma.user.findUnique({
-      where: {
-        email: email as string,
-      },
-    });
-
-    if (userEmailExists)
-      return NextResponse.json(
-        {
-          success: false,
-          message: "The provided email is already taken!",
+    if (session?.user.email !== email) {
+      const userEmailExists = await prisma.user.findUnique({
+        where: {
+          email: email as string,
         },
-        { status: 409 }
-      );
+      });
+
+      if (userEmailExists)
+        return NextResponse.json(
+          {
+            success: false,
+            message: "The provided email is already taken!",
+          },
+          { status: 409 }
+        );
+    }
 
     // Update db record
     const updatedUser = await prisma.user.update({

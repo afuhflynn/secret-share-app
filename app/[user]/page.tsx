@@ -14,7 +14,6 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { decryptData } from "@/lib/encryption";
-import { SECRETS_PASSWORD } from "@/utils/Load_Envs";
 import { useUserStore } from "@/store/user.store";
 import { Secret } from "@prisma/client";
 import { Loading } from "@/components/ui/loading";
@@ -30,12 +29,6 @@ export default function DashboardPage() {
   useEffect(() => {
     getUserProfile();
   }, [getUserProfile]);
-
-  useEffect(() => {
-    if (!user && !isAuthenticated) {
-      router.push(`/auth/log-in?redirect=${window.location.pathname}`);
-    }
-  }, [user, isAuthenticated, router]);
 
   if (isGettingUserProfile) {
     return <Loading />;

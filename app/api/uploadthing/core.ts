@@ -1,6 +1,5 @@
 import { devLog } from "@/utils/devLog";
 import { sendNotificationEmail } from "@/utils/Emails/send.emails";
-import { NODEMAILER_ADMIN_EMAIL, UPLOADTHING_TOKEN } from "@/utils/Load_Envs";
 import { logger } from "@/utils/logger";
 import { createUploadthing, type FileRouter } from "uploadthing/next";
 import { UploadThingError } from "uploadthing/server";
@@ -48,7 +47,7 @@ export const ourFileRouter = {
       // Send admin email to notify about the photos being uploaded from the server
       sendNotificationEmail(
         `A user at SecretShare image upload just got completed with account that has userId: ${metadata.userId}`,
-        NODEMAILER_ADMIN_EMAIL,
+        process.env.NODEMAILER_ADMIN_EMAIL as string,
         "Tembeng Flynn",
         new Date(Date.now()).toLocaleDateString(),
         "SecretShare user",

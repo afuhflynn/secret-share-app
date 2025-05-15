@@ -27,7 +27,6 @@ import { Textarea } from "@/components/ui/textarea";
 import { toast } from "@/hooks/use-toast";
 import { useDemoAuth } from "@/components/providers/demo-auth-provider";
 import { encryptData } from "@/lib/encryption";
-import { SECRETS_PASSWORD } from "@/utils/Load_Envs";
 import { useUserStore } from "@/store/user.store";
 
 export default function CreateSecretPage() {
@@ -43,12 +42,6 @@ export default function CreateSecretPage() {
     getUserProfile();
   }, [getUserProfile]);
 
-  useEffect(() => {
-    if (!user && !isAuthenticated) {
-      router.push(`/auth/log-in?redirect=${window.location.pathname}`);
-    }
-  }, [user, isAuthenticated, router]);
-
   async function onSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
     setIsLoading(true);
@@ -61,9 +54,9 @@ export default function CreateSecretPage() {
 
     const encryptedData = await encryptData(
       content,
-      SECRETS_PASSWORD as string
+      process.env.SECRETS_PASSWORD as string
     );
-    const encryptedName = await encryptData(name, SECRETS_PASSWORD as string);
+    const encryptedName = await encryptData(name, process.env.SECRETS_PASSWORD as string);
 
     try {
       // Demo mode - simulate creating a secret

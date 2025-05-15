@@ -32,7 +32,7 @@ export const SignInForm = () => {
   async function onSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
     setError("");
-    setIsSubmitted(true);
+    setIsSubmitted(false);
     try {
       signIn(formData); // Call backend signup
       setIsSubmitted(true);
