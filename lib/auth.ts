@@ -15,7 +15,7 @@ class InvalidLoginError extends CredentialsSignin {
 }
 
 export const { handlers, auth, signIn, signOut } = NextAuth({
-  secret: process.env.NEXTAUTH_SECRET,
+  secret: process.env.AUTH_SECRET,
   adapter: CustomPrismaAdapter(prisma),
   session: { strategy: "jwt" },
   pages: {

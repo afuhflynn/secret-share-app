@@ -53,16 +53,16 @@ export async function middleware(req: NextRequest) {
 
   // 2) The root "/" route
   if (pathname === "/") {
-    if (!session) {
-      devLog("→ Unauthenticated on `/` → redirect to /auth/log-in");
-      return NextResponse.redirect(new URL("/auth/log-in", req.url));
+    if (session) {
+      // Authenticated on `/` → redirect to /username
+      const handle = session.user?.name?.trim().split(" ")[0].toLowerCase();
+      if (handle) {
+        devLog(`→ Authenticated on "/" → redirect to /${handle}`);
+        return NextResponse.redirect(new URL(`/${handle}`, req.url));
+      }
+      return NextResponse.next();
     }
-    // Authenticated on `/` → redirect to /username
-    const handle = session.user?.name?.trim().split(" ")[0].toLowerCase();
-    if (handle) {
-      devLog(`→ Authenticated on "/" → redirect to /${handle}`);
-      return NextResponse.redirect(new URL(`/${handle}`, req.url));
-    }
+    // Unauthenticated users can access the home page
     return NextResponse.next();
   }
 
