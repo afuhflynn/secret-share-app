@@ -1,73 +1,138 @@
+import authConfig from "@/lib/auth.config";
+import { prisma } from "@/lib/prisma";
+import { logger } from "@/utils/logger";
+import NextAuth from "next-auth";
 import { NextResponse } from "next/server";
-import { getServerSession } from "next-auth/next";
-
-import { authOptions } from "@/lib/auth";
-import prisma from "@/lib/prisma";
 
 export async function POST(req: Request) {
+  const { name, content, expiryType, expiryTime, maxViews } = await req.json();
+  if (!name || !content || !expiryType) {
+    return NextResponse.json(
+      { success: false, message: "All fields are required." },
+      { status: 400 }
+    );
+  }
+
   try {
-    const session = await getServerSession(authOptions);
+    const { auth } = NextAuth(authConfig);
+    const session = await auth();
 
     if (!session?.user) {
-      return new NextResponse("Unauthorized", { status: 401 });
+      return NextResponse.json("Unauthorized", { status: 401 });
     }
 
-    const { name, content, expiryType, expiryTime, maxViews } =
-      await req.json();
-
-    // Calculate expiration date based on expiryTime
-    const expiresAt = new Date();
-    if (expiryTime === "1h") {
-      expiresAt.setHours(expiresAt.getHours() + 1);
-    } else if (expiryTime === "24h") {
-      expiresAt.setHours(expiresAt.getHours() + 24);
-    } else if (expiryTime === "7d") {
-      expiresAt.setDate(expiresAt.getDate() + 7);
-    } else if (expiryTime === "30d") {
-      expiresAt.setDate(expiresAt.getDate() + 30);
-    } else if (expiryTime === "never") {
-      // For "never", set a far future date (1 year)
-      expiresAt.setFullYear(expiresAt.getFullYear() + 1);
+    // Compute expiresAt...
+    let expiresAt: Date | null = new Date();
+    if (expiryTime) {
+      switch (expiryTime) {
+        case "1h":
+          expiresAt.setHours(expiresAt.getHours() + 1);
+          break;
+        case "24h":
+          expiresAt.setHours(expiresAt.getHours() + 24);
+          break;
+        case "7d":
+          expiresAt.setDate(expiresAt.getDate() + 7);
+          break;
+        case "30d":
+          expiresAt.setDate(expiresAt.getDate() + 30);
+          break;
+        case "never":
+          expiresAt.setFullYear(expiresAt.getFullYear() + 1);
+          break;
+      }
+    } else {
+      expiresAt = null;
     }
 
-    // Create the secret
+    // Find the user by email
+    const foundUser = await prisma.user.findUnique({
+      where: { email: session.user.email! },
+    });
+
+    if (!foundUser) {
+      return NextResponse.json(
+        { success: false, message: "User not found." },
+        { status: 404 }
+      );
+    }
+
+    // Create the secret—just pass userId, drop the User field
     const secret = await prisma.secret.create({
       data: {
         name,
         content,
-        expiresAt,
-        maxViews: expiryType === "views" ? Number.parseInt(maxViews) : null,
-        userId: session.user.id,
+        expiresAt: expiryType === "views" ? null : expiresAt,
+        maxViews: expiryType === "views" ? parseInt(maxViews, 10) : null,
+        userId: foundUser.id,
       },
     });
 
-    return NextResponse.json(secret);
-  } catch (error) {
-    console.error("[SECRETS_POST]", error);
-    return new NextResponse("Internal Error", { status: 500 });
+    logger.info(`Secret created for ${session.user.email}`);
+    return NextResponse.json({
+      success: true,
+      message: "Secret created successfully.",
+      secret,
+    });
+  } catch (error: any) {
+    logger.error("Error creating user secret", error);
+    return new NextResponse(
+      "Sorry, an unexpected error occurred creating your secret. Try again later.",
+      { status: 500 }
+    );
   }
 }
 
-export async function GET(req: Request) {
+// Get user's secrets
+export async function GET(_: Request) {
   try {
-    const session = await getServerSession(authOptions);
+    const { auth } = NextAuth(authConfig);
+    const session = await auth();
 
     if (!session?.user) {
-      return new NextResponse("Unauthorized", { status: 401 });
+      return new NextResponse(
+        "Unauthorized please login into your account to continue",
+        { status: 401 }
+      );
     }
+    // Find the user by email
+    const foundUser = await prisma.user.findUnique({
+      where: { email: session.user.email! },
+    });
 
+    if (!foundUser) {
+      return NextResponse.json(
+        { success: false, message: "User not found." },
+        { status: 404 }
+      );
+    }
     const secrets = await prisma.secret.findMany({
       where: {
-        userId: session.user.id,
+        userId: foundUser.id,
       },
       orderBy: {
         createdAt: "desc",
       },
     });
 
-    return NextResponse.json(secrets);
-  } catch (error) {
-    console.error("[SECRETS_GET]", error);
-    return new NextResponse("Internal Error", { status: 500 });
+    if (!secrets) {
+      return NextResponse.json(
+        { success: false, message: "User secrets found." },
+        { status: 204 }
+      );
+    }
+
+    return NextResponse.json({
+      secrets: secrets,
+      success: true,
+      message: "Secret retrieved successfully.",
+    });
+  } catch (error: any) {
+    logger.error("Error creating user secret", error.message);
+
+    return new NextResponse(
+      "Sorry, an unexpected error occurred getting your secrets.",
+      { status: 500 }
+    );
   }
 }

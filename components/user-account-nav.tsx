@@ -50,21 +50,13 @@ export function UserAccountNav({ user }: { user: User }) {
         </div>
         <DropdownMenuSeparator />
         <DropdownMenuItem asChild className="cursor-pointer">
-          <Link
-            href={`/${
-              user.username ? user.username : user.name?.trim()?.split(" ")[0]
-            }/profile`}
-          >
+          <Link href={`/dashboard/profile`}>
             <UserIcon className="w-4 h-4 mr-2" />
             <span>Profile</span>
           </Link>
         </DropdownMenuItem>
         <DropdownMenuItem asChild className="cursor-pointer">
-          <Link
-            href={`/${
-              user.username ? user.username : user.name?.trim()?.split(" ")[0]
-            }/settings`}
-          >
+          <Link href={`/dashboard/settings`}>
             <Settings className="w-4 h-4 mr-2" />
             <span>Settings</span>
           </Link>

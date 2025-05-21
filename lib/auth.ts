@@ -29,26 +29,14 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
       clientSecret: process.env.GITHUB_CLIENT_SECRET,
     }),
     Google({
-      clientId: process.env.GOOGLE_CLIENT_ID,
-      clientSecret: process.env.GOOGLE_CLIENT_SECRET,
-      wellKnown: "https://accounts.google.com/.well-known/openid-configuration",
+      clientId: process.env.GOOGLE_CLIENT_ID!,
+      clientSecret: process.env.GOOGLE_CLIENT_SECRET!,
       authorization: {
         params: {
           prompt: "consent",
           access_type: "offline",
           response_type: "code",
         },
-      },
-      profile(profile) {
-        return {
-          id: profile.sub,
-          name: profile.name,
-          email: profile.email,
-          image: profile.picture,
-          username: profile.email.split("@")[0],
-          emailVerified: profile.email_verified,
-          emailVerifiedAt: new Date(),
-        };
       },
     }),
     Credentials({
@@ -148,10 +136,10 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
     },
     async signIn({ account, profile }) {
       if (account?.provider === "google") {
-        return (
-          profile?.email_verified === true &&
-          profile?.email?.endsWith("@gmail.com") === true
-        );
+        if (profile?.email_verified && profile?.email?.endsWith("@gmail.com")) {
+          return true;
+        }
+        return false;
       }
       return true; // Do different verification for other providers that don't have `email_verified`
     },

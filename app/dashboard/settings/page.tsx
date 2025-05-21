@@ -22,6 +22,9 @@ import { Switch } from "@/components/ui/switch";
 import { toast } from "@/hooks/use-toast";
 import { useUserStore } from "@/store/user.store";
 import { Loading } from "@/components/ui/loading";
+import { BackButton } from "@/components/back-button";
+import { DeleteSecretButton } from "@/components/delete-secrets-form";
+import { NotificationsSettings } from "@/components/notifications-info";
 
 export default function SettingsPage() {
   const { user, isGettingUserProfile } = useUserStore();
@@ -29,54 +32,12 @@ export default function SettingsPage() {
   const { theme, setTheme } = useTheme();
   const [isLoading, setIsLoading] = useState(false);
 
-  // Notification settings
-  const [emailNotifications, setEmailNotifications] = useState<boolean>(
-    user?.emailNotifications || true
-  );
-  const [accessNotifications, setAccessNotifications] = useState<boolean>(
-    user?.accessNotifications || true
-  );
-  const [marketingEmails, setMarketingEmails] = useState<boolean>(
-    user?.marketingEmails || false
-  );
-
-  async function saveSettings() {
-    setIsLoading(true);
-
-    try {
-      // In a real app, we would save the settings to the database
-      // For demo purposes, we'll just simulate a delay
-      await new Promise((resolve) => setTimeout(resolve, 1000));
-
-      toast({
-        title: "Settings saved",
-        description: "Your settings have been saved successfully.",
-      });
-    } catch (error) {
-      console.error(error);
-      toast({
-        title: "Error",
-        description: "Failed to save settings. Please try again.",
-        variant: "destructive",
-      });
-    } finally {
-      setIsLoading(false);
-    }
-  }
-
   if (isGettingUserProfile) {
     return <Loading />;
   }
   return (
-    <div className="max-w-2xl mx-auto">
-      <Button
-        variant="ghost"
-        className="flex items-center mb-4 text-muted-foreground"
-        onClick={() => router.back()}
-      >
-        <ArrowLeft className="w-4 h-4 mr-2" />
-        Back
-      </Button>
+    <div className="max-w-2xl mx-auto pt-16">
+      <BackButton />
 
       <div className="space-y-6">
         <div>
@@ -136,64 +97,7 @@ export default function SettingsPage() {
           </CardContent>
         </Card>
 
-        <Card>
-          <CardHeader>
-            <CardTitle>Notifications</CardTitle>
-            <CardDescription>
-              Configure how you receive notifications.
-            </CardDescription>
-          </CardHeader>
-          <CardContent className="space-y-4">
-            <div className="flex items-center justify-between">
-              <div className="space-y-0.5">
-                <Label htmlFor="email-notifications">Email Notifications</Label>
-                <p className="text-xs text-muted-foreground">
-                  Receive email notifications about your account.
-                </p>
-              </div>
-              <Switch
-                id="email-notifications"
-                checked={emailNotifications}
-                onCheckedChange={setEmailNotifications}
-              />
-            </div>
-            <Separator />
-            <div className="flex items-center justify-between">
-              <div className="space-y-0.5">
-                <Label htmlFor="access-notifications">
-                  Access Notifications
-                </Label>
-                <p className="text-xs text-muted-foreground">
-                  Get notified when someone accesses your shared secrets.
-                </p>
-              </div>
-              <Switch
-                id="access-notifications"
-                checked={accessNotifications}
-                onCheckedChange={setAccessNotifications}
-              />
-            </div>
-            <Separator />
-            <div className="flex items-center justify-between">
-              <div className="space-y-0.5">
-                <Label htmlFor="marketing-emails">Marketing Emails</Label>
-                <p className="text-xs text-muted-foreground">
-                  Receive emails about new features and promotions.
-                </p>
-              </div>
-              <Switch
-                id="marketing-emails"
-                checked={marketingEmails}
-                onCheckedChange={setMarketingEmails}
-              />
-            </div>
-          </CardContent>
-          <CardFooter>
-            <Button onClick={saveSettings} disabled={isLoading}>
-              {isLoading ? "Saving..." : "Save Notification Settings"}
-            </Button>
-          </CardFooter>
-        </Card>
+        <NotificationsSettings />
 
         <Card>
           <CardHeader>
@@ -220,7 +124,7 @@ export default function SettingsPage() {
             <Separator />
             <div>
               <Button variant="outline" className="w-full" asChild>
-                <Link href={`/${user?.name}/profile`}>
+                <Link href={`/dashboard/profile#password`}>
                   <Lock className="w-4 h-4 mr-2" />
                   Change Password
                 </Link>
@@ -242,11 +146,7 @@ export default function SettingsPage() {
                 Export Your Data
               </Button>
             </div>
-            <div>
-              <Button variant="destructive" className="w-full">
-                Delete All Secrets
-              </Button>
-            </div>
+            <DeleteSecretButton />
           </CardContent>
         </Card>
       </div>

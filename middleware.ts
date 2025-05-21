@@ -18,23 +18,14 @@ const PUBLIC_ROUTES = [
   /^\/blog\/[^\/]+$/, // /blog/:slug
 ];
 
-// Protected patterns (regex)
-const PROTECTED_ROUTES = [
-  /^\/[^\/]+\/settings$/,
-  /^\/[^\/]+\/profile$/,
-  /^\/[^\/]+\/create$/,
-  /^\/[^\/]+\/secret(\/.*)?$/, // /:user/secret and deeper
-  /^\/s\/[^\/]+\/[^\/]+(\/.*)?$/, // /s/:user/:id and deeper
-];
-
 export async function middleware(req: NextRequest) {
   const { auth } = NextAuth(authConfig);
   const session = await auth();
   const { pathname } = req.nextUrl;
 
-  // 0) If signed in AND already under /<username>, just let it through.
+  // 0) If signed in AND already under /dashboard, just let it through.
   if (session) {
-    const handle = session.user?.name?.trim().split(" ")[0].toLowerCase();
+    const handle = "dashboard";
     if (handle && pathname.startsWith(`/${handle}`)) {
       devLog(`✔︎ Already under /${handle}, allowing ${pathname}`);
       return NextResponse.next();
@@ -55,7 +46,7 @@ export async function middleware(req: NextRequest) {
   if (pathname === "/") {
     if (session) {
       // Authenticated on `/` → redirect to /username
-      const handle = session.user?.name?.trim().split(" ")[0].toLowerCase();
+      const handle = "dashboard";
       if (handle) {
         devLog(`→ Authenticated on "/" → redirect to /${handle}`);
         return NextResponse.redirect(new URL(`/${handle}`, req.url));
@@ -72,14 +63,11 @@ export async function middleware(req: NextRequest) {
   }
 
   // 4) Protected pages require login
-  if (PROTECTED_ROUTES.some((rx) => rx.test(pathname)) && !session) {
+  if (
+    (pathname.startsWith("/dashboard") || pathname.startsWith("/s")) &&
+    !session
+  ) {
     devLog(`→ Unauthenticated access to protected ${pathname}`);
-    return NextResponse.redirect(new URL("/auth/log-in", req.url));
-  }
-
-  // 5) Top-level username profile (/:username)
-  if (/^\/[^\/]+$/.test(pathname) && !session) {
-    devLog(`→ Unauthenticated access to profile ${pathname}`);
     return NextResponse.redirect(new URL("/auth/log-in", req.url));
   }
 

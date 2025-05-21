@@ -18,8 +18,8 @@ export async function PUT(req: NextRequest) {
   const session = await auth();
 
   // Check if username is valid
-  const containsWhiteSpace = email.includes(" ");
-  const containsWeirdCharacter = /[!@#\$%\^&\*]/.test(username);
+  const containsWhiteSpace = username.includes(" ");
+  const containsWeirdCharacter = /[!@#-\$%\^&\*]/.test(username);
 
   if (containsWhiteSpace || containsWeirdCharacter) {
     return NextResponse.json(

@@ -51,7 +51,7 @@ export async function POST(req: NextRequest) {
     await sendPasswordResetEmail(
       foundUser?.email as string,
       foundUser?.name as string,
-      `${process.env.CLIENT_URL}/auth/reset-password/${resetToken}`,
+      `${process.env.NEXT_PUBLIC_CLIENT_URL}/auth/reset-password/${resetToken}`,
       {
         "X-Category": "Password Reset Email",
       }

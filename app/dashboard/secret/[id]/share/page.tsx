@@ -24,6 +24,7 @@ import {
 } from "@/components/ui/select";
 import { Switch } from "@/components/ui/switch";
 import { toast } from "@/hooks/use-toast";
+import { BackButton } from "@/components/back-button";
 
 export default function ShareSecretPage() {
   const params = useParams();
@@ -111,14 +112,7 @@ export default function ShareSecretPage() {
 
   return (
     <div className="max-w-2xl mx-auto">
-      <Button
-        variant="ghost"
-        className="flex items-center mb-4 text-muted-foreground"
-        onClick={() => router.back()}
-      >
-        <ArrowLeft className="w-4 h-4 mr-2" />
-        Back
-      </Button>
+      <BackButton />
 
       <Card>
         <CardHeader>

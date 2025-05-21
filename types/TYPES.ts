@@ -4,7 +4,10 @@ import { z } from "zod";
 
 export interface UserStore {
   user: User | null;
+  secrets: Secret[] | null;
   setUser: (user: User | null) => void;
+  setSecrets: (secrets: Secret[] | null) => void;
+
   error: string | null | undefined;
   setError: (error: string | any) => void;
   message: string | null | undefined;

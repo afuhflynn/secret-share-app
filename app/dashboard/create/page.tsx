@@ -1,8 +1,7 @@
 "use client";
 
-import { useEffect, useState } from "react";
-import { useRouter } from "next/navigation";
-import { ArrowLeft, Clock, Eye } from "lucide-react";
+import { useState } from "react";
+import { Clock, Eye } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 import {
@@ -25,95 +24,73 @@ import {
 } from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
 import { toast } from "@/hooks/use-toast";
-import { useDemoAuth } from "@/components/providers/demo-auth-provider";
 import { encryptData } from "@/lib/encryption";
-import { useUserStore } from "@/store/user.store";
+import { BackButton } from "@/components/back-button";
+import { privateAxios } from "@/utils/axios.config";
+import { Secret } from "@prisma/client";
+import { devLog } from "@/utils/devLog";
 
+const initialFormValues = {
+  name: "",
+  content: "",
+  expiryType: "time",
+  maxViews: "5",
+  expiryTime: "7d",
+};
 export default function CreateSecretPage() {
-  const { isDevelopment } = useDemoAuth();
   const [isLoading, setIsLoading] = useState(false);
-  const [expiryType, setExpiryType] = useState("time");
-  const router = useRouter();
-
-  const { isGettingUserProfile, getUserProfile, isAuthenticated, user } =
-    useUserStore();
-
-  useEffect(() => {
-    getUserProfile();
-  }, [getUserProfile]);
+  const [formData, setFormData] = useState(initialFormValues);
 
   async function onSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
     setIsLoading(true);
 
-    const formData = new FormData(event.currentTarget);
-    const name = formData.get("name") as string;
-    const content = formData.get("content") as string;
-    const expiryTime = formData.get("expiryTime") as string;
-    const maxViews = formData.get("maxViews") as string;
-
     try {
-      const encryptedData = await encryptData(
-        content,
-        process.env.NEXT_PUBLIC_SECRETS_PASSWORD || ''
+      const encryptedContent = await encryptData(
+        formData.content,
+        process.env.NEXT_PUBLIC_SECRETS_PASSWORD || ""
       );
+
       const encryptedName = await encryptData(
-        name,
-        process.env.NEXT_PUBLIC_SECRETS_PASSWORD || ''
+        formData.name,
+        process.env.NEXT_PUBLIC_SECRETS_PASSWORD || ""
       );
 
-      // Demo mode - simulate creating a secret
-      await new Promise((resolve) => setTimeout(resolve, 1000));
-
-      // Calculate expiration date based on expiryTime
-      const expiresAt = new Date();
-      if (expiryType === "time" && expiryTime) {
-        if (expiryTime === "1h") {
-          expiresAt.setHours(expiresAt.getHours() + 1);
-        } else if (expiryTime === "24h") {
-          expiresAt.setHours(expiresAt.getHours() + 24);
-        } else if (expiryTime === "7d") {
-          expiresAt.setDate(expiresAt.getDate() + 7);
-        } else if (expiryTime === "30d") {
-          expiresAt.setDate(expiresAt.getDate() + 30);
-        } else if (expiryTime === "never") {
-          // For "never", set a far future date (1 year)
-          expiresAt.setFullYear(expiresAt.getFullYear() + 1);
-        }
-      } else {
-        // Default to 7 days
-        expiresAt.setDate(expiresAt.getDate() + 7);
-      }
-
-      // Create a new secret
-      const newSecret = {
-        id: Math.random().toString(36).substring(2, 15),
+      const res = await privateAxios.post<{
+        secret: Secret;
+        message: string;
+      }>("/api/v1/secrets", {
+        ...formData,
+        content: encryptedContent,
         name: encryptedName,
-        content: encryptedData,
-        createdAt: new Date().toISOString(),
-        expiresAt: expiresAt.toISOString(),
-        currentViews: 0,
-        maxViews: expiryType === "views" && maxViews ? Number(maxViews) : null,
-      };
+      });
 
-      // Get existing secrets from localStorage
-      const storedSecrets = localStorage.getItem("demoSecrets");
-      const secrets = storedSecrets ? JSON.parse(storedSecrets) : [];
-
-      // Add the new secret
-      secrets.unshift(newSecret);
-
-      // Save to localStorage
-      localStorage.setItem("demoSecrets", JSON.stringify(secrets));
+      setFormData(initialFormValues);
 
       toast({
         title: "Secret created",
-        description: "Your secret has been created successfully.",
+        description:
+          res.data.message || "Your secret has been created successfully.",
       });
+      // @ts-expect-error: error is of type 'unknown', casting to 'any' to access properties
+    } catch (error: Error) {
+      if (error.response.data)
+        toast({
+          title: "Error",
+          description:
+            error.response.data.message ||
+            "Failed to create secret. Please try again.",
+          variant: "destructive",
+        });
+      else
+        toast({
+          title: "Error",
+          description:
+            "Sorry, an unexpected error occurred. Please try again later.",
+          variant: "destructive",
+        });
 
-      router.push(`/${user?.name}`);
-    } catch (error) {
-      console.error(error);
+      devLog(error);
       toast({
         title: "Error",
         description: "Failed to create secret. Please try again.",
@@ -124,26 +101,13 @@ export default function CreateSecretPage() {
     }
   }
 
-  return (
-    <div className="max-w-2xl mx-auto">
-      {isDevelopment && (
-        <div className="relative px-4 py-3 mb-4 text-yellow-800 bg-yellow-100 border border-yellow-400 rounded">
-          <strong className="font-bold">Development Mode:</strong>
-          <span className="block sm:inline">
-            {" "}
-            You can create secrets without authentication.
-          </span>
-        </div>
-      )}
+  const handleFormData = (name: string, value: string) => {
+    setFormData({ ...formData, [name]: value });
+  };
 
-      <Button
-        variant="ghost"
-        className="flex items-center mb-4 text-muted-foreground"
-        onClick={() => router.back()}
-      >
-        <ArrowLeft className="w-4 h-4 mr-2" />
-        Back
-      </Button>
+  return (
+    <div className="max-w-2xl mx-auto  pt-16">
+      <BackButton />
 
       <Card>
         <CardHeader>
@@ -160,6 +124,8 @@ export default function CreateSecretPage() {
                 id="name"
                 name="name"
                 placeholder="Development Environment Variables"
+                value={formData.name}
+                onChange={(e) => handleFormData("name", e.target.value)}
                 required
               />
             </div>
@@ -174,6 +140,8 @@ DATABASE_URL=your_database_url
 SECRET_KEY=your_secret_key"
                 className="h-40 font-mono resize-y"
                 required
+                value={formData.content}
+                onChange={(e) => handleFormData("content", e.target.value)}
               />
               <p className="text-xs text-muted-foreground">
                 Enter your environment variables in KEY=VALUE format, one per
@@ -184,8 +152,8 @@ SECRET_KEY=your_secret_key"
             <div className="space-y-4">
               <Label>Expiration Settings</Label>
               <RadioGroup
-                defaultValue="time"
-                onValueChange={setExpiryType}
+                value={formData.expiryType}
+                onValueChange={(value) => handleFormData("expiryType", value)}
                 className="flex flex-col space-y-3"
               >
                 <div className="flex items-center p-3 space-x-3 border rounded-md">
@@ -211,10 +179,14 @@ SECRET_KEY=your_secret_key"
               </RadioGroup>
             </div>
 
-            {expiryType === "time" ? (
+            {formData.expiryType === "time" ? (
               <div className="space-y-2">
                 <Label htmlFor="expiryTime">Expires After</Label>
-                <Select name="expiryTime" defaultValue="7d">
+                <Select
+                  name="expiryTime"
+                  value={formData.expiryTime}
+                  onValueChange={(value) => handleFormData("expiryTime", value)}
+                >
                   <SelectTrigger>
                     <SelectValue placeholder="Select expiration time" />
                   </SelectTrigger>
@@ -240,7 +212,11 @@ SECRET_KEY=your_secret_key"
             ) : (
               <div className="space-y-2">
                 <Label htmlFor="maxViews">Maximum Views</Label>
-                <Select name="maxViews" defaultValue="5">
+                <Select
+                  name="maxViews"
+                  value={formData.maxViews}
+                  onValueChange={(value) => handleFormData("maxViews", value)}
+                >
                   <SelectTrigger>
                     <SelectValue placeholder="Select maximum views" />
                   </SelectTrigger>

@@ -15,7 +15,7 @@ import { logger } from "@/utils/logger";
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-const clientUrl = process.env.CLIENT_URL;
+const clientUrl = process.env.NEXT_PUBLIC_CLIENT_URL!;
 const attachments = [
   {
     filename: "SecretShare logo", // Inline file

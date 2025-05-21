@@ -60,7 +60,7 @@ export default function LogoutPage() {
                 {isLoading ? "Logging out..." : "Yes, Log Me Out"}
               </Button>
               <Button variant="outline" asChild>
-                <Link href={`/${user?.name}`}>Cancel</Link>
+                <Link href={`/dashboard`}>Cancel</Link>
               </Button>
             </div>
           </CardContent>

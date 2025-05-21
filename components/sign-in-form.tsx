@@ -23,12 +23,6 @@ export const SignInForm = () => {
   // Helps to display the pop ups when they are needed
   const [isSubmitted, setIsSubmitted] = useState(false);
 
-  // clear the error and message and redirect the user to verify email page
-  useEffect(() => {
-    setMessage(null);
-    setError(null);
-  }, [setMessage, setError]);
-
   async function onSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
     setError("");

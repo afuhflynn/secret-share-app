@@ -15,10 +15,7 @@ export default function AuthLayout({
   }, [getUserProfile]);
 
   useEffect(() => {
-    if (user && isAuthenticated)
-      redirect(
-        `/${user.username ? user.username : user.name?.trim()?.split(" ")[0]}`
-      );
+    if (user && isAuthenticated) redirect("/dashboard");
   }, [isAuthenticated, user]);
 
   return <div className="container py-6 md:py-8">{children}</div>;

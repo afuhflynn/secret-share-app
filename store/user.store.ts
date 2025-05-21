@@ -10,6 +10,7 @@ export const controller = new AbortController(); // Controlling and aborting sig
 
 export const useUserStore = create<UserStore>((set) => ({
   user: null,
+  secrets: null,
   error: null,
   loading: false,
   isAuthenticated: false,
@@ -26,6 +27,10 @@ export const useUserStore = create<UserStore>((set) => ({
   setUser: (user) => {
     set({ user });
   },
+  setSecrets: (secrets) => {
+    set({ secrets });
+  },
+
   getUserProfile: async () => {
     set({ isGettingUserProfile: true });
     try {
@@ -40,7 +45,7 @@ export const useUserStore = create<UserStore>((set) => ({
       // controller.abort("Fetch complete");
     } catch (error: Error | any) {
       set({ error: "" });
-      if (error.response.data) set({ error: error.response.data.error });
+      if (error.response.data) set({ error: error.response.data.message });
       else
         set({
           error:

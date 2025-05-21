@@ -16,6 +16,8 @@ import {
 import { Textarea } from "@/components/ui/textarea";
 import { toast } from "@/hooks/use-toast";
 import { useDemoAuth } from "@/components/providers/demo-auth-provider";
+import { BackButton } from "@/components/back-button";
+import { useUserStore } from "@/store/user.store";
 
 export default function SecretPage() {
   const params = useParams();
@@ -23,23 +25,25 @@ export default function SecretPage() {
   const [secret, setSecret] = useState<any>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [copied, setCopied] = useState(false);
-  const { user } = useDemoAuth();
+  const { secrets } = useUserStore();
 
   useEffect(() => {
+    const s = secrets?.find((item) => item.id === params.id);
+    setSecret(s);
     // In a real app, we would fetch the secret from the API
     // For demo purposes, we'll use localStorage
-    const storedSecrets = localStorage.getItem("demoSecrets");
-    if (storedSecrets) {
-      const secrets = JSON.parse(storedSecrets);
-      const foundSecret = secrets.find((s: any) => s.id === params.id);
-      if (foundSecret) {
-        setSecret(foundSecret);
-      } else {
-        router.push(`${user?.name}`);
-      }
-    } else {
-      router.push(`${user?.name}`);
-    }
+    // const storedSecrets = localStorage.getItem("demoSecrets");
+    // if (storedSecrets) {
+    //   const secrets = JSON.parse(storedSecrets);
+    //   const foundSecret = secrets.find((s: any) => s.id === params.id);
+    //   if (foundSecret) {
+    //     setSecret(foundSecret);
+    //   } else {
+    //     router.push(`/dashboard`);
+    //   }
+    // } else {
+    //   router.push(`dashboard`);
+    // }
     setIsLoading(false);
   }, [params.id, router]);
 
@@ -61,10 +65,10 @@ export default function SecretPage() {
   function downloadAsFile() {
     if (!secret) return;
 
-    const element = document.createElement("a");
-    const file = new Blob([secret.content], { type: "text/plain" });
+    const element = document.createElement("a"); // Initialize an anchor tag
+    const file = new Blob([secret.content], { type: "text/plain" }); // Create a file
     element.href = URL.createObjectURL(file);
-    element.download = `${secret.name.toLowerCase().replace(/\s+/g, "-")}.env`;
+    element.download = `${secret.name.toLowerCase().replace(/\s+/g, "-")}.env`; // replace every space with -
     document.body.appendChild(element);
     element.click();
     document.body.removeChild(element);
@@ -89,14 +93,7 @@ export default function SecretPage() {
 
   return (
     <div className="max-w-2xl mx-auto">
-      <Button
-        variant="ghost"
-        className="flex items-center mb-4 text-muted-foreground"
-        onClick={() => router.back()}
-      >
-        <ArrowLeft className="w-4 h-4 mr-2" />
-        Back
-      </Button>
+      <BackButton />
 
       <Card>
         <CardHeader className="flex flex-row items-center justify-between">
@@ -112,7 +109,7 @@ export default function SecretPage() {
             </CardDescription>
           </div>
           <Button variant="outline" size="sm" asChild>
-            <Link href={`/${user?.name}/secret/${secret.id}/edit`}>
+            <Link href={`/dashboard/secret/${secret.id}/edit`}>
               <Edit className="w-4 h-4 mr-2" />
               Edit
             </Link>
@@ -141,7 +138,7 @@ DATABASE_URL=demo_database_url_${secret.id}
 SECRET_KEY=demo_secret_key_${secret.id}`
               }
               readOnly
-              className="h-40 font-mono"
+              className="h-[16rem] font-mono"
             />
           </div>
 
@@ -153,7 +150,7 @@ SECRET_KEY=demo_secret_key_${secret.id}`
                   Share this secret with others
                 </p>
               </div>
-              <Link href={`/${user?.name}/secret/${secret.id}/share`}>
+              <Link href={`/dashboard/secret/${secret.id}/share`}>
                 <Button>Share Secret</Button>
               </Link>
             </div>

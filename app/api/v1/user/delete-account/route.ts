@@ -17,7 +17,7 @@ import { signOut } from "@/lib/auth";
  * @returns
  */
 
-export async function POST(req: NextRequest, res: NextResponse) {
+export async function POST(req: NextRequest) {
   const { reason, email } = await req.json();
   const { auth } = NextAuth(authConfig);
   const session = await auth();

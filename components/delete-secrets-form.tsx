@@ -5,7 +5,6 @@ import { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Label } from "./ui/label";
 import { Input } from "./ui/input";
-import { Textarea } from "./ui/textarea";
 import {
   Dialog,
   DialogClose,
@@ -19,15 +18,13 @@ import {
 import { toast } from "@/hooks/use-toast";
 import { devLog } from "@/utils/devLog";
 import { privateAxios } from "@/utils/axios.config";
-import { User as AuthUser } from "@prisma/client";
+import { Secret } from "@prisma/client";
 import { useUserStore } from "@/store/user.store";
-import { useRouter } from "next/navigation";
 
-export function DeleteAccountButton() {
+export function DeleteSecretButton() {
   const [isOpen, setIsOpen] = useState(false);
   const [formData, setFormData] = useState({
     email: "",
-    reason: "",
   });
 
   const [isLoading, setIsLoading] = useState(false);
@@ -38,8 +35,7 @@ export function DeleteAccountButton() {
       [name]: value,
     });
   };
-  const router = useRouter();
-  const { setUser, error, setMessage, setError, message } = useUserStore();
+  const { error, setMessage, setError, message, setSecrets } = useUserStore();
   const [isSubmitted, setIsSubmitted] = useState(false);
 
   // clear the error and message and redirect the user to verify email page
@@ -53,17 +49,17 @@ export function DeleteAccountButton() {
 
     try {
       const res = await privateAxios.post<{
-        user: AuthUser;
+        secrets: Secret;
         message: string;
-      }>("/api/v1/user/delete-account", {
+      }>("/api/v1/secrets/delete-secrets", {
         email: formData.email,
-        reason: formData.reason,
       });
 
-      setUser(res.data.user);
+      setSecrets(null);
       setMessage(res.data.message);
       setIsSubmitted(true);
-    } catch (error: Error | any) {
+      // @ts-expect-error: error is of type 'unknown', casting to 'any' to access properties
+    } catch (error: Error) {
       if (error.response.data) setError(error.response.data.message);
       else
         setError(
@@ -86,17 +82,17 @@ export function DeleteAccountButton() {
       isSubmitted
     ) {
       toast({
-        title: "Account deleted",
+        title: "Secrets deleted successfully",
         description:
-          message || "Your account has been permanently deleted successfully.",
+          message || "Your secrets have been permanently deleted successfully.",
       });
       setIsOpen(false);
     } else {
       if (error !== null)
         toast({
-          title: "Error deleting account",
+          title: "Error deleting secrets",
           description:
-            error || "Failed to delete your account. Please try again.",
+            error || "Failed to delete your secrets. Please try again.",
           variant: "destructive",
         });
     }
@@ -104,14 +100,16 @@ export function DeleteAccountButton() {
   return (
     <Dialog open={isOpen} onOpenChange={setIsOpen}>
       <DialogTrigger asChild>
-        <Button variant="destructive">Delete Account</Button>
+        <Button variant="destructive" className="w-full">
+          Delete All Secrets
+        </Button>
       </DialogTrigger>
       <DialogContent>
         <DialogHeader>
           <DialogTitle>Are you absolutely sure?</DialogTitle>
           <DialogDescription>
-            This action cannot be undone. This will permanently delete your
-            account and remove all of your data from our servers.
+            This action cannot be undone. This will permanently delete all of
+            your secrets from our databases.
           </DialogDescription>
         </DialogHeader>
         <div className="flex flex-col items-start">
@@ -130,23 +128,7 @@ export function DeleteAccountButton() {
             onChange={(e) => handleInputChange(e.target.id, e.target.value)}
           />
         </div>
-        <div className="flex flex-col items-start">
-          <Label className="mt-5 mb-4" htmlFor="reason">
-            <span>Account Delete Reason </span>
-            <span className="text-xs">
-              (Helps us serve you better next time you come by)
-            </span>
-          </Label>
-          <Textarea
-            className="h-[10rem]"
-            value={formData.reason}
-            maxLength={400}
-            id="reason"
-            name="reason"
-            placeholder="Your message here..."
-            onChange={(e) => handleInputChange(e.target.id, e.target.value)}
-          />
-        </div>
+
         <DialogFooter>
           <DialogClose>
             <Button disabled={isLoading} variant={"outline"}>
@@ -158,7 +140,7 @@ export function DeleteAccountButton() {
             disabled={isLoading}
             className="bg-destructive text-destructive-foreground hover:bg-destructive/90"
           >
-            {isLoading ? "Deleting..." : "Delete Account"}
+            {isLoading ? "Deleting..." : "Delete Secrets"}
           </Button>
         </DialogFooter>
       </DialogContent>
