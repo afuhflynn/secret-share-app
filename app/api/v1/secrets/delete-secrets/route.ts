@@ -5,6 +5,10 @@ import { logger } from "@/utils/logger";
 import NextAuth from "next-auth";
 import { NextResponse } from "next/server";
 
+/**
+ * @description This file handles multiple secrets operations (such as deleting multiple secrets)
+ */
+
 // Delete user's secrets
 export async function POST(req: Request) {
   const { email } = await req.json();
@@ -39,6 +43,21 @@ export async function POST(req: Request) {
       );
     }
 
+    // Verify if the secret belongs to the user
+    const foundUser = await prisma.user.findUnique({
+      where: { email: session.user.email! },
+    });
+
+    if (!foundUser) {
+      return NextResponse.json(
+        {
+          success: false,
+          message: "Please login into your account to continue.",
+        },
+        { status: 404 }
+      );
+    }
+
     const secrets = await prisma.secret.deleteMany({
       where: {
         userId: session.user.id,
@@ -49,8 +68,29 @@ export async function POST(req: Request) {
       logger.error(
         `Error deleting user secrets: ${session.user.name}, ${session.user.email}`
       );
+      if (foundUser.emailNotifications) {
+        await sendNotificationEmail(
+          `We noticed an unsuccessful secrets deletion attempt for your account with email: ${session.user.email}`,
+          session.user?.email as string,
+          session.user?.name as string,
+          new Date(Date.now()).toLocaleDateString(),
+          session.user?.name as string,
+          {
+            "X-Category": "Notification Email",
+          }
+        );
+        return NextResponse.json(
+          {
+            success: false,
+            message: "error deleting secrets.",
+          },
+          { status: 500 }
+        );
+      }
+    }
+    if (foundUser.emailNotifications) {
       await sendNotificationEmail(
-        `We noticed an unsuccessful secrets deletion attempt for your account with email: ${session.user.email}`,
+        `We noticed an you made a request to delete all of your secrets from our severs for your account with email: ${session.user.email}`,
         session.user?.email as string,
         session.user?.name as string,
         new Date(Date.now()).toLocaleDateString(),
@@ -59,24 +99,7 @@ export async function POST(req: Request) {
           "X-Category": "Notification Email",
         }
       );
-      return NextResponse.json(
-        {
-          success: false,
-          message: "error deleting secrets.",
-        },
-        { status: 500 }
-      );
     }
-    await sendNotificationEmail(
-      `We noticed an you made a request to delete all of your secrets from our severs for your account with email: ${session.user.email}`,
-      session.user?.email as string,
-      session.user?.name as string,
-      new Date(Date.now()).toLocaleDateString(),
-      session.user?.name as string,
-      {
-        "X-Category": "Notification Email",
-      }
-    );
     logger.info(
       `User ${session.user.name}, ${session.user.email} secrets deleted successfully`
     );

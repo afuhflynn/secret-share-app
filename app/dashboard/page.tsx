@@ -1,9 +1,8 @@
 "use client";
 
-import { useEffect, useCallback, useState } from "react";
+import { useEffect, useCallback } from "react";
 import Link from "next/link";
 import { Edit, Plus, Trash2 } from "lucide-react";
-import { useRouter } from "next/navigation";
 
 import { Button } from "@/components/ui/button";
 import {
@@ -23,7 +22,6 @@ import { useUserStore } from "@/store/user.store";
 import type { Secret } from "@prisma/client";
 
 export default function DashboardPage() {
-  const router = useRouter();
   const { isGettingUserProfile, getUserProfile, secrets, setSecrets } =
     useUserStore();
 
@@ -59,10 +57,20 @@ export default function DashboardPage() {
 
   // load secrets once
   useEffect(() => {
+    // let isMounted = true;
+    // initial load
+    fetchSecrets();
+    // poll every minute
+    const id = setInterval(fetchSecrets, 60_000 * 6);
+
+    return () => {
+      // isMounted = false;
+      clearInterval(id);
+    };
     fetchSecrets();
   }, [fetchSecrets]);
 
-  if (isGettingUserProfile) return <Loading />;
+  if (isGettingUserProfile) return <Loading hideText />;
 
   return (
     <div className="flex flex-col space-y-6">
@@ -94,71 +102,69 @@ export default function DashboardPage() {
       ) : (
         <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
           {secrets &&
-            secrets.map((secret) => {
-              const created = new Date(secret.createdAt).toLocaleDateString();
-              const expires = secret.expiresAt
-                ? new Date(secret.expiresAt).toLocaleDateString()
-                : "Never";
+            secrets.map((secret) => (
+              <Card key={secret.id} className="relative group hover:shadow-md">
+                <CardHeader>
+                  <CardTitle>
+                    {secret.name.length > 23
+                      ? `${secret.name.slice(0, 23)}…`
+                      : secret.name}
+                  </CardTitle>
+                  <CardDescription>
+                    Created at {new Date(secret.createdAt).toLocaleDateString()}
+                  </CardDescription>
 
-              return (
-                <Card
-                  key={secret.id}
-                  className="relative group hover:shadow-md"
-                >
-                  <CardHeader>
-                    <CardTitle>
-                      {secret.name.length > 23
-                        ? `${secret.name.slice(0, 23)}…`
-                        : secret.name}
-                    </CardTitle>
-                    <CardDescription>Created on {created}</CardDescription>
-
-                    {/* Edit/Delete buttons */}
-                    <div className="absolute top-3 right-3 hidden flex-row items-center bg-background group-hover:flex">
-                      <Button variant="ghost" size="icon" asChild>
-                        <Link href={`/dashboard/secret/${secret.id}/edit`}>
-                          <Edit className="w-4 h-4" />
-                          <span className="sr-only">Edit</span>
-                        </Link>
-                      </Button>
-                      <Button variant="ghost" size="icon" asChild>
-                        <Link href={`/dashboard/secret/${secret.id}/delete`}>
-                          <Trash2 className="w-4 h-4" />
-                          <span className="sr-only">Delete</span>
-                        </Link>
-                      </Button>
-                    </div>
-                  </CardHeader>
-
-                  <CardContent>
-                    <div className="space-y-2 text-sm">
-                      <div className="flex justify-between">
-                        <span className="text-muted-foreground">Expires</span>
-                        <span>{expires}</span>
-                      </div>
-                      <div className="flex justify-between">
-                        <span className="text-muted-foreground">Views</span>
-                        <span>
-                          {secret.currentViews}
-                          {secret.maxViews && ` / ${secret.maxViews}`}
-                        </span>
-                      </div>
-                    </div>
-                  </CardContent>
-
-                  <CardFooter className="flex justify-between">
-                    <Button variant="outline" size="sm" asChild>
-                      <Link href={`/dashboard/secret/${secret.id}`}>View</Link>
-                    </Button>
-                    <Button variant="outline" size="sm" asChild>
-                      <Link href={`/dashboard/secret/${secret.id}/share`}>
-                        Share
+                  {/* Edit/Delete buttons */}
+                  <div className="absolute top-3 right-3 hidden flex-row items-center bg-background group-hover:flex">
+                    <Button variant="ghost" size="icon" asChild>
+                      <Link href={`/dashboard/secret/${secret.id}/edit`}>
+                        <Edit className="w-4 h-4" />
+                        <span className="sr-only">Edit</span>
                       </Link>
                     </Button>
-                  </CardFooter>
-                </Card>
-              );
-            })}
+                    <Button variant="ghost" size="icon" asChild>
+                      <Link href={`/dashboard/secret/${secret.id}/delete`}>
+                        <Trash2 className="w-4 h-4" />
+                        <span className="sr-only">Delete</span>
+                      </Link>
+                    </Button>
+                  </div>
+                </CardHeader>
+
+                <CardContent>
+                  <div className="space-y-2 text-sm">
+                    <div className="flex justify-between">
+                      {secret.expiresAt && (
+                        <>
+                          <span className="text-muted-foreground">Expires</span>
+                          <span>
+                            {new Date(secret.expiresAt).toLocaleDateString()}
+                          </span>
+                        </>
+                      )}
+                    </div>
+                    <div className="flex justify-between">
+                      <span className="text-muted-foreground">Views</span>
+                      <span>
+                        {secret.currentViews}
+                        {secret.maxViews && ` / ${secret.maxViews}`}
+                      </span>
+                    </div>
+                  </div>
+                </CardContent>
+
+                <CardFooter className="flex justify-between">
+                  <Button variant="outline" size="sm" asChild>
+                    <Link href={`/dashboard/secret/${secret.id}`}>View</Link>
+                  </Button>
+                  <Button variant="outline" size="sm" asChild>
+                    <Link href={`/dashboard/secret/${secret.id}/share`}>
+                      Share
+                    </Link>
+                  </Button>
+                </CardFooter>
+              </Card>
+            ))}
         </div>
       )}
     </div>

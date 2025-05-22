@@ -237,7 +237,7 @@ export default function ResetPasswordPage() {
         description: "Your password has been updated.",
       });
       router.push("/auth/log-in");
-    } else if (error) {
+    } else if (error && isSubmitted) {
       toast({ title: "Error", description: error, variant: "destructive" });
     }
   }, [message, error, isSubmitted, router]);
@@ -279,7 +279,7 @@ export default function ResetPasswordPage() {
                 {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
               </button>
             </div>
-            {!allGood && (
+            {!allGood && formData.password.trim() !== "" && (
               <>
                 <div className="w-full bg-gray-200 h-1 mt-4 rounded overflow-hidden">
                   <div
@@ -328,7 +328,7 @@ export default function ResetPasswordPage() {
               className="pr-10"
             />
             {!passwordsMatch && formData.confirmPassword && (
-              <p className="text-red-600 text-sm mt-1">
+              <p className="text-red-600 text-sm mt-2">
                 Passwords do not match
               </p>
             )}

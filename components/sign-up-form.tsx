@@ -83,7 +83,7 @@ export const SignUpForm = () => {
       });
       localStorage.setItem(localStorageKey, JSON.stringify(formData.email));
       router.push("/auth/verify-email");
-    } else if (error && !error.includes("Login to continue")) {
+    } else if (error && isSubmitted) {
       toast({
         title: "Error creating account",
         description: error,
@@ -145,7 +145,7 @@ export const SignUpForm = () => {
                 {showPassword ? <EyeOff size={20} /> : <Eye size={20} />}
               </button>
             </div>
-            {!allGood && (
+            {!allGood && formData.password.trim() !== "" && (
               <div className="mt-2">
                 <div className="w-full bg-gray-200 rounded h-1 mt-4 mb-2 overflow-hidden">
                   <div
@@ -194,7 +194,7 @@ export const SignUpForm = () => {
               className="pr-10"
             />
             {!passwordsMatch && formData.confirmPassword.length > 0 && (
-              <p className="text-sm text-red-600 mt-1">
+              <p className="text-sm text-red-600 mt-2">
                 Passwords do not match
               </p>
             )}

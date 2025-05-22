@@ -71,6 +71,7 @@ model User {
   sessions    Session[]
   secrets     Secret[]
   testimonial Testimonial?
+  ShareView   ShareView[]
 
   @@map(name: "users")
 }
@@ -105,7 +106,7 @@ model Secret {
 }
 
 model Share {
-  id              String   @id @default(cuid()) @map("_id") // Added @map("_id")
+  id              String   @id @default(cuid()) @map("_id")
   token           String   @unique
   secretId        String
   secret          Secret   @relation(fields: [secretId], references: [id], onDelete: Cascade)
@@ -116,5 +117,20 @@ model Share {
   emails          String?
   sendAccessEmail Boolean?
 
+  // ← NEW
+  viewers ShareView[]
+
   @@map(name: "shares")
+}
+
+model ShareView {
+  id       String   @id @default(cuid()) @map("_id")
+  share    Share    @relation(fields: [shareId], references: [id], onDelete: Cascade)
+  shareId  String
+  user     User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId   String
+  viewedAt DateTime @default(now())
+
+  @@unique([shareId, userId])
+  @@map(name: "share_views")
 }

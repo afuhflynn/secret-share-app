@@ -1,7 +1,6 @@
 import { ArrowRight, CheckCircle, Shield } from "lucide-react";
 import Link from "next/link";
 import { Button } from "./ui/button";
-import { SecretShareLogo } from "./ui/secret-share-logo";
 
 export default function HeroSection() {
   return (
@@ -13,7 +12,11 @@ export default function HeroSection() {
               <Shield className="mr-1 h-3.5 w-3.5" />
               <span>Secure Environment Variables</span>
             </div>
-            <SecretShareLogo variant="horizontal" darkMode />
+            <div className="flex flex-col items-start">
+              <span className="text-3xl font-bold">
+                Secure. Private. Encrypted.
+              </span>
+            </div>
             <p className="max-w-[42rem] text-muted-foreground sm:text-xl">
               Securely share sensitive environment variables with your team or
               clients. No more sending secrets over email or chat.

@@ -2,7 +2,7 @@ import React from "react";
 
 export const XLogo = () => {
   return (
-    <div className="flex items-center justify-center w-8 h-8 p-2 bg-white rounded-full shadow-sm">
+    <div className="flex items-center justify-center w-7 h-7 p-[0.4rem] bg-white rounded-full shadow-sm">
       <svg
         xmlns="http://www.w3.org/2000/svg"
         viewBox="0 0 1200 1227"

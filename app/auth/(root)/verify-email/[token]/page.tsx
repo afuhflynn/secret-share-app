@@ -56,7 +56,7 @@ export default function VerifyEmailTokenPage() {
       localStorage.removeItem(localStorageKey);
       setVerificationStatus("success");
     } else {
-      if (error !== null)
+      if (error !== null && isSubmitted)
         toast({
           title: "Error verifying your email",
           description:

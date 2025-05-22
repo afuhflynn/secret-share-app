@@ -1,11 +1,19 @@
 import authConfig from "@/lib/auth.config";
 import { prisma } from "@/lib/prisma";
 import { logger } from "@/utils/logger";
+import { Secret } from "@prisma/client";
 import NextAuth from "next-auth";
 import { NextResponse } from "next/server";
 
+/**
+ * @description This file handles creating and fetching a user's secrets,
+ *              auto-deleting any that have expired by date or view count.
+ */
+
+// CREATE A NEW SECRET
 export async function POST(req: Request) {
   const { name, content, expiryType, expiryTime, maxViews } = await req.json();
+
   if (!name || !content || !expiryType) {
     return NextResponse.json(
       { success: false, message: "All fields are required." },
@@ -16,40 +24,43 @@ export async function POST(req: Request) {
   try {
     const { auth } = NextAuth(authConfig);
     const session = await auth();
-
-    if (!session?.user) {
-      return NextResponse.json("Unauthorized", { status: 401 });
+    if (!session?.user?.email) {
+      return NextResponse.json({ message: "Unauthorized" }, { status: 401 });
     }
 
-    // Compute expiresAt...
-    let expiresAt: Date | null = new Date();
-    if (expiryTime) {
+    // Compute expiresAt (or null if “never” or view-based)
+    const now = new Date();
+    let expiresAt: Date | null = null;
+    if (expiryType === "time") {
+      expiresAt = new Date(now);
       switch (expiryTime) {
         case "1h":
-          expiresAt.setHours(expiresAt.getHours() + 1);
+          expiresAt.setHours(now.getHours() + 1);
           break;
         case "24h":
-          expiresAt.setHours(expiresAt.getHours() + 24);
+          expiresAt.setHours(now.getHours() + 24);
           break;
         case "7d":
-          expiresAt.setDate(expiresAt.getDate() + 7);
+          expiresAt.setDate(now.getDate() + 7);
           break;
         case "30d":
-          expiresAt.setDate(expiresAt.getDate() + 30);
+          expiresAt.setDate(now.getDate() + 30);
           break;
         case "never":
-          expiresAt.setFullYear(expiresAt.getFullYear() + 1);
+          expiresAt = null;
           break;
+        default:
+          return NextResponse.json(
+            { success: false, message: "Invalid expiryTime." },
+            { status: 400 }
+          );
       }
-    } else {
-      expiresAt = null;
     }
 
-    // Find the user by email
+    // Find the user
     const foundUser = await prisma.user.findUnique({
-      where: { email: session.user.email! },
+      where: { email: session.user.email },
     });
-
     if (!foundUser) {
       return NextResponse.json(
         { success: false, message: "User not found." },
@@ -57,12 +68,12 @@ export async function POST(req: Request) {
       );
     }
 
-    // Create the secret—just pass userId, drop the User field
+    // Create secret
     const secret = await prisma.secret.create({
       data: {
         name,
         content,
-        expiresAt: expiryType === "views" ? null : expiresAt,
+        expiresAt: expiryType === "time" ? expiresAt : null,
         maxViews: expiryType === "views" ? parseInt(maxViews, 10) : null,
         userId: foundUser.id,
       },
@@ -76,62 +87,63 @@ export async function POST(req: Request) {
     });
   } catch (error: any) {
     logger.error("Error creating user secret", error);
-    return new NextResponse(
-      "Sorry, an unexpected error occurred creating your secret. Try again later.",
+    return NextResponse.json(
+      { success: false, message: "Internal server error." },
       { status: 500 }
     );
   }
 }
 
-// Get user's secrets
+// GET ALL NON-EXPIRED SECRETS (AND CLEANUP)
 export async function GET(_: Request) {
   try {
     const { auth } = NextAuth(authConfig);
     const session = await auth();
-
-    if (!session?.user) {
-      return new NextResponse(
-        "Unauthorized please login into your account to continue",
-        { status: 401 }
-      );
+    if (!session?.user?.email) {
+      return NextResponse.json({ message: "Unauthorized" }, { status: 401 });
     }
-    // Find the user by email
-    const foundUser = await prisma.user.findUnique({
-      where: { email: session.user.email! },
-    });
 
+    const foundUser = await prisma.user.findUnique({
+      where: { email: session.user.email },
+    });
     if (!foundUser) {
       return NextResponse.json(
         { success: false, message: "User not found." },
         { status: 404 }
       );
     }
-    const secrets = await prisma.secret.findMany({
+
+    // Single “now” for consistency
+    const now = new Date();
+
+    // 1) Delete any date-based secrets where expiresAt ≤ now
+    await prisma.secret.deleteMany({
+      where: {
+        userId: foundUser.id,
+        expiresAt: { lte: now },
+      },
+    });
+
+    // 2) (Optional) Delete any view-based secrets that have hit maxViews here
+    //    e.g. prisma.secret.deleteMany({ where: { userId: foundUser.id, views: { gte: maxViews } } })
+
+    // 3) Fetch remaining
+    const liveSecrets = await prisma.secret.findMany({
       where: {
         userId: foundUser.id,
       },
-      orderBy: {
-        createdAt: "desc",
-      },
+      orderBy: { createdAt: "desc" },
     });
-
-    if (!secrets) {
-      return NextResponse.json(
-        { success: false, message: "User secrets found." },
-        { status: 204 }
-      );
-    }
 
     return NextResponse.json({
-      secrets: secrets,
       success: true,
-      message: "Secret retrieved successfully.",
+      message: "Secrets retrieved successfully.",
+      secrets: liveSecrets as Secret[],
     });
   } catch (error: any) {
-    logger.error("Error creating user secret", error.message);
-
-    return new NextResponse(
-      "Sorry, an unexpected error occurred getting your secrets.",
+    logger.error("Error fetching user secrets", error);
+    return NextResponse.json(
+      { success: false, message: "Internal server error." },
       { status: 500 }
     );
   }

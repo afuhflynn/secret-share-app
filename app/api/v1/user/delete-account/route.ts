@@ -96,7 +96,6 @@ export async function POST(req: NextRequest) {
       deletedUser?.username
         ? (deletedUser?.username as string)
         : (deletedUser?.name as string),
-      req.url,
       {
         "X-Category": "Account deletion email",
       }
@@ -108,13 +107,8 @@ export async function POST(req: NextRequest) {
       deletedUser?.username
         ? (deletedUser?.username as string)
         : (deletedUser?.name as string),
-      `A user at SecretShare with email: ${deletedUser.email} and username: ${
-        deletedUser?.username
-          ? (deletedUser?.username as string)
-          : (deletedUser?.name as string)
-      } recently deleted their account`,
       reason,
-      new Date(Date.now()).toLocaleDateString(),
+      new Date(Date.now()).toString(),
       {
         "X-Category": "User account deletion",
       }

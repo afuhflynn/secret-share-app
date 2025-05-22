@@ -5,8 +5,25 @@ import { logger } from "@/utils/logger";
 import NextAuth from "next-auth";
 import { NextResponse } from "next/server";
 
-// NOTE: Create a new user secret
-export async function POST(req: Request) {
+/**
+ * @description This file handles single secret operations (such as deleting, getting or updating a single secret)
+ */
+
+// NOTE: Update a secret
+export async function PUT(
+  req: Request,
+  { params }: { params: { id: string } }
+) {
+  const { content } = await req.json();
+  if (!content) {
+    return NextResponse.json(
+      {
+        success: false,
+        message: "Can not update a secret with with null values",
+      },
+      { status: 400 }
+    );
+  }
   try {
     const { auth } = NextAuth(authConfig);
     const session = await auth();
@@ -15,63 +32,67 @@ export async function POST(req: Request) {
       return new NextResponse("Unauthorized", { status: 401 });
     }
 
-    const { name, content, expiryType, expiryTime, maxViews } =
-      await req.json();
-
-    // Calculate expiration date based on expiryTime
-    const expiresAt = new Date();
-    // NOTE: Create a new expiry time based on user request body
-    if (expiryTime === "1h") {
-      expiresAt.setHours(expiresAt.getHours() + 1);
-    } else if (expiryTime === "24h") {
-      expiresAt.setHours(expiresAt.getHours() + 24);
-    } else if (expiryTime === "7d") {
-      expiresAt.setDate(expiresAt.getDate() + 7);
-    } else if (expiryTime === "30d") {
-      expiresAt.setDate(expiresAt.getDate() + 30);
-    } else if (expiryTime === "never") {
-      // For "never", set a far future date (1 year)
-      expiresAt.setFullYear(expiresAt.getFullYear() + 1);
-    }
-
     // Create the secret
-    const secret = await prisma.secret.create({
+    const foundUser = await prisma.user.findUnique({
+      where: { email: session.user.email! },
+    });
+
+    if (!foundUser) {
+      return NextResponse.json(
+        { success: false, message: "User not found." },
+        { status: 404 }
+      );
+    }
+    const secret = await prisma.secret.update({
+      where: {
+        userId: foundUser.id,
+        id: params.id,
+      },
       data: {
-        name,
         content,
-        expiresAt,
-        maxViews: expiryType === "views" ? Number.parseInt(maxViews) : null,
-        userId: session.user.id,
       },
     });
+
     if (!secret) {
       logger.error(
-        `Error creating user secret: ${session.user.name}, ${session.user.email}`
+        `Error updating user secret: ${session.user.name}, ${session.user.email}`
       );
+      if (foundUser.emailNotifications) {
+        await sendNotificationEmail(
+          "There was an unsuccessful attempt to update one of your secrets.",
+          foundUser.email as string,
+          (foundUser.username as string) || (foundUser.name as string),
+          new Date(Date.now()).toString(),
+          `${foundUser.username as string}, ${foundUser.email as string}`,
+          {
+            "X-Category": "Notification email",
+          }
+        );
+      }
       return NextResponse.json(
         {
           success: false,
-          message: "Error creating secret.",
+          message: "Error updating secret.",
         },
         { status: 500 }
       );
     }
     return NextResponse.json({
       success: true,
-      message: "Secret created successfully.",
+      message: "Secret updated successfully.",
     });
     // @ts-expect-error: error is of type 'unknown', casting to 'any' to access properties
   } catch (error: Error) {
-    logger.error(`Error creating user secret`, error.message);
+    logger.error(`Error updating user secret`, error.message);
     return new NextResponse(
-      "Sorry, an unexpected error occurred creating your secrets. Try again later.",
+      "Sorry, an unexpected error occurred updating your secret. Try again later.",
       { status: 500 }
     );
   }
 }
 
-// Get user's secrets
-export async function GET(_: Request) {
+// Get a single user secrets
+export async function GET(_: Request, { params }: { params: { id: string } }) {
   try {
     const { auth } = NextAuth(authConfig);
     const session = await auth();
@@ -83,17 +104,33 @@ export async function GET(_: Request) {
       );
     }
 
-    const secrets = await prisma.secret.findMany({
+    // Find the user by email
+    const foundUser = await prisma.user.findUnique({
+      where: { email: session.user.email! },
+    });
+
+    if (!foundUser) {
+      return NextResponse.json(
+        { success: false, message: "User not found." },
+        { status: 404 }
+      );
+    }
+    const secret = await prisma.secret.findUnique({
       where: {
-        userId: session.user.id,
-      },
-      orderBy: {
-        createdAt: "desc",
+        id: params.id,
+        userId: foundUser.id,
       },
     });
 
+    if (!secret) {
+      return NextResponse.json(
+        { success: false, message: "User secret found." },
+        { status: 204 }
+      );
+    }
+
     return NextResponse.json({
-      secrets: secrets,
+      secret,
       success: true,
       message: "Secret retrieved successfully.",
     });
@@ -102,14 +139,17 @@ export async function GET(_: Request) {
     logger.error(`Error creating user secret`, error.message);
 
     return new NextResponse(
-      "Sorry, an unexpected error occurred getting your secrets.",
+      "Sorry, an unexpected error occurred getting your secret.",
       { status: 500 }
     );
   }
 }
 
-// Delete user's secrets
-export async function DELETE(_: Request) {
+// Delete a secret
+export async function DELETE(
+  _: Request,
+  { params }: { params: { id: string } }
+) {
   try {
     const { auth } = NextAuth(authConfig);
     const session = await auth();
@@ -121,18 +161,51 @@ export async function DELETE(_: Request) {
       );
     }
 
-    const secrets = await prisma.secret.deleteMany({
+    const foundUser = await prisma.user.findUnique({
+      where: { email: session.user.email! },
+    });
+
+    if (!foundUser) {
+      return NextResponse.json(
+        { success: false, message: "User not found." },
+        { status: 404 }
+      );
+    }
+    const secret = await prisma.secret.deleteMany({
       where: {
-        userId: session.user.id,
+        userId: foundUser.id,
+        id: params.id,
       },
     });
 
-    if (!secrets) {
+    if (!secret) {
       logger.error(
-        `Error deleting user secrets: ${session.user.name}, ${session.user.email}`
+        `Error deleting user secret: ${session.user.name}, ${session.user.email}`
       );
+
+      if (foundUser.emailNotifications) {
+        await sendNotificationEmail(
+          `We noticed an unsuccessful attempt to delete one of your secrets: ${session.user.email}`,
+          session.user?.email as string,
+          session.user?.name as string,
+          new Date(Date.now()).toLocaleDateString(),
+          session.user?.name as string,
+          {
+            "X-Category": "Notification Email",
+          }
+        );
+      }
+      return NextResponse.json(
+        {
+          success: false,
+          message: "Error deleting secret.",
+        },
+        { status: 500 }
+      );
+    }
+    if (foundUser.emailNotifications) {
       await sendNotificationEmail(
-        `We noticed an unsuccessful secrets deletion attempt for your account with email: ${session.user.email}`,
+        `We noticed an you made a request to delete all of your secrets from our severs for your account with email: ${session.user.email}`,
         session.user?.email as string,
         session.user?.name as string,
         new Date(Date.now()).toLocaleDateString(),
@@ -141,38 +214,21 @@ export async function DELETE(_: Request) {
           "X-Category": "Notification Email",
         }
       );
-      return NextResponse.json(
-        {
-          success: false,
-          message: "error deleting secrets.",
-        },
-        { status: 500 }
-      );
     }
-    await sendNotificationEmail(
-      `We noticed an you made a request to delete all of your secrets from our severs for your account with email: ${session.user.email}`,
-      session.user?.email as string,
-      session.user?.name as string,
-      new Date(Date.now()).toLocaleDateString(),
-      session.user?.name as string,
-      {
-        "X-Category": "Notification Email",
-      }
-    );
     logger.error(
       `User ${session.user.name}, ${session.user.email} secrets deleted successfully`
     );
 
     return NextResponse.json({
       success: true,
-      message: "Secrets deleted successfully.",
+      message: "Secret deleted successfully.",
     });
     // @ts-expect-error: error is of type 'unknown', casting to 'any' to access properties
   } catch (error: Error) {
-    logger.error(`Error deleting user secrets`, error.message);
+    logger.error(`Error deleting user secret`, error.message);
 
     return new NextResponse(
-      "Sorry, an unexpected error occurred deleting your secrets.",
+      "Sorry, an unexpected error occurred deleting your secret.",
       { status: 500 }
     );
   }

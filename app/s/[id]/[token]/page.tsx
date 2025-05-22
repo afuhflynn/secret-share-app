@@ -4,7 +4,7 @@
 
 "use client";
 
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import Link from "next/link";
 import { useParams } from "next/navigation";
 import { Copy, Download, Lock } from "lucide-react";
@@ -21,62 +21,73 @@ import {
 import { Textarea } from "@/components/ui/textarea";
 import { toast } from "@/hooks/use-toast";
 import Logo from "@/components/logo";
+import { Secret } from "@prisma/client";
+import { privateAxios } from "@/utils/axios.config";
+import { decryptData } from "@/lib/encryption";
+import { devLog } from "@/utils/devLog";
 
 export default function AccessSecretPage() {
   const params = useParams();
-  const [loading, setLoading] = useState(true);
+  const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState("");
-  const [secret, setSecret] = useState<any>(null);
+  const [secret, setSecret] = useState<Secret | null>(null);
   const [copied, setCopied] = useState(false);
 
-  useEffect(() => {
-    async function fetchSecret() {
-      try {
-        // Demo mode - simulate fetching a secret
-        await new Promise((resolve) => setTimeout(resolve, 1500));
+  const fetchSecret = useCallback(async () => {
+    setIsLoading(true);
+    try {
+      const { data } = await privateAxios.get<{
+        secret: Secret;
+        message: string;
+      }>(`/api/v1/secrets/${params.id}/shares/${params.token}`);
+      const decryptedName = await decryptData(
+        data.secret.name,
+        process.env.NEXT_PUBLIC_SECRETS_PASSWORD!
+      );
+      const decryptedContent = await decryptData(
+        data.secret.content,
+        process.env.NEXT_PUBLIC_SECRETS_PASSWORD!
+      );
 
-        // In a real app, we would fetch the secret from the API
-        // For demo purposes, we'll use localStorage
-        const storedSecrets = localStorage.getItem("demoSecrets");
-        if (storedSecrets) {
-          const secrets = JSON.parse(storedSecrets);
-          const foundSecret = secrets.find((s: any) => s.id === params.id);
-
-          if (foundSecret) {
-            setSecret({
-              name: foundSecret.name,
-              content:
-                foundSecret.content ||
-                `API_KEY=demo_api_key_${foundSecret.id}\nDATABASE_URL=demo_database_url_${foundSecret.id}\nSECRET_KEY=demo_secret_key_${foundSecret.id}`,
-              expires: foundSecret.expiresAt,
-            });
-          } else {
-            setError(
-              "The secret you're trying to access doesn't exist or has expired."
-            );
-          }
-        } else {
-          // If no secrets in localStorage, create a demo one
-          setSecret({
-            name: "Demo Environment Variables",
-            content: `API_KEY=demo_api_key\nDATABASE_URL=demo_database_url\nSECRET_KEY=demo_secret_key`,
-            expires: new Date(
-              Date.now() + 7 * 24 * 60 * 60 * 1000
-            ).toISOString(),
-          });
-        }
-      } catch (error) {
-        console.error(error);
-        setError(
-          "The secret you're trying to access doesn't exist or has expired."
-        );
-      } finally {
-        setLoading(false);
-      }
+      const decrypted = {
+        ...data.secret,
+        name: decryptedName,
+        content: decryptedContent,
+      };
+      setSecret(decrypted);
+      toast({
+        title: "Secret Shared",
+        description:
+          data.message || "The environment variables shared successfully.",
+      });
+      devLog("Decrypted secrets:", decrypted);
+      // @ts-expect-error: error is of type 'unknown', casting to 'any' to access properties
+    } catch (error: Error) {
+      devLog("Failed to fetch secrets:", error);
+      if (error.response) {
+        toast({
+          title: "Error",
+          description:
+            error.response.data.message ||
+            "Failed to fetch secret. Please try again.",
+          variant: "destructive",
+        });
+        setError(error.response.data.message);
+      } else
+        toast({
+          title: "Error",
+          description: "Failed to fetch secret. Please try again.",
+          variant: "destructive",
+        });
+    } finally {
+      setIsLoading(false);
     }
+  }, [setSecret, setIsLoading]);
 
+  // load secrets once
+  useEffect(() => {
     fetchSecret();
-  }, [params.id, params.token]);
+  }, [fetchSecret]);
 
   function copyToClipboard() {
     if (!secret) return;
@@ -110,9 +121,14 @@ export default function AccessSecretPage() {
     });
   }
 
+  useEffect(() => {
+    if (!secret) {
+      // redirect("/dashboard");
+    }
+  }, [secret]);
   return (
     <div className="container flex flex-col items-center justify-center min-h-screen py-12">
-      <div className="w-full max-w-md mx-auto space-y-6">
+      <div className="w-full max-w-md mx-auto space-y-6 flex flex-col items-center">
         <div className="flex flex-col items-center space-y-2 text-center">
           <Logo hideText />
           <h1 className="text-2xl font-semibold tracking-tight">
@@ -123,8 +139,8 @@ export default function AccessSecretPage() {
           </p>
         </div>
 
-        {loading ? (
-          <Card>
+        {isLoading ? (
+          <Card className="w-[36rem]">
             <CardContent className="flex flex-col items-center justify-center py-10">
               <div className="w-12 h-12 border-4 rounded-full animate-spin border-primary border-t-transparent" />
               <p className="mt-4 text-sm text-muted-foreground">
@@ -133,7 +149,7 @@ export default function AccessSecretPage() {
             </CardContent>
           </Card>
         ) : error ? (
-          <Card>
+          <Card className="w-[36rem]">
             <CardContent className="flex flex-col items-center justify-center py-10">
               <div className="p-3 rounded-full bg-destructive/10">
                 <Lock className="w-6 h-6 text-destructive" />
@@ -148,13 +164,14 @@ export default function AccessSecretPage() {
             </CardContent>
           </Card>
         ) : (
-          <Card>
+          <Card className="w-[36rem]">
             <CardHeader>
               <CardTitle>{secret?.name}</CardTitle>
-              <CardDescription>
-                Expires on{" "}
-                {new Date(secret?.expires || "").toLocaleDateString()}
-              </CardDescription>
+              {secret && secret.expiresAt && (
+                <CardDescription>
+                  Expires at {new Date(secret?.expiresAt).toLocaleDateString()}
+                </CardDescription>
+              )}
             </CardHeader>
             <CardContent className="space-y-4">
               <div className="space-y-2">
@@ -183,7 +200,7 @@ export default function AccessSecretPage() {
                   value={secret?.content}
                   disabled
                   readOnly
-                  className="h-40 font-mono"
+                  className="h-[18rem] font-mono"
                 />
               </div>
 

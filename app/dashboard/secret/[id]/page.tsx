@@ -1,9 +1,9 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import Link from "next/link";
-import { useParams, useRouter } from "next/navigation";
-import { ArrowLeft, Copy, Download, Edit } from "lucide-react";
+import { useParams } from "next/navigation";
+import { Copy, Download, Edit } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 import {
@@ -15,37 +15,52 @@ import {
 } from "@/components/ui/card";
 import { Textarea } from "@/components/ui/textarea";
 import { toast } from "@/hooks/use-toast";
-import { useDemoAuth } from "@/components/providers/demo-auth-provider";
 import { BackButton } from "@/components/back-button";
-import { useUserStore } from "@/store/user.store";
+import { privateAxios } from "@/utils/axios.config";
+import { Secret } from "@prisma/client";
+import { decryptData } from "@/lib/encryption";
+import { devLog } from "@/utils/devLog";
+import { Loading } from "@/components/ui/loading";
 
-export default function SecretPage() {
+export default function SecretSharePage() {
   const params = useParams();
-  const router = useRouter();
   const [secret, setSecret] = useState<any>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [copied, setCopied] = useState(false);
-  const { secrets } = useUserStore();
 
+  const fetchSecret = useCallback(async () => {
+    setIsLoading(true);
+    try {
+      const { data } = await privateAxios.get<{ secret: Secret }>(
+        `/api/v1/secrets/${params.id}/secrets`
+      );
+      const decryptedName = await decryptData(
+        data.secret.name,
+        process.env.NEXT_PUBLIC_SECRETS_PASSWORD!
+      );
+      const decryptedContent = await decryptData(
+        data.secret.content,
+        process.env.NEXT_PUBLIC_SECRETS_PASSWORD!
+      );
+
+      const decrypted = {
+        ...data.secret,
+        name: decryptedName,
+        content: decryptedContent,
+      };
+      setSecret(decrypted);
+      devLog("Decrypted secrets:", decrypted);
+    } catch (err) {
+      devLog("Failed to fetch secrets:", err);
+    } finally {
+      setIsLoading(false);
+    }
+  }, [setSecret, setIsLoading]);
+
+  // load secrets once
   useEffect(() => {
-    const s = secrets?.find((item) => item.id === params.id);
-    setSecret(s);
-    // In a real app, we would fetch the secret from the API
-    // For demo purposes, we'll use localStorage
-    // const storedSecrets = localStorage.getItem("demoSecrets");
-    // if (storedSecrets) {
-    //   const secrets = JSON.parse(storedSecrets);
-    //   const foundSecret = secrets.find((s: any) => s.id === params.id);
-    //   if (foundSecret) {
-    //     setSecret(foundSecret);
-    //   } else {
-    //     router.push(`/dashboard`);
-    //   }
-    // } else {
-    //   router.push(`dashboard`);
-    // }
-    setIsLoading(false);
-  }, [params.id, router]);
+    fetchSecret();
+  }, [fetchSecret]);
 
   function copyToClipboard() {
     if (!secret) return;
@@ -79,20 +94,14 @@ export default function SecretPage() {
     });
   }
 
-  if (isLoading) {
-    return (
-      <div className="flex min-h-[50vh] items-center justify-center">
-        Loading...
-      </div>
-    );
-  }
+  if (isLoading) return <Loading hideText />;
 
   if (!secret) {
     return null;
   }
 
   return (
-    <div className="max-w-2xl mx-auto">
+    <div className="max-w-2xl mx-auto pt-16">
       <BackButton />
 
       <Card>
@@ -103,9 +112,16 @@ export default function SecretPage() {
                 ? `${secret.name.substring(0, 34)}...`
                 : secret.name}
             </CardTitle>
-            <CardDescription>
-              Created on {new Date(secret.createdAt).toLocaleDateString()} •
-              Expires on {new Date(secret.expiresAt).toLocaleDateString()}
+            <CardDescription className="mt-4 flex items-start sm:items-center flex-col sm:flex-row sm:gap-2 gap-1">
+              <span>
+                Created at {new Date(secret.createdAt).toLocaleDateString()}
+              </span>
+              <span className="hidden sm:block">•</span>
+              {secret.expiresAt && (
+                <span>
+                  Expires at {new Date(secret.expiresAt).toLocaleDateString()}
+                </span>
+              )}
             </CardDescription>
           </div>
           <Button variant="outline" size="sm" asChild>
@@ -138,7 +154,7 @@ DATABASE_URL=demo_database_url_${secret.id}
 SECRET_KEY=demo_secret_key_${secret.id}`
               }
               readOnly
-              className="h-[16rem] font-mono"
+              className="h-[18rem] font-mono"
             />
           </div>
 

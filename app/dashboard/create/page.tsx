@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Clock, Eye } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
@@ -29,6 +29,7 @@ import { BackButton } from "@/components/back-button";
 import { privateAxios } from "@/utils/axios.config";
 import { Secret } from "@prisma/client";
 import { devLog } from "@/utils/devLog";
+import { useUserStore } from "@/store/user.store";
 
 const initialFormValues = {
   name: "",
@@ -40,6 +41,12 @@ const initialFormValues = {
 export default function CreateSecretPage() {
   const [isLoading, setIsLoading] = useState(false);
   const [formData, setFormData] = useState(initialFormValues);
+  const { user, getUserProfile } = useUserStore();
+
+  useEffect(() => {
+    getUserProfile();
+  }, [getUserProfile]);
+  devLog(user);
 
   async function onSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
@@ -138,7 +145,7 @@ export default function CreateSecretPage() {
                 placeholder="API_KEY=your_api_key
 DATABASE_URL=your_database_url
 SECRET_KEY=your_secret_key"
-                className="h-40 font-mono resize-y"
+                className="h-[17rem] font-mono resize-y"
                 required
                 value={formData.content}
                 onChange={(e) => handleFormData("content", e.target.value)}
@@ -200,10 +207,18 @@ SECRET_KEY=your_secret_key"
                     <SelectItem value="7d" className="cursor-pointer">
                       7 days
                     </SelectItem>
-                    <SelectItem value="30d" className="cursor-pointer">
+                    <SelectItem
+                      value="30d"
+                      className="cursor-pointer"
+                      disabled={user?.plan === "free"}
+                    >
                       30 days (Pro plan only)
                     </SelectItem>
-                    <SelectItem value="never" className="cursor-pointer">
+                    <SelectItem
+                      value="never"
+                      className="cursor-pointer"
+                      disabled={user?.plan === "free"}
+                    >
                       Never (Pro plan only)
                     </SelectItem>
                   </SelectContent>
@@ -230,10 +245,18 @@ SECRET_KEY=your_secret_key"
                     <SelectItem value="10" className="cursor-pointer">
                       10 views
                     </SelectItem>
-                    <SelectItem value="25" className="cursor-pointer">
+                    <SelectItem
+                      value="25"
+                      className="cursor-pointer"
+                      disabled={user?.plan === "free"}
+                    >
                       25 views (Pro plan only)
                     </SelectItem>
-                    <SelectItem value="unlimited" className="cursor-pointer">
+                    <SelectItem
+                      value="unlimited"
+                      className="cursor-pointer"
+                      disabled={user?.plan === "free"}
+                    >
                       Unlimited (Enterprise plan only)
                     </SelectItem>
                   </SelectContent>

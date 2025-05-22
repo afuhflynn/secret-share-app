@@ -1,8 +1,8 @@
 "use client";
 
-import { useEffect, useState } from "react";
-import { useParams, useRouter } from "next/navigation";
-import { ArrowLeft, Copy, Share2 } from "lucide-react";
+import { useCallback, useEffect, useState } from "react";
+import { useParams } from "next/navigation";
+import { Copy, Share2 } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 import {
@@ -25,10 +25,15 @@ import {
 import { Switch } from "@/components/ui/switch";
 import { toast } from "@/hooks/use-toast";
 import { BackButton } from "@/components/back-button";
+import { privateAxios } from "@/utils/axios.config";
+import { decryptData } from "@/lib/encryption";
+import { Secret } from "@prisma/client";
+import { devLog } from "@/utils/devLog";
+import { Loading } from "@/components/ui/loading";
+import { useUserStore } from "@/store/user.store";
 
 export default function ShareSecretPage() {
   const params = useParams();
-  const router = useRouter();
   const [secret, setSecret] = useState<any>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [generating, setGenerating] = useState(false);
@@ -37,50 +42,79 @@ export default function ShareSecretPage() {
   const [accessType, setAccessType] = useState("anyone");
   const [emails, setEmails] = useState("");
   const [expiryTime, setExpiryTime] = useState("7d");
+  const { user, getUserProfile } = useUserStore();
+  const [emailNotifications, setEmailNotifications] = useState<boolean>(true);
 
-  useEffect(() => {
-    // In a real app, we would fetch the secret from the API
-    // For demo purposes, we'll use localStorage
-    const storedSecrets = localStorage.getItem("demoSecrets");
-    if (storedSecrets) {
-      const secrets = JSON.parse(storedSecrets);
-      const foundSecret = secrets.find((s: any) => s.id === params.id);
-      if (foundSecret) {
-        setSecret(foundSecret);
-      } else {
-        router.push("");
-      }
-    } else {
-      router.push("");
+  const fetchSecret = useCallback(async () => {
+    setIsLoading(true);
+    try {
+      const { data } = await privateAxios.get<{ secret: Secret }>(
+        `/api/v1/secrets/${params.id}/secrets`
+      );
+      const decryptedName = await decryptData(
+        data.secret.name,
+        process.env.NEXT_PUBLIC_SECRETS_PASSWORD!
+      );
+      const decryptedContent = await decryptData(
+        data.secret.content,
+        process.env.NEXT_PUBLIC_SECRETS_PASSWORD!
+      );
+
+      const decrypted = {
+        ...data.secret,
+        name: decryptedName,
+        content: decryptedContent,
+      };
+      setSecret(decrypted);
+      devLog("Decrypted secrets:", decrypted);
+    } catch (err) {
+      devLog("Failed to fetch secrets:", err);
+    } finally {
+      setIsLoading(false);
     }
-    setIsLoading(false);
-  }, [params.id, router]);
+  }, [setSecret, setIsLoading]);
+
+  // load secrets once
+  useEffect(() => {
+    fetchSecret();
+    getUserProfile();
+  }, [fetchSecret, getUserProfile]);
 
   async function generateShareLink() {
     setGenerating(true);
 
     try {
-      // Demo mode - simulate generating a share link
-      await new Promise((resolve) => setTimeout(resolve, 1000));
-
-      // Generate a random token
-      const token = Math.random().toString(36).substring(2, 15);
-
-      // Create a share link
-      const link = `${window.location.origin}/s/${params.id}/${token}`;
-      setShareLink(link);
-
+      const res = await privateAxios.post<{
+        message: string;
+        shareUrl: string;
+      }>(`/api/v1/secrets/${params.id}/shares`, {
+        emails,
+        expiryTime,
+        emailNotifications,
+      });
+      setShareLink(res.data.shareUrl);
       toast({
         title: "Share link generated",
-        description: "You can now share this link with others.",
+        description:
+          res.data.message || "You can now share this link with others.",
       });
-    } catch (error) {
-      console.error(error);
-      toast({
-        title: "Error",
-        description: "Failed to generate share link. Please try again.",
-        variant: "destructive",
-      });
+      // @ts-expect-error: error is of type 'unknown', casting to 'any' to access properties
+    } catch (error: Error) {
+      devLog(error);
+      if (error.response)
+        toast({
+          title: "Error",
+          description:
+            error.response.data.message ||
+            "Failed to generate share link. Please try again.",
+          variant: "destructive",
+        });
+      else
+        toast({
+          title: "Error",
+          description: "Failed to generate share link. Please try again.",
+          variant: "destructive",
+        });
     } finally {
       setGenerating(false);
     }
@@ -99,19 +133,14 @@ export default function ShareSecretPage() {
   }
 
   if (isLoading) {
-    return (
-      <div className="flex min-h-[50vh] items-center justify-center">
-        Loading...
-      </div>
-    );
+    <Loading hideText />;
   }
 
   if (!secret) {
     return null;
   }
-
   return (
-    <div className="max-w-2xl mx-auto">
+    <div className="max-w-2xl mx-auto pt-16">
       <BackButton />
 
       <Card>
@@ -145,12 +174,23 @@ export default function ShareSecretPage() {
                 </Label>
               </div>
               <div className="flex items-center p-3 space-x-3 border rounded-md">
-                <RadioGroupItem value="email" id="email" disabled />
+                <RadioGroupItem
+                  value="email"
+                  id="email"
+                  disabled={user?.plan === "free"}
+                  className="disabled:opacity-50 disabled:hover:cursor-default"
+                />
                 <Label
                   htmlFor="email"
-                  className="flex items-center gap-2 font-normal cursor-pointer"
+                  className={`flex items-center gap-2 font-normal ${
+                    user?.plan === "free" ? "cursor-default" : "cursor-pointer"
+                  }`}
                 >
-                  <span>Specific email addresses (Pro plan only)</span>
+                  <span
+                    className={`${user?.plan === "free" ? "opacity-50" : ""}`}
+                  >
+                    Specific email addresses (Pro plan only)
+                  </span>
                 </Label>
               </div>
             </RadioGroup>
@@ -188,10 +228,18 @@ export default function ShareSecretPage() {
                   <SelectItem value="7d" className="cursor-pointer">
                     7 days
                   </SelectItem>
-                  <SelectItem value="30d" className="cursor-pointer">
+                  <SelectItem
+                    value="30d"
+                    className="cursor-pointer"
+                    disabled={user?.plan === "free"}
+                  >
                     30 days (Pro plan only)
                   </SelectItem>
-                  <SelectItem value="never" className="cursor-pointer">
+                  <SelectItem
+                    value="never"
+                    className="cursor-pointer"
+                    disabled={user?.plan === "free"}
+                  >
                     Never (Pro plan only)
                   </SelectItem>
                 </SelectContent>
@@ -206,7 +254,12 @@ export default function ShareSecretPage() {
                 Get notified when someone accesses this secret.
               </p>
             </div>
-            <Switch id="notify" />
+            <Switch
+              id="notify"
+              // checked
+              checked={emailNotifications}
+              onCheckedChange={(value) => setEmailNotifications(value)}
+            />
           </div>
 
           {shareLink ? (

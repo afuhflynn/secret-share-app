@@ -11,6 +11,7 @@ import {
 } from "@/emails-templates-setup/email-templates";
 import { sendEmails } from "@/config/email.sender.setup";
 import { logger } from "@/utils/logger";
+import { devLog } from "../devLog";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -19,7 +20,7 @@ const clientUrl = process.env.NEXT_PUBLIC_CLIENT_URL!;
 const attachments = [
   {
     filename: "SecretShare logo", // Inline file
-    path: path.join(__dirname, "..", "..", "public", "logo.svg"), // Path to inline image
+    path: path.join(__dirname, "..", "..", "public", "logo.ico"), // Path to inline image
     cid: "unique_inline_logo_cid", // Content-ID for inline image (must be unique)
   },
 ];
@@ -36,10 +37,8 @@ const sendVerificationEmail = async (
     const newEmail: string = verificationEmailTemplate
       .replace("[user_name]", username)
       .replace("[verification_code]", code)
-      .replace(
-        "[verification_link]",
-        `"${clientUrl}/auth/verify-email/${token}"`
-      );
+      .replace("[verification_link]", `${clientUrl}/auth/verify-email/${token}`)
+      .replace("[unsubscribe_link]", `${clientUrl}/mail/unsubscribe`);
     await sendEmails(
       email,
       "Verification Email",
@@ -63,13 +62,20 @@ const sendNotificationEmail = async (
   }
 ) => {
   try {
+    devLog(time);
     const newEmail: string = accountNotificationTemplate
       .replace("[user_name]", username)
+      .replace("[account_security_link]", `${clientUrl}/dashboard/settings`)
+      .replace(`"[account_security_link]"`, `${clientUrl}/dashboard/settings`)
       .replace("[activity_description]", activity)
-      .replace("[activity_time]", time)
+      .replace(
+        "[activity_time]",
+        `${new Date(Date.now()).toDateString()}-${new Date(
+          Date.now()
+        ).toLocaleTimeString()}`
+      )
       .replace("[activity_author]", author)
-      .replace("href=[account_security_link]", `href="${clientUrl}"`)
-      .replace("[account_security_link]", `${clientUrl}`);
+      .replace("[unsubscribe_link]", `http://localhost:3000/mail/unsubscribe`);
     await sendEmails(
       email,
       "Notification Email",
@@ -91,7 +97,9 @@ const sendWelcomeEmail = async (
   try {
     const newEmail: string = welcomeEmailTemplate
       .replace("[user_name]", username)
-      .replace("[homepage_link]", `"${clientUrl}"`);
+      .replace("[homepage_link]", `${clientUrl}`)
+      .replace("[learn_link]", `${clientUrl}/how-it-works`)
+      .replace("[unsubscribe_link]", `${clientUrl}/mail/unsubscribe`);
     //Send email content
     await sendEmails(email, "Welcome Email", newEmail, headers, attachments);
   } catch (error: any | { message: string }) {
@@ -108,7 +116,9 @@ const sendLogoutEmail = async (
   try {
     const newEmail: string = accountLogoutEmailTemplate
       .replace("[user_name]", username)
-      .replace("[account_security_link]", `"${clientUrl}"`);
+      .replace("[account_security_link]", `${clientUrl}/dashboard/settings`)
+      .replace(`"[account_security_link]"`, `${clientUrl}/dashboard/settings`)
+      .replace("[unsubscribe_link]", `${clientUrl}/mail/unsubscribe`);
     //Send email content
     await sendEmails(email, "Logout Email", newEmail, headers, attachments);
   } catch (error: any | { message: string }) {
@@ -127,7 +137,8 @@ const sendPasswordResetEmail = async (
     const newEmail: string = passwordResetEmailTemplate
       .replace("[user_name]", username)
       .replace("[reset_link]", resetUrl)
-      .replace("href=[reset_link]", `href="${resetUrl}"`);
+      .replace(`"[reset_link]"`, resetUrl)
+      .replace("[unsubscribe_link]", `${clientUrl}/mail/unsubscribe`);
     //Send email content
     await sendEmails(
       email,
@@ -143,7 +154,6 @@ const sendPasswordResetEmail = async (
 const sendAccountDeleteEmail = async (
   email: string,
   username: string,
-  deleteUrl: string,
   headers: {
     "X-Category": string;
   }
@@ -151,10 +161,7 @@ const sendAccountDeleteEmail = async (
   try {
     const newEmail: string = accountDeleteEmailTemplate
       .replace("[user_name]", username)
-      .replace("[cancel_deletion_link]", `"${clientUrl}"`)
-      .replace("[account_deletion_link]", `"${deleteUrl}"`)
-      .replace("[account_deletion_link]", deleteUrl)
-      .replace("[cancel_deletion_link]", clientUrl!);
+      .replace("[unsubscribe_link]", `${clientUrl}/mail/unsubscribe`);
     //Send email content
     await sendEmails(
       email,
@@ -170,7 +177,6 @@ const sendAccountDeleteEmail = async (
 const sendAccountDeleteAdminNotificationEmail = async (
   email: string,
   username: string,
-  activityDescription: string,
   accountDeleteReason: string,
   time: string,
   headers: {
@@ -180,10 +186,10 @@ const sendAccountDeleteAdminNotificationEmail = async (
   try {
     const newEmail: string = adminNotificationTemplateForAccountDelete
       .replace("[user_name]", "Tembeng Flynn")
-      .replace("[activity_description]", activityDescription)
+      .replace("[user_info]", `${username}, ${email}`)
       .replace("[account_delete_reason]", accountDeleteReason)
       .replace("[activity_time]", time)
-      .replace("[activity_author]", `${username}, ${email}`);
+      .replace("[unsubscribe_link]", `${clientUrl}/mail/unsubscribe`);
 
     // Read admin email from env file
     const adminEmail = process.env.NODEMAILER_ADMIN_EMAIL!;

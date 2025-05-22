@@ -3,11 +3,9 @@ import Link from "next/link";
 import { UserAccountNav } from "./user-account-nav";
 
 import Logo from "./logo";
-import { ThemeToggle } from "./theme-toggle";
 import { Button } from "./ui/button";
 import { useUserStore } from "@/store/user.store";
 import { User } from "@prisma/client";
-import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar";
 import { usePathname } from "next/navigation";
 import { cn } from "@/lib/utils";
 
@@ -33,7 +31,6 @@ const Navbar: React.FC = () => {
           </h2>
         </Link>
         <div className="flex items-center gap-4">
-          <ThemeToggle />
           <UserAccountNav user={user as User} />
           <div>
             <span className="sr-only">Have an issue to report?</span>

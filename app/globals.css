@@ -5,7 +5,7 @@
 @tailwind utilities;
 
 
-@layer utilities {
+@layer base {
   .text-balance {
     text-wrap: balance;
   }
@@ -25,7 +25,7 @@
   }
 
   textarea {
-    @apply resize-none font-source-code-pro-semibold;
+    @apply resize-none font-source-code-pro-semibold h-[18rem] p-4;
   }
 
   .card {

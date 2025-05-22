@@ -48,7 +48,7 @@ export function DashboardSecrets({ initialSecrets }: DashboardSecretsProps) {
               <CardHeader>
                 <CardTitle>{secret.name}</CardTitle>
                 <CardDescription>
-                  Created on {new Date(secret.createdAt).toLocaleDateString()}
+                  Created at {new Date(secret.createdAt).toLocaleDateString()}
                 </CardDescription>
               </CardHeader>
               <CardContent>

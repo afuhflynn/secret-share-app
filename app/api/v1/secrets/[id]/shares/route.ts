@@ -1,14 +1,25 @@
 import authConfig from "@/lib/auth.config";
 import { prisma } from "@/lib/prisma";
-import { sendNotificationEmail } from "@/utils/Emails/send.emails";
 import { logger } from "@/utils/logger";
 import NextAuth from "next-auth";
 import { NextResponse } from "next/server";
 
+/**
+ * @description This file handles single secret operations (such as getting or creating a share link for a shared secret)
+ */
+
+// Create a new secret share link
 export async function POST(
   req: Request,
   { params }: { params: { id: string } }
 ) {
+  const { emails, expiryTime, emailNotifications } = await req.json();
+  if (!expiryTime) {
+    return NextResponse.json(
+      { success: false, message: "All fields are required." },
+      { status: 400 }
+    );
+  }
   try {
     const { auth } = NextAuth(authConfig);
     const session = await auth();
@@ -16,18 +27,21 @@ export async function POST(
     if (!session?.user) {
       return new NextResponse("Unauthorized", { status: 401 });
     }
-
-    if (!session?.user) {
-      return new NextResponse("Unauthorized", { status: 401 });
-    }
-
-    const { expiryTime, emails } = await req.json();
-
     // Verify the secret belongs to the user
+    const foundUser = await prisma.user.findUnique({
+      where: { email: session.user.email! },
+    });
+
+    if (!foundUser) {
+      return NextResponse.json(
+        { success: false, message: "User not found." },
+        { status: 404 }
+      );
+    }
     const secret = await prisma.secret.findUnique({
       where: {
         id: params.id,
-        userId: session.user.id,
+        userId: foundUser.id,
       },
     });
 
@@ -59,18 +73,33 @@ export async function POST(
     const share = await prisma.share.create({
       data: {
         token,
-        secretId: params.id,
+        secretId: secret.id,
         expiresAt,
-        emails: emails ? emails.join(",") : null,
+        emails: emails ? emails : null,
+        sendAccessEmail: emailNotifications ? emailNotifications : null,
       },
     });
 
+    if (!share) {
+      return NextResponse.json({
+        success: false,
+        message: "An unexpected error occurred creating a share link.",
+      });
+    }
+
+    // Create a new access link for frontend response ui
+    const shareLink = `${process.env.NEXT_PUBLIC_CLIENT_URL}/s/${secret.id}/${token}`;
+
     return NextResponse.json({
-      ...share,
-      shareUrl: `${process.env.NEXT_PUBLIC_CLIENT_URL}/s/${params.id}/${token}`,
+      shareUrl: shareLink,
+      success: true,
+      message: "Share link created successfully",
     });
   } catch (error) {
-    console.error("[SHARES_POST]", error);
-    return new NextResponse("Internal Error", { status: 500 });
+    logger.error("[SHARES_POST]", error);
+    return new NextResponse(
+      "There was an error on our site creating the share link. Please try again later.",
+      { status: 500 }
+    );
   }
 }

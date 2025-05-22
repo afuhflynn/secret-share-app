@@ -18,8 +18,7 @@ export const SignInForm = () => {
     password: "",
     email: "",
   });
-  const { error, setError, setMessage, message, signIn, loading } =
-    useUserStore();
+  const { error, setError, message, signIn, loading } = useUserStore();
   // Helps to display the pop ups when they are needed
   const [isSubmitted, setIsSubmitted] = useState(false);
 
@@ -46,7 +45,7 @@ export const SignInForm = () => {
         });
       router.push("/");
     } else {
-      if (error !== null && !error?.includes("Login to continue"))
+      if (error !== null && isSubmitted)
         toast({
           title: "Error login into your account",
           description:

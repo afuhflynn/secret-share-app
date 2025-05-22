@@ -51,17 +51,17 @@ export default function ForgotPasswordPage() {
     if (message && message !== null && error === null && isSubmitted) {
       if (message !== null)
         toast({
-          title: "Email verified",
-          description: " Email verified successfully!",
+          title: "Email sent ",
+          description: "Reset email sent successfully!",
         });
       setRequestStatus("success");
     } else {
-      if (error !== null)
+      if (error !== null && isSubmitted)
         toast({
-          title: "Error verifying your email",
+          title: "Error sending reset email",
           description:
             error ||
-            "An error occurred verifying your email. Please try again later!",
+            "An error occurred sending reset email. Please try again later!",
           variant: "destructive",
         });
       setRequestStatus("error");

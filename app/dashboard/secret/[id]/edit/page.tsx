@@ -1,8 +1,7 @@
 "use client";
 
-import { useEffect, useState } from "react";
-import { useParams, useRouter } from "next/navigation";
-import { ArrowLeft } from "lucide-react";
+import { useCallback, useEffect, useState } from "react";
+import { useParams } from "next/navigation";
 
 import { Button } from "@/components/ui/button";
 import {
@@ -14,94 +13,106 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { Textarea } from "@/components/ui/textarea";
-import { useDemoAuth } from "@/components/providers/demo-auth-provider";
 import { toast } from "@/hooks/use-toast";
 import { BackButton } from "@/components/back-button";
+import { privateAxios } from "@/utils/axios.config";
+import { Secret } from "@prisma/client";
+import { decryptData, encryptData } from "@/lib/encryption";
+import { devLog } from "@/utils/devLog";
+import { Loading } from "@/components/ui/loading";
 
 export default function EditSecretPage() {
   const params = useParams();
-  const router = useRouter();
-  const [secret, setSecret] = useState<any>(null);
+  const [secret, setSecret] = useState<Secret | null>(null);
   const [secretValue, setSecretValue] = useState("");
   const [isLoading, setIsLoading] = useState(true);
   const [isUpdating, setIsUpdating] = useState(false);
-  const { user } = useDemoAuth();
 
-  useEffect(() => {
-    // In a real app, we would fetch the secret from the API
-    // For demo purposes, we'll use localStorage
-    const storedSecrets = localStorage.getItem("demoSecrets");
-    if (storedSecrets) {
-      const secrets = JSON.parse(storedSecrets);
-      const foundSecret = secrets.find((s: any) => s.id === params.id);
-      if (foundSecret) {
-        setSecret(foundSecret);
-        setSecretValue(foundSecret.content);
-      } else {
-        router.push("/dashboard");
-      }
-    } else {
-      router.push("/dashboard");
+  const fetchSecret = useCallback(async () => {
+    setIsLoading(true);
+    try {
+      const { data } = await privateAxios.get<{ secret: Secret }>(
+        `/api/v1/secrets/${params.id}/secrets`
+      );
+      const decryptedName = await decryptData(
+        data.secret.name,
+        process.env.NEXT_PUBLIC_SECRETS_PASSWORD!
+      );
+      const decryptedContent = await decryptData(
+        data.secret.content,
+        process.env.NEXT_PUBLIC_SECRETS_PASSWORD!
+      );
+
+      const decrypted = {
+        ...data.secret,
+        name: decryptedName,
+        content: decryptedContent,
+      };
+      setSecret(decrypted);
+      setSecretValue(decrypted.content);
+      devLog("Decrypted secrets:", decrypted);
+    } catch (err) {
+      devLog("Failed to fetch secrets:", err);
+    } finally {
+      setIsLoading(false);
     }
-    setIsLoading(false);
-  }, [params.id, router]);
+  }, [setSecret, setIsLoading]);
 
-  if (isLoading) {
-    return (
-      <div className="flex min-h-[50vh] items-center justify-center">
-        Loading...
-      </div>
-    );
-  }
-
-  if (!secret) {
-    return null;
-  }
+  // load secrets once
+  useEffect(() => {
+    fetchSecret();
+  }, [fetchSecret]);
 
   async function onSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
     setIsUpdating(true);
 
     try {
-      // Demo mode - simulate creating a secret
-      await new Promise((resolve) => setTimeout(resolve, 1000));
-
-      // Create a new secret
-      setSecret({ ...secret, content: secretValue });
-
-      // Get existing secrets from localStorage
-      const storedSecrets = localStorage.getItem("demoSecrets");
-      const secrets = storedSecrets ? JSON.parse(storedSecrets) : [];
-
-      // Update current secret
-      secrets.map((item: any) => {
-        if (item.id === params.id) {
-          item = secret;
+      // NOTE: Encrypt data before sending
+      const encryptedData = await encryptData(
+        secretValue,
+        process.env.NEXT_PUBLIC_SECRETS_PASSWORD!
+      );
+      const res = await privateAxios.put<{ message: string }>(
+        `/api/v1/secrets/${params.id}/secrets`,
+        {
+          content: encryptedData,
         }
-      });
-
-      // Save to localStorage
-      localStorage.setItem("demoSecrets", JSON.stringify(secrets));
-
+      );
       toast({
         title: "Secret updated",
-        description: "Your secret has been updated successfully.",
+        description:
+          res.data.message || "Your secret has been updated successfully.",
       });
-
-      router.push("/dashboard");
-    } catch (error) {
-      console.error(error);
-      toast({
-        title: "Error",
-        description: "Failed to update secret. Please try again.",
-        variant: "destructive",
-      });
+      // @ts-expect-error: error is of type 'unknown', casting to 'any' to access properties
+    } catch (error: Error) {
+      devLog(error);
+      if (error.response)
+        toast({
+          title: "Error",
+          description:
+            error.response.data.message ||
+            "Failed to update secret. Please try again.",
+          variant: "destructive",
+        });
+      else
+        toast({
+          title: "Error",
+          description: "Failed to update secret. Please try again.",
+          variant: "destructive",
+        });
     } finally {
       setIsUpdating(false);
     }
   }
+  if (isLoading) {
+    return <Loading hideText />;
+  }
+  if (!secret) {
+    return null;
+  }
   return (
-    <form className="max-w-2xl mx-auto" onSubmit={onSubmit}>
+    <form className="max-w-2xl mx-auto pt-16" onSubmit={onSubmit}>
       <BackButton />
 
       <Card>
@@ -114,9 +125,16 @@ export default function EditSecretPage() {
                 : secret.name}
               &apos;
             </CardTitle>
-            <CardDescription>
-              Created on {new Date(secret.createdAt).toLocaleDateString()} •
-              Expires on {new Date(secret.expiresAt).toLocaleDateString()}
+            <CardDescription className="mt-4 flex items-start sm:items-center flex-col sm:flex-row sm:gap-2 gap-1">
+              <span>
+                Created at {new Date(secret.createdAt).toLocaleDateString()}
+              </span>
+              <span className="hidden sm:block">•</span>
+              {secret.expiresAt && (
+                <span>
+                  Expires at {new Date(secret.expiresAt).toLocaleDateString()}
+                </span>
+              )}
             </CardDescription>
           </div>
         </CardHeader>
@@ -128,7 +146,7 @@ export default function EditSecretPage() {
             <Textarea
               value={secretValue}
               onChange={(e) => setSecretValue(e.target.value)}
-              className="h-40 font-mono resize-y"
+              className="h-[18rem] font-mono resize-y"
             />
           </div>
 
