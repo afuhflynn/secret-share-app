@@ -23,11 +23,11 @@ export const ContactInfo = () => {
               <h3 className="font-medium">Email</h3>
               <p className="text-sm text-muted-foreground">
                 <Link
-                  href="mailto:secretshare-support@gmail.com"
+                  href="mailto:flyinnsafuh@gmail.com"
                   target="_blank"
                   className="flex items-center text-primary hover:underline"
                 >
-                  secretshare-support@gmail.com
+                  flyinnsafuh@gmail.com
                 </Link>
               </p>
               <p className="mt-1 text-xs text-muted-foreground">
@@ -56,7 +56,7 @@ export const ContactInfo = () => {
                 <br />
                 Biyem-Assi
                 <br />
-                Nfoundi, Yaounde, Cameroon
+                Mfoundi, Yaounde, Cameroon
               </p>
             </div>
           </div>

@@ -1,5 +1,6 @@
 import authConfig from "@/lib/auth.config";
 import { prisma } from "@/lib/prisma";
+import { devLog } from "@/utils/devLog";
 import { sendNotificationEmail } from "@/utils/Emails/send.emails";
 import { logger } from "@/utils/logger";
 import NextAuth from "next-auth";
@@ -7,9 +8,11 @@ import { NextResponse } from "next/server";
 
 // Get a shared secret
 export async function GET(
-  _: Request,
+  req: Request,
+  res: Response,
   { params }: { params: { id: string; token: string } }
 ) {
+  devLog(req, res);
   const { token, id } = await params;
   if (!id || !token) {
     return NextResponse.json(

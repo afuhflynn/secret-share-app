@@ -1,5 +1,6 @@
 import authConfig from "@/lib/auth.config";
 import { prisma } from "@/lib/prisma";
+import { devLog } from "@/utils/devLog";
 import { sendNotificationEmail } from "@/utils/Emails/send.emails";
 import { logger } from "@/utils/logger";
 import NextAuth from "next-auth";
@@ -12,8 +13,10 @@ import { NextResponse } from "next/server";
 // NOTE: Update a secret
 export async function PUT(
   req: Request,
-  { params }: { params: { id: string } }
+  res: Response,
+  { params }: { params: { id: string; token: string } }
 ) {
+  devLog(res);
   const { content } = await req.json();
   if (!content) {
     return NextResponse.json(
@@ -92,8 +95,13 @@ export async function PUT(
 }
 
 // Get a single user secrets
-export async function GET(_: Request, { params }: { params: { id: string } }) {
+export async function GET(
+  req: Request,
+  res: Response,
+  { params }: { params: { id: string; token: string } }
+) {
   try {
+    devLog(req, res);
     const { auth } = NextAuth(authConfig);
     const session = await auth();
 
@@ -147,9 +155,11 @@ export async function GET(_: Request, { params }: { params: { id: string } }) {
 
 // Delete a secret
 export async function DELETE(
-  _: Request,
-  { params }: { params: { id: string } }
+  req: Request,
+  res: Response,
+  { params }: { params: { id: string; token: string } }
 ) {
+  devLog(req, res);
   try {
     const { auth } = NextAuth(authConfig);
     const session = await auth();

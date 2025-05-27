@@ -86,3 +86,25 @@
 
 [2025-05-22 19:54:32] - [ERROR] - Error sending email: getaddrinfo EAI_AGAIN smtp.gmail.com - to flynnsf1keyz@gmail.com
 
+[2025-05-22 19:59:59] - [INFO] - Secret created for flynnsf1keyz@gmail.com
+
+[2025-05-22 20:00:22] - [ERROR] - Error sending email: getaddrinfo EAI_AGAIN smtp.gmail.com - to flynnsf1keyz@gmail.com
+
+[2025-05-22 20:00:35] - [ERROR] - Error sending email: getaddrinfo EAI_AGAIN smtp.gmail.com - to flynnsf1keyz@gmail.com
+
+[2025-05-24 12:11:05] - [ERROR] - Error sending email from afuhtembeng@gmail.com - to flynnsf1keyz@gmail.com}
+
+[2025-05-24 12:12:21] - [ERROR] - Error sending email from flyinnsafuh@gmail.com - to flynnsf1keyz@gmail.com}
+
+[2025-05-24 12:12:30] - [ERROR] - Error sending email from flyinnsafuh@gmail.com - to flynnsf1keyz@gmail.com}
+
+[2025-05-26 09:53:16] - [INFO] - Secret created for flyinnsafuh@gmail.com
+
+[2025-05-26 09:54:37] - [INFO] - Secret created for flyinnsafuh@gmail.com
+
+[2025-05-26 09:57:51] - [ERROR] - User flynnsf1keyz@gmail.com recently authorized a sign in into their account
+
+[2025-05-26 09:57:51] - [ERROR] - Error sending email: getaddrinfo EAI_AGAIN smtp.gmail.com - to flynnsf1keyz@gmail.com
+
+[2025-05-26 09:57:51] - [INFO] - User sign in http://localhost:3000 
+

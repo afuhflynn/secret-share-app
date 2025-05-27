@@ -61,7 +61,7 @@ export default function DashboardPage() {
     // initial load
     fetchSecrets();
     // poll every minute
-    const id = setInterval(fetchSecrets, 60_000 * 6);
+    const id = setInterval(fetchSecrets, 6 * 60 * 1000);
 
     return () => {
       // isMounted = false;

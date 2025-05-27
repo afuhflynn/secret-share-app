@@ -1,5 +1,6 @@
 import authConfig from "@/lib/auth.config";
 import { prisma } from "@/lib/prisma";
+import { devLog } from "@/utils/devLog";
 import { logger } from "@/utils/logger";
 import NextAuth from "next-auth";
 import { NextResponse } from "next/server";
@@ -11,8 +12,10 @@ import { NextResponse } from "next/server";
 // Create a new secret share link
 export async function POST(
   req: Request,
-  { params }: { params: { id: string } }
+  res: Response,
+  { params }: { params: { id: string; token: string } }
 ) {
+  devLog(req, res);
   const { emails, expiryTime, emailNotifications } = await req.json();
   if (!expiryTime) {
     return NextResponse.json(

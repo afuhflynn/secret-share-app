@@ -7,7 +7,6 @@ import {
   Shield,
   Users,
 } from "lucide-react";
-import CTASection from "@/components/cta-section";
 import Footer from "@/components/footer";
 
 export default function FeaturesPage() {
@@ -398,8 +397,6 @@ export default function FeaturesPage() {
             </div>
           </div>
         </section>
-
-        <CTASection />
       </main>
       <Footer />
     </div>

@@ -28,7 +28,6 @@ export const SignUpForm = () => {
     confirmPassword: "",
   });
   const [showPassword, setShowPassword] = useState(false);
-  const [showConfirm, setShowConfirm] = useState(false);
   const { error, setError, setMessage, message, signUp, loading } =
     useUserStore();
   const [isSubmitted, setIsSubmitted] = useState(false);

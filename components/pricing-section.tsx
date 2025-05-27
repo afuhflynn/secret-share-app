@@ -40,10 +40,6 @@ export default function PricingSection() {
               <ul className="space-y-2 text-sm">
                 <li className="flex items-center">
                   <CheckCircle className="w-4 h-4 mr-2 text-primary" />
-                  <span>Up to 4 secret shares per week</span>
-                </li>
-                <li className="flex items-center">
-                  <CheckCircle className="w-4 h-4 mr-2 text-primary" />
                   <span>7-day expiration</span>
                 </li>
                 <li className="flex items-center">

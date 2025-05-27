@@ -1,38 +1,10 @@
 import Link from "next/link";
 import { ArrowLeft, Building, Lock, Users } from "lucide-react";
 
-import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import Footer from "@/components/footer";
 
 export default function AboutPage() {
-  const team = [
-    {
-      name: "Tembeng Flynn",
-      role: "Founder & CEO",
-      bio: "Tembeng has over 2 years of experience in full stack web / mobile development and is current studying for an HND degree in Software Engineering and brainstorming new startup ideas everyday to make life better for his community.",
-      image: "/placeholder.svg?height=300&width=300",
-    },
-    {
-      name: "Sarah Miller",
-      role: "CTO",
-      bio: "Sarah is a security expert with a background in cryptography and previously worked at leading tech companies.",
-      image: "/placeholder.svg?height=300&width=300",
-    },
-    {
-      name: "Michael Chen",
-      role: "Head of Engineering",
-      bio: "Michael has led engineering teams at several startups and has a passion for building secure, user-friendly products.",
-      image: "/placeholder.svg?height=300&width=300",
-    },
-    {
-      name: "Emily Rodriguez",
-      role: "Head of Design",
-      bio: "Emily brings her expertise in UX/UI design to make complex security concepts accessible to everyone.",
-      image: "/placeholder.svg?height=300&width=300",
-    },
-  ];
-
   return (
     <div className="flex flex-col min-h-screen">
       <main className="flex-1">
@@ -78,8 +50,8 @@ export default function AboutPage() {
                   information with the right people, for the right amount of
                   time. Since our launch, we've had very interesting outcomes.
                 </p>
-                <div className="grid grid-cols-2 gap-8 my-8 text-center sm:grid-cols-4">
-                  <div>
+                <div className="flex flex-row w-full gap-12 items-center justify-center">
+                  {/* <div>
                     <div className="text-3xl font-bold text-primary">10k+</div>
                     <div className="text-sm text-muted-foreground">Users</div>
                   </div>
@@ -88,7 +60,7 @@ export default function AboutPage() {
                     <div className="text-sm text-muted-foreground">
                       Secrets Shared
                     </div>
-                  </div>
+                  </div> */}
                   <div>
                     <div className="text-3xl font-bold text-primary">99.9%</div>
                     <div className="text-sm text-muted-foreground">Uptime</div>

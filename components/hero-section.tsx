@@ -7,7 +7,7 @@ export default function HeroSection() {
     <section className="relative w-full h-screen py-16 overflow-hidden bg-gradient-to-b from-background to-muted/30 md:py-24 lg:py-32 lg:pt-40 md:pt-50">
       <div className="container">
         <div className="flex flex-col items-center w-full gap-12 sm:grid sm:w-full md:grid-cols-2">
-          <div className="w-full space-y-6">
+          <div className="w-full space-y-8">
             <div className="inline-flex items-center px-3 py-1 text-sm border rounded-full border-primary/20 bg-primary/10 text-primary">
               <Shield className="mr-1 h-3.5 w-3.5" />
               <span>Secure Environment Variables</span>

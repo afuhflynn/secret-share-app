@@ -1,15 +1,17 @@
+"use client";
+
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { useSearchParams } from "next/navigation";
+import { Suspense } from "react";
 
-export default async function AuthErrorPage({
-  searchParams,
-}: {
-  searchParams: { error?: string };
-}) {
+const ErrorComponent = () => {
+  const searchparams = useSearchParams();
+  const error = searchparams.get("error");
   let message = "An unknown authentication error occurred.";
-  if (searchParams?.error) {
-    switch (searchParams.error) {
+  if (error) {
+    switch (error) {
       case "OAuthAccountNotLinked":
         message =
           "This account is already linked with a different provider. Please use the correct provider to sign in.";
@@ -30,7 +32,7 @@ export default async function AuthErrorPage({
           "There was an error during the OAuth sign-in process. Please try again or use a different provider.";
         break;
       default:
-        message = decodeURIComponent(searchParams.error);
+        message = decodeURIComponent(error);
     }
   }
   return (
@@ -61,5 +63,13 @@ export default async function AuthErrorPage({
         </CardContent>
       </Card>
     </div>
+  );
+};
+
+export default function AuthErrorPage() {
+  return (
+    <Suspense fallback={null}>
+      <ErrorComponent />
+    </Suspense>
   );
 }

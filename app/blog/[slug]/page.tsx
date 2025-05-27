@@ -1,3 +1,5 @@
+"use client";
+
 import Link from "next/link";
 import { ArrowLeft, Calendar, ChevronRight, Share2 } from "lucide-react";
 
@@ -9,15 +11,12 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import Footer from "@/components/footer";
+import { useParams } from "next/navigation";
 
-export default async function BlogPostPage({
-  params,
-}: {
-  params: { slug: string };
-}) {
-  // In a real app, you would fetch the blog post data from an API or CMS
-  // For this demo, we'll use hardcoded data
-  const postId = await params.slug;
+export default function BlogPostPage() {
+  const params = useParams();
+
+  const postId = params.slug;
   const post = {
     id: postId,
     title:

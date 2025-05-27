@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { CheckCircle, XCircle } from "lucide-react";
-
+import { localStorageKey } from "@/lib/constants";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardFooter } from "@/components/ui/card";
 import { Label } from "@/components/ui/label";
@@ -15,7 +15,6 @@ import { Loader } from "@/components/ui/loading";
 import { toast } from "@/hooks/use-toast";
 import { devLog } from "@/utils/devLog";
 import { ResendVerificationEmail } from "@/components/resend-verification-email";
-import { localStorageKey } from "@/lib/constants";
 
 export default function VerifyEmailTokenPage() {
   const router = useRouter();

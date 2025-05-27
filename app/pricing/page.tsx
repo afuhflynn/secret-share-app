@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Link from "next/link";
 import { ArrowLeft, CheckCircle, X } from "lucide-react";
 
@@ -15,12 +15,17 @@ import {
 } from "@/components/ui/card";
 import { Switch } from "@/components/ui/switch";
 import Footer from "@/components/footer";
-import CTASection from "@/components/cta-section";
+import { useUserStore } from "@/store/user.store";
 
 export default function PricingPage() {
   const [billingInterval, setBillingInterval] = useState<"monthly" | "yearly">(
     "monthly"
   );
+  const { user, getUserProfile } = useUserStore();
+
+  useEffect(() => {
+    getUserProfile();
+  }, [getUserProfile]);
 
   const plans = [
     {
@@ -31,10 +36,10 @@ export default function PricingPage() {
         yearly: 0,
       },
       features: [
-        "Up to 5 secret shares",
-        "7-day expiration",
+        "Secrets don't last more than 7 days",
         "Basic encryption",
         "Email support",
+        "Access notifications",
       ],
       limitations: [
         "No team sharing",
@@ -44,6 +49,7 @@ export default function PricingPage() {
       cta: "Get Started",
       href: "/signup",
       popular: false,
+      isCurrentPlan: user && user.plan && user.plan === "free",
     },
     {
       name: "Pro",
@@ -54,7 +60,7 @@ export default function PricingPage() {
       },
       features: [
         "Unlimited secret shares",
-        "30-day expiration",
+        "30-day expiration available",
         "Advanced encryption",
         "Email-based access controls",
         "Access notifications",
@@ -64,6 +70,7 @@ export default function PricingPage() {
       cta: "Get Started",
       href: "/signup",
       popular: true,
+      isCurrentPlan: user && user.plan && user.plan === "pro",
     },
     {
       name: "Enterprise",
@@ -85,6 +92,7 @@ export default function PricingPage() {
       cta: "Contact Sales",
       href: "/contact",
       popular: false,
+      isCurrentPlan: user && user.plan && user.plan === "enterprise",
     },
   ];
 
@@ -214,14 +222,24 @@ export default function PricingPage() {
                     </div>
                   </CardContent>
                   <CardFooter>
-                    <Link href={plan.href} className="w-full">
+                    {plan.isCurrentPlan ? (
                       <Button
-                        variant={plan.popular ? "default" : "outline"}
+                        variant={"outline"}
                         className="w-full"
+                        disabled={plan.isCurrentPlan}
                       >
-                        {plan.cta}
+                        Current Plan
                       </Button>
-                    </Link>
+                    ) : (
+                      <Link href={plan.href} className="w-full">
+                        <Button
+                          variant={plan.popular ? "default" : "outline"}
+                          className="w-full"
+                        >
+                          {plan.cta}
+                        </Button>
+                      </Link>
+                    )}
                   </CardFooter>
                 </Card>
               ))}
@@ -351,8 +369,6 @@ export default function PricingPage() {
             </div>
           </div>
         </section>
-
-        <CTASection />
       </main>
       <Footer />
     </div>
