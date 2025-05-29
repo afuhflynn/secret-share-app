@@ -55,18 +55,7 @@ export default function DashboardPage() {
     getUserProfile();
   }, [getUserProfile]);
 
-  // load secrets once
   useEffect(() => {
-    // let isMounted = true;
-    // initial load
-    fetchSecrets();
-    // poll every minute
-    const id = setInterval(fetchSecrets, 6 * 60 * 1000);
-
-    return () => {
-      // isMounted = false;
-      clearInterval(id);
-    };
     fetchSecrets();
   }, [fetchSecrets]);
 
@@ -111,7 +100,7 @@ export default function DashboardPage() {
                       : secret.name}
                   </CardTitle>
                   <CardDescription>
-                    Created at {new Date(secret.createdAt).toLocaleDateString()}
+                    Created at {new Date(secret.createdAt).toDateString()}
                   </CardDescription>
 
                   {/* Edit/Delete buttons */}
@@ -138,7 +127,7 @@ export default function DashboardPage() {
                         <>
                           <span className="text-muted-foreground">Expires</span>
                           <span>
-                            {new Date(secret.expiresAt).toLocaleDateString()}
+                            {new Date(secret.expiresAt).toDateString()}
                           </span>
                         </>
                       )}

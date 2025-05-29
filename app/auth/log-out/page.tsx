@@ -13,7 +13,7 @@ import { signOutAction } from "@/actions/log-out";
 
 export default function LogoutPage() {
   const router = useRouter();
-  const { user, setUser } = useUserStore();
+  const { setUser } = useUserStore();
   const [isLoading, setIsLoading] = useState(false);
 
   async function handleLogout() {

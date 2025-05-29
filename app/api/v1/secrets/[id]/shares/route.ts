@@ -12,10 +12,10 @@ import { NextResponse } from "next/server";
 // Create a new secret share link
 export async function POST(
   req: Request,
-  res: Response,
   { params }: { params: { id: string; token: string } }
 ) {
-  devLog(req, res);
+  devLog(req);
+  const id = await params.id;
   const { emails, expiryTime, emailNotifications } = await req.json();
   if (!expiryTime) {
     return NextResponse.json(
@@ -43,7 +43,7 @@ export async function POST(
     }
     const secret = await prisma.secret.findUnique({
       where: {
-        id: params.id,
+        id: id,
         userId: foundUser.id,
       },
     });

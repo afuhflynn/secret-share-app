@@ -5,12 +5,11 @@ import { devLog } from "@/utils/devLog";
 
 export async function GET(
   req: Request,
-  res: Response,
   { params }: { params: { id: string; token: string } }
 ) {
-  devLog(req, res);
+  devLog(req);
   try {
-    const { token } = params;
+    const { token } = await params;
 
     // Find the share
     const share = await prisma.share.findUnique({

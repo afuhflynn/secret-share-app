@@ -108,3 +108,33 @@
 
 [2025-05-26 09:57:51] - [INFO] - User sign in http://localhost:3000 
 
+[2025-05-28 05:51:03] - [ERROR] - Error creating user secret
+
+[2025-05-28 05:52:25] - [ERROR] - Error creating user secret
+
+[2025-05-28 05:53:13] - [ERROR] - Error getting user secret
+
+[2025-05-28 05:54:11] - [ERROR] - Error getting user secret
+
+[2025-05-28 05:55:10] - [ERROR] - Error getting user secret
+
+[2025-05-28 06:00:55] - [ERROR] - Error getting user secret
+
+[2025-05-28 06:01:23] - [ERROR] - Error getting user secret
+
+[2025-05-28 06:01:45] - [ERROR] - Error getting user secret
+
+[2025-05-29 08:07:51] - [ERROR] - Error getting user secret
+
+[2025-05-29 08:33:49] - [ERROR] - Error sending email: getaddrinfo EAI_AGAIN smtp.gmail.com - to flyinnsafuh@gmail.com
+
+[2025-05-29 08:33:49] - [ERROR] - User Afuh Flynn Tembeng, flyinnsafuh@gmail.com secrets deleted successfully
+
+[2025-05-29 08:37:18] - [INFO] - Secret created for flyinnsafuh@gmail.com
+
+[2025-05-29 08:39:17] - [ERROR] - Error sending email: getaddrinfo EAI_AGAIN smtp.gmail.com - to flyinnsafuh@gmail.com
+
+[2025-05-29 08:39:17] - [INFO] - User Afuh Flynn Tembeng, flyinnsafuh@gmail.com account email preferences updated
+
+[2025-05-29 08:41:32] - [ERROR] - Error sending email: getaddrinfo EAI_AGAIN smtp.gmail.com - to flyinnsafuh@gmail.com
+

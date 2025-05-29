@@ -13,10 +13,13 @@ import { NextResponse } from "next/server";
 // NOTE: Update a secret
 export async function PUT(
   req: Request,
-  res: Response,
-  { params }: { params: { id: string; token: string } }
+  {
+    params,
+  }: {
+    params: { id: string; token: string };
+  }
 ) {
-  devLog(res);
+  const id = await params.id;
   const { content } = await req.json();
   if (!content) {
     return NextResponse.json(
@@ -49,7 +52,7 @@ export async function PUT(
     const secret = await prisma.secret.update({
       where: {
         userId: foundUser.id,
-        id: params.id,
+        id: id,
       },
       data: {
         content,
@@ -96,12 +99,16 @@ export async function PUT(
 
 // Get a single user secrets
 export async function GET(
-  req: Request,
-  res: Response,
-  { params }: { params: { id: string; token: string } }
+  _: Request,
+  {
+    params,
+  }: {
+    params: { id: string; token: string };
+  }
 ) {
   try {
-    devLog(req, res);
+    const id = await params.id;
+    devLog("data", id);
     const { auth } = NextAuth(authConfig);
     const session = await auth();
 
@@ -125,7 +132,7 @@ export async function GET(
     }
     const secret = await prisma.secret.findUnique({
       where: {
-        id: params.id,
+        id: id,
         userId: foundUser.id,
       },
     });
@@ -144,7 +151,7 @@ export async function GET(
     });
     // @ts-expect-error: error is of type 'unknown', casting to 'any' to access properties
   } catch (error: Error) {
-    logger.error(`Error creating user secret`, error.message);
+    logger.error(`Error getting user secret`, error.message);
 
     return new NextResponse(
       "Sorry, an unexpected error occurred getting your secret.",
@@ -156,11 +163,11 @@ export async function GET(
 // Delete a secret
 export async function DELETE(
   req: Request,
-  res: Response,
   { params }: { params: { id: string; token: string } }
 ) {
-  devLog(req, res);
+  devLog(req);
   try {
+    const id = await params.id;
     const { auth } = NextAuth(authConfig);
     const session = await auth();
 
@@ -184,7 +191,7 @@ export async function DELETE(
     const secret = await prisma.secret.deleteMany({
       where: {
         userId: foundUser.id,
-        id: params.id,
+        id: id,
       },
     });
 

@@ -12,30 +12,12 @@ import {
 } from "@/components/ui/accordion";
 import Footer from "@/components/footer";
 import { faqs } from "@/lib/constants";
-import { useEffect, useState } from "react";
-import { Input } from "@/components/ui/input";
 
 export default function FAQsPage() {
-  const [searchQuery, setSearchQuery] = useState("");
-  const [faqsData, setFaqsData] = useState(faqs);
-
-  useEffect(() => {
-    const filtered = faqs.map((item) =>
-      // item.category.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      item.questions.map((value) =>
-        value.question.toLowerCase().includes(searchQuery.toLowerCase())
-      )
-    );
-    console.log(filtered);
-    // setFaqsData(
-
-    // );
-  }, [faqs, setFaqsData, searchQuery]);
-
   return (
     <div className="flex flex-col min-h-screen">
       <main className="flex-1">
-        <section className="pt-16 bg-muted/30 md:pt-24 md:pb-6">
+        <section className="py-16 bg-muted/30 md:py-24">
           <div className="container">
             <div className="flex items-center gap-2 mb-8">
               <Link
@@ -55,20 +37,12 @@ export default function FAQsPage() {
               </p>
             </div>
           </div>
-          <div className="flex items-center w-full pt-6">
-            <Input
-              placeholder="Search by category, question or answer..."
-              className="py-5 px-4 max-w-3xl"
-              value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
-            />
-          </div>
         </section>
 
         <section className="py-16 md:py-24">
           <div className="container">
             <div className="max-w-3xl mx-auto">
-              {faqsData.map((category) => (
+              {faqs.map((category) => (
                 <div key={category.category} className="mb-12">
                   <h2 className="mb-6 text-2xl font-bold">
                     {category.category}

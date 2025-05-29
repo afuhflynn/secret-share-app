@@ -9,10 +9,9 @@ import { NextResponse } from "next/server";
 // Get a shared secret
 export async function GET(
   req: Request,
-  res: Response,
   { params }: { params: { id: string; token: string } }
 ) {
-  devLog(req, res);
+  devLog(req);
   const { token, id } = await params;
   if (!id || !token) {
     return NextResponse.json(
