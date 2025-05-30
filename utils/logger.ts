@@ -8,7 +8,7 @@ const logFormat = printf(({ level, message, timestamp }) => {
 export const logger = createLogger({
   format: combine(timestamp({ format: "YYYY-MM-DD HH:mm:ss" }), logFormat),
   transports: [
-    new transports.File({ filename: "./logs/logger.log" }),
+    new transports.File({ filename: "logs/logger.log" }),
     new transports.Console(),
   ],
 });
