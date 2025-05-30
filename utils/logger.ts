@@ -1,14 +1,18 @@
-import { createLogger, format, transports } from "winston";
-const { combine, timestamp, printf } = format;
+/**
+* Logs to console and into the logger file only in development
+*/
 
-const logFormat = printf(({ level, message, timestamp }) => {
-  return `[${timestamp}] - [${level.toUpperCase()}] - ${message}\n`;
+const isDev = process.env.NODE_ENV !== "production";
+
+const fileTransport = new transports.File({
+  filename: path.join(logDir, "logger.log"),
+  level: "info",
 });
 
 export const logger = createLogger({
-  format: combine(timestamp({ format: "YYYY-MM-DD HH:mm:ss" }), logFormat),
+  format: combine(timestamp(), logFormat),
   transports: [
-    new transports.File({ filename: "logs/logger.log" }),
+    ...(isDev ? [fileTransport] : []),
     new transports.Console(),
   ],
 });
