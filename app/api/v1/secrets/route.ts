@@ -79,7 +79,7 @@ export async function POST(req: Request) {
       },
     });
 
-    logger.info(Secret created for ${session.user.email});
+    logger.info(`Secret created for ${session.user.email}`);
     return NextResponse.json({
       success: true,
       message: "Secret created successfully.",
