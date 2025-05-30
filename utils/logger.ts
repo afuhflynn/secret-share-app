@@ -20,7 +20,7 @@ const logFormat = printf(({ level, message, timestamp: ts }) =>
 const isDev = process.env.NODE_ENV !== "production";
 
 // Create and export the Winston logger
-const logger: Logger = createLogger({
+export const logger: Logger = createLogger({
   level: process.env.LOG_LEVEL || "info",
   format: combine(
     timestamp({ format: "YYYY-MM-DD HH:mm:ss" }),
@@ -41,5 +41,3 @@ const logger: Logger = createLogger({
     new transports.Console(),
   ],
 });
-
-export default logger;
