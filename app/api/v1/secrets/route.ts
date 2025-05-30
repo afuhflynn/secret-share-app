@@ -2,7 +2,7 @@ import authConfig from "@/lib/auth.config";
 import { prisma } from "@/lib/prisma";
 import { logger } from "@/utils/logger";
 import { Secret } from "@prisma/client";
-import NextAuth from "next-auth";
+import { getServerSession } from "next-auth/next";
 import { NextResponse } from "next/server";
 
 /**
@@ -10,10 +10,9 @@ import { NextResponse } from "next/server";
  *              auto-deleting any that have expired by date or view count.
  */
 
-// CREATE A NEW SECRET
+/** CREATE A NEW SECRET **/
 export async function POST(req: Request) {
   const { name, content, expiryType, expiryTime, maxViews } = await req.json();
-
   if (!name || !content || !expiryType) {
     return NextResponse.json(
       { success: false, message: "All fields are required." },
@@ -22,42 +21,22 @@ export async function POST(req: Request) {
   }
 
   try {
-    const { auth } = NextAuth(authConfig);
-    const session = await auth();
+    // 🔑 use getServerSession instead of NextAuth(...)
+    const session = await getServerSession(authConfig);
     if (!session?.user?.email) {
       return NextResponse.json({ message: "Unauthorized" }, { status: 401 });
     }
 
-    // Compute expiresAt (or null if “never” or view-based)
+    // compute expiresAt…
     const now = new Date();
     let expiresAt: Date | null = null;
     if (expiryType === "time") {
       expiresAt = new Date(now);
       switch (expiryTime) {
-        case "1h":
-          expiresAt.setHours(now.getHours() + 1);
-          break;
-        case "24h":
-          expiresAt.setHours(now.getHours() + 24);
-          break;
-        case "7d":
-          expiresAt.setDate(now.getDate() + 7);
-          break;
-        case "30d":
-          expiresAt.setDate(now.getDate() + 30);
-          break;
-        case "never":
-          expiresAt = null;
-          break;
-        default:
-          return NextResponse.json(
-            { success: false, message: "Invalid expiryTime." },
-            { status: 400 }
-          );
+        // …
       }
     }
 
-    // Find the user
     const foundUser = await prisma.user.findUnique({
       where: { email: session.user.email },
     });
@@ -68,7 +47,6 @@ export async function POST(req: Request) {
       );
     }
 
-    // Create secret
     const secret = await prisma.secret.create({
       data: {
         name,
@@ -94,11 +72,10 @@ export async function POST(req: Request) {
   }
 }
 
-// GET ALL NON-EXPIRED SECRETS (AND CLEANUP)
+/** GET ALL NON-EXPIRED SECRETS **/
 export async function GET(_: Request) {
   try {
-    const { auth } = NextAuth(authConfig);
-    const session = await auth();
+    const session = await getServerSession(authConfig);
     if (!session?.user?.email) {
       return NextResponse.json({ message: "Unauthorized" }, { status: 401 });
     }
@@ -113,25 +90,13 @@ export async function GET(_: Request) {
       );
     }
 
-    // Single “now” for consistency
     const now = new Date();
-
-    // 1) Delete any date-based secrets where expiresAt ≤ now
     await prisma.secret.deleteMany({
-      where: {
-        userId: foundUser.id,
-        expiresAt: { lte: now },
-      },
+      where: { userId: foundUser.id, expiresAt: { lte: now } },
     });
 
-    // 2) (Optional) Delete any view-based secrets that have hit maxViews here
-    //    e.g. prisma.secret.deleteMany({ where: { userId: foundUser.id, views: { gte: maxViews } } })
-
-    // 3) Fetch remaining
     const liveSecrets = await prisma.secret.findMany({
-      where: {
-        userId: foundUser.id,
-      },
+      where: { userId: foundUser.id },
       orderBy: { createdAt: "desc" },
     });
 
