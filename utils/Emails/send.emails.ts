@@ -1,5 +1,5 @@
 import path from "node:path";
-import { fileURLToPath } from "node:url";
+import fs from "node:fs";
 import {
   accountLogoutEmailTemplate,
   accountNotificationTemplate,
@@ -13,17 +13,29 @@ import { sendEmails } from "@/config/email.sender.setup";
 import { logger } from "@/utils/logger";
 import { devLog } from "../devLog";
 
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
+// 🔑 Build an absolute path from project root—no __dirname hacks.
+const logoPath = path.join(process.cwd(), "public", "logo.ico");
 
-const clientUrl = process.env.NEXT_PUBLIC_CLIENT_URL!;
+// 🛡️ Optional: pre-flight check to catch missing files instantly
+try {
+  fs.accessSync(logoPath, fs.constants.R_OK);
+} catch {
+  console.error("🚨 Logo not found at:", logoPath);
+}
+
 const attachments = [
   {
-    filename: "SecretShare logo", // Inline file
-    path: path.join(__dirname, "..", "..", "public", "logo.ico"), // Path to inline image
-    cid: "unique_inline_logo_cid", // Content-ID for inline image (must be unique)
+    filename: "logo.ico",            // exact filename your repo uses
+    path: logoPath,                  // absolute path
+    cid: "inline-logo-unique-cid",   // unique content-id
   },
 ];
+
+const clientUrl = process.env.NEXT_PUBLIC_CLIENT_URL!;
+
+// ——————————————
+// Email-sending functions
+// ——————————————
 const sendVerificationEmail = async (
   code: string,
   email: string,
